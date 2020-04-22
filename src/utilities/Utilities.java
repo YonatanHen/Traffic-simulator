@@ -3,7 +3,6 @@
 
 package utilities;
 
-import javax.management.relation.RelationNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -30,10 +29,10 @@ public interface Utilities {
         return rand.nextBoolean();
     }
 
-    default  double getRandomDouble(double min, double max){
+    default double getRandomDouble(double min, double max){
     //Function return random value in the range between min and max
         Random rand=new Random();
-        return (rand.nextDouble()+rand.nextInt(max)+min);
+        return (rand.nextDouble()+rand.nextInt((int)max)+min);
     }
 
     default int getRandomInt(int min, int max){
@@ -56,6 +55,4 @@ public interface Utilities {
     //Function prints a message of successful creation of object
         System.out.println(objName+" created successfully.");
     }
-
-
 }
