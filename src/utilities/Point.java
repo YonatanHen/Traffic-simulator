@@ -9,12 +9,12 @@ package utilities;
  * @see Utilities
  */
 public abstract class Point implements Utilities {
-    final int minVal=0;//Minimal values of coordinates X and Y
-    final int maxX=800;//Maximal value of X
-    final int maxY=600;//Maximal value of Y
+    private final int minVal=0;//Minimal values of coordinates X and Y
+    private final int maxX=800;//Maximal value of X
+    private final int maxY=600;//Maximal value of Y
     //x and y are coordinates of some point on the map in cartesian axis system
-    double x;
-    double y;
+    private double x;
+    private double y;
 
     /**
      * Point constructor
@@ -63,6 +63,18 @@ public abstract class Point implements Utilities {
             return (((Point) o).x==x && ((Point)o).y==y);
         }
         return false;
+    }
+
+    /**
+     * Function calculate the distance between 2 points
+     * by formula.
+     *
+     * @param other
+     * @return distance between this to other point.
+     */
+    public double calcDistance(Point other){
+        return Math.sqrt(Math.pow(x - other.getX(), 2) +
+                Math.pow(y - other.getY(), 2));
     }
 
 }
