@@ -22,7 +22,7 @@ public abstract class Point implements Utilities {
      * @param x
      * @param y
      */
-    Point(double x,double y){
+    public Point(double x,double y){
         if(checkValue(x,minVal,maxX)) this.x=x;
         else {
            double wrongVal=x;
@@ -41,11 +41,13 @@ public abstract class Point implements Utilities {
     /**
      * Point constructor-make point with randomal values
      */
-    Point(){
+    public Point(){
         x=getRandomDouble(minVal,maxX);
         y=getRandomDouble(minVal,maxY);
         successMessage(toString());
     }
+
+
 
     //getters
     public double getX(){return x;}
