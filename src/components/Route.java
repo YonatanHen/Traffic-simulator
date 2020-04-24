@@ -22,7 +22,7 @@ public class Route implements RouteParts {
     public Route(RouteParts start, Vehicle vehicle){
         this.RouteParts = new ArrayList<>();
         RouteParts.add(start);
-
+        this.vehicle=vehicle;
     }
 
     //getters

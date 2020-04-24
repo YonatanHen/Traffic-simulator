@@ -56,18 +56,17 @@ public class Driving implements Utilities, Timer {
         //TODO:Implement
     }
 
-    /*public String toString(){
-        //TODO:check if do we need this or not
+    public String toString(){
         return "=====================START DRIVING====================";
-    }*/
+    }
 
 
     public boolean equals(Object o){
         if(o instanceof Driving){
-            return map.equals((Driving)o).map &&
+            return map.equals(((Driving)o).map) &&
             vehicles.equals(((Driving) o).vehicles) &&
             drivingTime==((Driving) o).drivingTime &&
-            allTimedElements==((Driving) o).allTimedElements;
+            allTimedElements.equals(((Driving) o).allTimedElements);
         }
         return false;
     }
