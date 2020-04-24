@@ -56,10 +56,10 @@ public class Driving implements Utilities, Timer {
         //TODO:Implement
     }
 
-    public String toString(){
+    /*public String toString(){
         //TODO:check if do we need this or not
         return "=====================START DRIVING====================";
-    }
+    }*/
 
 
     public boolean equals(Object o){

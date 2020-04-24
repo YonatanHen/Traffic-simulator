@@ -46,6 +46,7 @@ public class Road implements RouteParts, Utilities {
         this.waitingVehicles = new ArrayList<>();
     }
     //getters
+    public boolean getEnable(){return enable;}
     public int getMaxSpeed() {return getMaxSpeed();}
     public double getLength() { return length;}
     public Junction getEndJunction() { return endJunction; }
@@ -114,6 +115,10 @@ public class Road implements RouteParts, Utilities {
         System.out.println(" has arrived to" + startJunction);
     }
 
+    /**
+     *
+     * @param vehicle
+     */
     public void checkOut(Vehicle vehicle){
         removeVehicleFromWaitingVehicles(vehicle);
         System.out.println("The vehicle " + vehicle.getId() + " pass the junction");
