@@ -19,7 +19,7 @@ public class Vehicle implements Utilities,Timer {
     private int id;
     private VehicleType vehicleType;
     private Route currentRoute;
-    private RouteParts currentRouteParts;
+    private RouteParts currentRouteParts;// The current type of route part when vehicle locating.
     private int timeFromStartRoute; //time in pulses from the start
     private int timeOnCurrentPart; //time in pulses from the checkIn at this part
     private static int objectCount=1; //Counter to num of objects

@@ -11,17 +11,25 @@ import java.util.Random;
  */
 public class RandomTrafficLights extends TrafficLights {
     /**
-     * random constructor RandomTrafficLights
+     * Random constructor of RandomTrafficLights
      * @param roads
      */
-
     public RandomTrafficLights(ArrayList<Road>roads){
         super(roads);
         Random random = new Random();
-        int i= random.nextInt(roads.size());
-        roads.get(i).setGreenlight(true);
+        roads.get(random.nextInt(roads.size())).setGreenlight(true);
     }
 
-    public void changeIndex(){ // method return index of road that get green light
-    }//TODO : the method need to return but it void
+    /**
+     * Change the index for road that suppose to get green light.
+     * NOTE:This method override abstract trafficLight method.
+     */
+    public void changeIndex(){
+        for(Road r:getRoads()){
+            if(r.getGreenLight()){
+                setGreenLightIndex(getRoads().indexOf(r));
+                break;
+            }
+        }
+    }
 }

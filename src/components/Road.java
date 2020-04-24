@@ -69,7 +69,7 @@ public class Road implements RouteParts, Utilities {
 
 
     /**
-     * function that add car to list of waiting
+     * function that add car to waiting list.
      * @param vehicle
      */
     public void addVehicleToWaitingVehicles(Vehicle vehicle){
@@ -94,65 +94,85 @@ public class Road implements RouteParts, Utilities {
     public double calcLength(){ //calc the length between two points
         return Math.sqrt(Math.pow(startJunction.getX()-endJunction.getX(),2)
                 +Math.pow(startJunction.getY()-endJunction.getY(),2));
-
     }
 
     /**
+     *Method check if a vehicle can finish his drive in current road.
+     * @param vehicle
+     * @return true when delay time at this part equal/bigger then estimated time that vehicle suppose to pass this part.
+     */
+    public boolean canLeave(Vehicle vehicle){
+        return vehicle.getTimeOnCurrentPart()>=calcEstimatedTime(vehicle);
+    }
+
+    /**
+     *  Method add the vehicle to this road and update all relevant data fields.
      *
      * @param vehicle
-     * @return
      */
-    public boolean canLeave(Vehicle vehicle){ //TODO:
-        return false;
+    public void checkIn(Vehicle vehicle){
+        vehicle.setCurrentRouteParts(this);
+        vehicle.setLastRoad(this);
+        vehicle.setStatus("- is starting to move on " +  toString() + ", " + vehicle.toString());
+        System.out.println(vehicle.getStatus());
     }
 
     /**
-     *
-     * @param vehicle
-     */
-    public void checkIn(Vehicle vehicle){ //TODO : i dont know if this true.
-        vehicle = new Vehicle(new Road(startJunction,endJunction));
-
-        System.out.println(" has arrived to" + startJunction);
-    }
-
-    /**
+     * Method "release" the car fron current road. upadte all relevant data fields.
      *
      * @param vehicle
      */
     public void checkOut(Vehicle vehicle){
         removeVehicleFromWaitingVehicles(vehicle);
-        System.out.println("The vehicle " + vehicle.getId() + " pass the junction");
+        vehicle.setStatus("- has finished " + toString() + ", " + vehicle.toString());
+        System.out.println(vehicle.getStatus());
     }
 
-    public RouteParts findNextPart(Vehicle vehicle){// return last junction of this road.
-        return vehicle.getLastRoad();
+    /**
+     * return last junction of this road.
+     *
+     * @param vehicle
+     * @return the junction when road finish as RoutePart! (not Junction).
+     */
+    public RouteParts findNextPart(Vehicle vehicle){
+        return endJunction;
     }
 
-    @Override
     public void stayOnCurrentPart(Vehicle vehicle) {
-
+        //- is still moving on Road from Junction 10 to Junction 5 (Lighted), length: 526, max speed 30, time to arrive: 13.0
+        vehicle.setStatus("- is still moving on" + toString() + ", " + vehicle.toString());
+        System.out.println(vehicle.getStatus());
     }
 
     /**
      * remove car from the list of waiting car in junction
      * @param vehicle
      */
-    public void removeVehicleFromWaitingVehicles(Vehicle vehicle){
-        for(int i=0;i<waitingVehicles.size();i++){
-            if(waitingVehicles.get(i).equals(vehicle))
+    public void removeVehicleFromWaitingVehicles(Vehicle vehicle) {
+        for (int i = 0; i < waitingVehicles.size(); i++) {
+            if (waitingVehicles.get(i).equals(vehicle))
                 waitingVehicles.remove(i);
         }
-        //TODO: print
     }
 
-    /**
-     * print if in current pulse the car stays in this road
-     * @param vehicle
-     */
-    public void setOnCurrentPart(Vehicle vehicle){
-        if(vehicle.getLastRoad().getEndJunction()!=endJunction)
-            System.out.println(" is still moving on ");
+    public String toString(){
+        //Assume that implementation is correct,maybe need to fix this later.
+        if (greenlight) return "Road from "+ startJunction + " to " + endJunction + "(Lighted)";
+        else return "Road from "+ startJunction + " to " + endJunction;
+    }
 
+    public boolean equals(Object obj){
+        if(obj instanceof Road){
+            return ((Road)obj).allowedSpeedOptions.equals(allowedSpeedOptions) &&
+                    ((Road) obj).enable==enable &&
+                    ((Road) obj).startJunction.equals(startJunction) &&
+                    ((Road) obj).endJunction.equals(endJunction) &&
+                    ((Road) obj).greenlight==greenlight &&
+                    ((Road) obj).length==length &&
+                    ((Road) obj).maxSpeed == maxSpeed &&
+                    ((Road) obj).vehicleTypes.equals(vehicleTypes) &&
+                    ((Road) obj).waitingVehicles.equals(waitingVehicles);
+        }
+        return  false;
     }
 }
