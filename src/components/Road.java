@@ -23,7 +23,7 @@ public class Road implements RouteParts, Utilities {
     private boolean enable; //if true, the road appear on the map.
     private Junction startJunction; //The junction from which the road comes out
     private Junction endJunction; //The junction which the road enters
-    private boolean greenlight; //variable fro green light to this road, update when the light is change.
+    private boolean greenlight; //variable for green light to this road, update when the light is change.
     private double length; //length of road, calculate as distance between 2 junction with distance formula between two points.
     private int maxSpeed; // allowed max speed. random from list of allowed values.
     private VehicleType[] vehicleTypes;//array kinds of cars that allowed in this road.
@@ -46,6 +46,7 @@ public class Road implements RouteParts, Utilities {
         this.waitingVehicles = new ArrayList<>();
     }
     //getters
+    public boolean getGreenLight(){return greenlight;}
     public boolean getEnable(){return enable;}
     public int getMaxSpeed() {return getMaxSpeed();}
     public double getLength() { return length;}

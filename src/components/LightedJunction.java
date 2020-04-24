@@ -9,7 +9,7 @@ public class LightedJunction extends Junction{
     private TrafficLights lights;
 
     public LightedJunction(){
-        Junction junction = new Junction();
+        super();
 
     }
 }
