@@ -24,4 +24,10 @@ public class Route implements RouteParts {
         RouteParts.add(start);
 
     }
+
+    //getters
+    public ArrayList<RouteParts> getRouteParts(){return RouteParts;}
+
+
+    //setters
 }
