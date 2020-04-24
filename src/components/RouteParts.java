@@ -5,7 +5,7 @@ import utilities.Utilities;
 
 /**
  * @author Yehonatan Hen-207630112
- * @author Rotem Librati-
+ * @author Rotem Librati-307903732
  */
 public interface RouteParts extends Utilities {
     double calcEstimatedTime(Object obj);

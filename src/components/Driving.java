@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Class simulate driving of number of vehicles based on the map.
  *
  * @author Yehonatan Hen-207630112
- * @author Rotem Librati-
+ * @author Rotem Librati-307903732
  * @see Timer
  * @see Utilities
  * @see Map

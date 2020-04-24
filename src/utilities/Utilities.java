@@ -6,7 +6,7 @@ import java.util.Random;
 
 /**
  * @author Yehonatan Hen-207630112
- * @author Rotem Librati-
+ * @author Rotem Librati-307903732
  */
 public interface Utilities {
     /**
@@ -74,7 +74,6 @@ public interface Utilities {
      * @return Integer value in the range of min-max
      */
     default int getRandomInt(int min, int max){
-        //TODO:Why double in the instructions? it suppose to be int
 
         Random rand=new Random();
         return rand.nextInt(max)+min;

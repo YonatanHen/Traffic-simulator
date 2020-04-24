@@ -3,7 +3,7 @@ package utilities;
 
 /**
  * @author Yehonatan Hen-207630112
- * @author Rotem Librati-
+ * @author Rotem Librati-307903732
  */
 public enum VehicleType {
     car(90), bus(60), bicycle(40), motorcycle(120), truck(80),

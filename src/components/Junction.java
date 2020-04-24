@@ -8,7 +8,8 @@ import java.util.ArrayList;
  * Class represent Junction on the map.
  *
  * @author Yehonatan Hen-207630112
- * @author Rotem Librati-
+ * @author Rotem Librati-307903732
+ * @see Road
  */
 public class Junction extends Point implements RouteParts {
     private static int objectsCount=1; //Count the number of created objects,initialized by the value of 1.
@@ -103,7 +104,5 @@ public class Junction extends Point implements RouteParts {
      * @param vehicle
      * @return
      */
-    public boolean canLeave(Vehicle vehicle){
-    //TODO:
-    }
+
 }

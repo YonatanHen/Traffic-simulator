@@ -9,7 +9,11 @@ import java.util.Random;
  * Class represent Vehicle on the map.
  *
  * @author Yehonatan Hen-207630112
- * @author Rotem Librati-
+ * @author Rotem Librati-307903732
+ * @see VehicleType
+ * @see Route
+ * @see RouteParts
+ * @see Road
  */
 public class Vehicle implements Utilities,Timer {
     private int id;

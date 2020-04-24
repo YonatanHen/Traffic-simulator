@@ -5,7 +5,7 @@ package utilities;
  * class represent a point on the map.
  *
  * @author Yehonatan Hen-207630112
- * @author Rotem Librati-
+ * @author Rotem Librati-307903732
  * @see Utilities
  */
 public abstract class Point implements Utilities {
