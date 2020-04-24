@@ -24,7 +24,7 @@ public abstract class TrafficLights implements Timer, Utilities {
     private static final int minDelay=2; //min value for delay time =2.
     private static final int maxDelay=6; // max value for delay time =6.
     private ArrayList<Road> roads; //entering roads of junction where the traffic light is located.
-    private boolean trafficLightsOn; //TODO: its green/red or have traffic light in current junction
+    private boolean trafficLightsOn; //Traffic light on/off
     private int workingTime; // count of pulses when the traffic light on.
 
     /**
@@ -90,7 +90,10 @@ public abstract class TrafficLights implements Timer, Utilities {
     public void setId(int id) { this.id = id; }
     public void setTrafficLightsOn(boolean trafficLightsOn) { this.trafficLightsOn = trafficLightsOn; }
     public void setObjectCount(int objectCount) { this.objectCount = objectCount; }
-    public void setRoads(ArrayList<Road> roads) { this.roads = roads; }
+    public void setRoads(ArrayList<Road> roads) {
+        this.roads.clear();
+        this.roads.addAll(roads);
+    }
     public void setWorkingTime(int workingTime) { this.workingTime = workingTime; }
 
     //getters
@@ -103,4 +106,12 @@ public abstract class TrafficLights implements Timer, Utilities {
     public int getGreenLightIndex() { return greenLightIndex; }
     public int getObjectCount() { return objectCount; }
     public int getWorkingTime() { return workingTime; }
+
+    public String toString(){
+
+    }
+
+    public boolean equals(Object o){
+
+    }
 }
