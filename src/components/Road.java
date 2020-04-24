@@ -175,4 +175,18 @@ public class Road implements RouteParts, Utilities {
         }
         return  false;
     }
+    public boolean equals(Object other){
+        if(other instanceof Road){
+            return startJunction.equals(((Road) other).startJunction) &&
+                    endJunction.equals(((Road)other).endJunction) &&
+                    enable == ((Road)other).enable &&
+                    waitingVehicles == ((Road)other).waitingVehicles &&
+                    greenlight == ((Road)other).greenlight &&
+                    length == ((Road)other).length &&
+                    maxSpeed == ((Road)other).maxSpeed &&
+                    vehicleTypes == ((Road)other).vehicleTypes;
+        }
+        return false;
+    }
+    public String toString(){return "Road from" + startJunction.getJunctionName() + " to " + endJunction.getJunctionName();}
 }

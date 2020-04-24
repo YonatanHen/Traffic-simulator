@@ -29,5 +29,11 @@ public class Route implements RouteParts {
     public ArrayList<RouteParts> getRouteParts(){return RouteParts;}
 
 
-    //setters
+    public boolean equals(Object other){
+        if(other instanceof Route){
+            return RouteParts.equals(((Route)other).RouteParts)&&
+                    vehicle.equals(((Route)other).vehicle);
+        }
+        return false;
+    }
 }
