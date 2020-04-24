@@ -5,6 +5,7 @@ import utilities.Timer;
 import utilities.Utilities;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class represent TrafficLights in the junction.
@@ -14,13 +15,14 @@ import java.util.ArrayList;
  * @see Road
  */
 public abstract class TrafficLights implements Timer, Utilities {
-    private int objectCount=0; //count of objects
-    private int delay=0; //Delay time (in pulses) that passes between each traffic light switch. The lag time is 0 when the traffic light is off and momentarily
+    private int objectCount=0; //count the objects
+    private int delay=0; //Delay time (in pulses) that passes between each traffic light switch.
+    // The delay time is 0 when the traffic light is off and momentarily
     //This time light illuminator is magnified and ranges from 2 to 6
-    private int greenLightIndex; //index of the road in entering roads green light is currently on.
+    private int greenLightIndex; //index of the road in entering roads when green light is currently on.
     private int id;
-    private static int minDelay=2; //min value for delay time =2.
-    private static int maxDelay=6; // max value for delay time =6.
+    private static final int minDelay=2; //min value for delay time =2.
+    private static final int maxDelay=6; // max value for delay time =6.
     private ArrayList<Road> roads; //entering roads of junction where the traffic light is located.
     private boolean trafficLightsOn; //TODO: its green/red or have traffic light in current junction
     private int workingTime; // count of pulses when the traffic light on.
@@ -33,27 +35,54 @@ public abstract class TrafficLights implements Timer, Utilities {
     TrafficLights(ArrayList<Road> roads){
         this.roads = new ArrayList<Road>();
         this.roads.addAll(roads);
-        this.delay=0;
-        this.objectCount++;
+        //Initialize green light index
+        for(Road r:roads){
+            if(r.getGreenLight()){
+                greenLightIndex=roads.indexOf(r);
+                break;
+            }
+        }
+        //Make random value to traffic light delay.
+        Random rand=new Random();
+        delay=rand.nextInt(maxDelay+1)+minDelay;
+        trafficLightsOn=false;
+        objectCount++;
+        id=objectCount;
+        workingTime=0;
     }
+
     public abstract void changeIndex();
 
     /**
      * function that change to next junction to green and make sure that other junction with red light
      */
     public void changeLights(){
+        int temp=greenLightIndex;
         for(int i=0;i<roads.size();i++){
-            if(i==greenLightIndex)
+            if(i==greenLightIndex){
                 roads.get(i + 1).setGreenlight(true);
-            else
-                roads.get(i).setGreenlight(false);
+                //Keep the index of the green light to implement it on green light index variable later
+                temp=i+1;
+                //Print message
+                System.out.println(roads.get(i+1)+": green light.");
+            }
+            else roads.get(i).setGreenlight(false);
         }
-        System.out.println();
+        //upadte green light index.
+        greenLightIndex=temp;
+        //Change delay time-happens when new light turn on.
+        Random rand=new Random();
+        delay=rand.nextInt(maxDelay+1)+minDelay;
+        //Initialize the working time of the new light who turns on to 0.
+        workingTime=0;
     }
 
+    /**
+     * Method check if it's time to change lights by advancing the index of light working time.
+     */
     public void incrementDrivingTime(){
-        greenLightIndex++;//TODO : check if need to change lights
-
+        workingTime++;
+        if(workingTime>=delay) changeLights();
     }
     //setters
     public void setDelay(int delay) { this.delay = delay; }
