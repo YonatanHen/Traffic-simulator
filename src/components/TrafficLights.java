@@ -68,7 +68,7 @@ public abstract class TrafficLights implements Timer, Utilities {
             }
             else roads.get(i).setGreenlight(false);
         }
-        //upadte green light index.
+        //update green light index.
         greenLightIndex=temp;
         //Change delay time-happens when new light turn on.
         Random rand=new Random();
@@ -107,11 +107,16 @@ public abstract class TrafficLights implements Timer, Utilities {
     public int getObjectCount() { return objectCount; }
     public int getWorkingTime() { return workingTime; }
 
-    public String toString(){
-
-    }
-
     public boolean equals(Object o){
-
+        if(o instanceof TrafficLights){
+            return ((TrafficLights) o).delay == delay &&
+                    ((TrafficLights) o).trafficLightsOn == trafficLightsOn &&
+                    ((TrafficLights) o).id == id &&
+                    ((TrafficLights) o).objectCount == objectCount &&
+                    ((TrafficLights) o).greenLightIndex == greenLightIndex &&
+                    ((TrafficLights) o).roads == roads &&
+                    ((TrafficLights) o).workingTime == workingTime;
+        }
+        return false;
     }
 }
