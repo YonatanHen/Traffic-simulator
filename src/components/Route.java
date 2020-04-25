@@ -20,14 +20,79 @@ public class Route implements RouteParts {
      * @param vehicle
      */
     public Route(RouteParts start, Vehicle vehicle){
-        this.RouteParts = new ArrayList<>();
+        this.RouteParts = new ArrayList<RouteParts>();
         RouteParts.add(start);
         this.vehicle=vehicle;
+//        if(vehicle.getCurrentRouteParts().equals(vehicle.getLastRoad() )&& RouteParts.size()<10)
+//            vehicle.setCurrentRouteParts(new Junction());
     }
 
     //getters
     public ArrayList<RouteParts> getRouteParts(){return RouteParts;}
 
+
+    /**
+     *Method calculates the estimated time to perform the route for this vehicle
+     * @param obj
+     * @return the time that the vehicle arrive to over route.
+     */
+    public double calcEstimatedTime(Object obj){ //calculate the time for this route.
+        double temp =0;
+        if(obj instanceof Vehicle && ((Vehicle) obj).getCurrentRoute().equals(((Vehicle) obj).getLastRoad())){
+            temp = ((Vehicle) obj).getTimeFromStartRoute()+((Vehicle) obj).getTimeOnCurrentPart();
+        }
+        return temp;
+    }
+
+    /**
+     * Check if vehicle arrived to his last RoutePart
+     * @param vehicle
+     * @return true if yes .
+     */
+    public boolean canLeave(Vehicle vehicle){
+        if(RouteParts.get(RouteParts.size()-1).equals(vehicle.getCurrentRoute()))
+            return true;
+        return false;
+    }
+
+    /**
+     * write the vehicle in the route (as soon as the vehicle receives the route),
+     * updates the relevant fields and prints an appropriate message.
+     * @param vehicle
+     */
+    public void checkIn(Vehicle vehicle){ //TODO: check this function, if not clearly need to ask Sofi.
+        vehicle.setStatus("- is starting a new Route from "+ toString());
+        // put the vehicle in route
+        Route route = new Route(vehicle.getCurrentRoute(), vehicle);
+        vehicle.setCurrentRoute(route);
+        System.out.println(vehicle.getStatus());
+    }
+
+    /**
+     * to free the vehicle from the route. ???
+     *
+     * @param vehicle
+     */
+    public void checkOut(Vehicle vehicle){
+        if(canLeave(vehicle)) {//check if vehicle arrived to last route
+            vehicle.setStatus(" has finished the ");
+            System.out.println(vehicle.getStatus());
+        }
+        else
+            stayOnCurrentPart(vehicle);
+    }
+
+    public RouteParts findNextPart(Vehicle vehicle){
+        //TODO:
+    }
+
+    /**
+     * print massage that the vehicle continue in current route.
+     * @param vehicle
+     */
+    public void stayOnCurrentPart(Vehicle vehicle){
+        vehicle.getLastRoad().stayOnCurrentPart(vehicle);
+    }
 
     public boolean equals(Object other){
         if(other instanceof Route){
@@ -36,4 +101,9 @@ public class Route implements RouteParts {
         }
         return false;
     }
+    public String toString(){
+        return "Route from " + vehicle.getLastRoad() + " from " +
+        vehicle.getLastRoad().getEndJunction() + " to " + vehicle.getLastRoad().getStartJunction();
+    }
+    
 }

@@ -186,8 +186,8 @@ public class Junction extends Point implements RouteParts {
             //Check if route part equal to current junction
             if(rp.equals(this)){
                         for(Road r:exitingRoads){
-                    //Add the roads to the arrayList
-                    if (r.getEnable()) enabledRoads.add(r);
+                            //Add the roads to the arrayList
+                            if (r.getEnable()) enabledRoads.add(r);
             }
             break;
             }
@@ -221,5 +221,4 @@ public class Junction extends Point implements RouteParts {
         }
         return false;
     }
-
 }
