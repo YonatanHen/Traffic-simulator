@@ -26,7 +26,7 @@ public class Road implements RouteParts, Utilities {
     private boolean greenlight; //variable for green light to this road, update when the light is change.
     private double length; //length of road, calculate as distance between 2 junction with distance formula between two points.
     private int maxSpeed; // allowed max speed. random from list of allowed values.
-    private VehicleType[] vehicleTypes;//array kinds of cars that allowed in this road.
+    private VehicleType[] vehicleTypes;//array types of cars that allowed in this road.
     private ArrayList<Vehicle> waitingVehicles; //list of car that finish the driving in this road and wait to pass the junction
 
     /**
@@ -42,7 +42,20 @@ public class Road implements RouteParts, Utilities {
         this.greenlight=random.nextBoolean();
         this.length=calcLength();
         this.maxSpeed= allowedSpeedOptions[random.nextInt(allowedSpeedOptions.length)];
-        VehicleType [] arr = {};//TODO: complete
+        //Make vehicleTypes array based on randomal values-array size and types both.
+        VehicleType [] vehicleTypes=new VehicleType[random.nextInt(VehicleType.values().length)];
+        for(int i=0;i<vehicleTypes.length;i++){
+            VehicleType newVal=VehicleType.values()[random.nextInt(vehicleTypes.length)];
+            for (int j=0;j<i;){
+                //Iterate over the same j index if the randomised value equals to composed value in the array.
+                //Randomise new value
+                if (newVal.equals(vehicleTypes[j])) newVal = VehicleType.values()[random.nextInt(vehicleTypes.length)];
+                //Advance j when value isn't equal
+                else j++;
+            }
+            //Applying of the new value in the array if he does'nt exist already.
+            vehicleTypes[i]=newVal;
+        }
         this.waitingVehicles = new ArrayList<>();
     }
     //getters
