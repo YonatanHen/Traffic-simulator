@@ -14,11 +14,11 @@ public class Route implements RouteParts {
     private Vehicle vehicle;
 
     /***
-     * constructor Route
+     * constructor Route-Randomal constructor that looking for optional
+     * route part from current position until he reach 10 route parts/ Junction without exists.
      * @param start
      * @param vehicle
      */
-
     public Route(RouteParts start, Vehicle vehicle){
         this.RouteParts = new ArrayList<>();
         RouteParts.add(start);
