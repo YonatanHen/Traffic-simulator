@@ -19,7 +19,7 @@ import java.util.Random;
  */
 
 public class Road implements RouteParts, Utilities {
-    private static int [] allowedSpeedOptions = {30,40,50,55,60,70,80,90};//array of allowed speed in road
+    private static final int [] allowedSpeedOptions = {30,40,50,55,60,70,80,90};//array of allowed speed in road
     private boolean enable; //if true, the road appear on the map.
     private Junction startJunction; //The junction from which the road comes out
     private Junction endJunction; //The junction which the road enters

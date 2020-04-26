@@ -24,7 +24,7 @@ public class LightedJunction extends Junction{
         String selectedType=types[rand.nextInt(types.length)];
         //Randomal junction randomise green light from entering roads of the junction.
         if(selectedType=="Randomal") lights=new RandomTrafficLights(getEnteringRoads());
-        else lights=new SequentialTrafficLights();
+        else lights=new SequentialTrafficLights(getEnteringRoads());
     }
 
     /**
@@ -38,9 +38,21 @@ public class LightedJunction extends Junction{
     public LightedJunction(String name, double x, double y, boolean sequential, boolean lightsOn){
         //Call Junction constructor
         super(name,x,y);
-        if(sequential) lights=new SequentialTrafficLights();
+        if(sequential) lights=new SequentialTrafficLights(getEnteringRoads());
         else lights=new RandomTrafficLights(getEnteringRoads());
         lights.setTrafficLightsOn(lightsOn);
+    }
+
+    //setters
+
+
+    public void setLights(TrafficLights lights) {
+        this.lights = lights;
+    }
+
+    //getters
+    public TrafficLights getLights() {
+        return lights;
     }
 
     /**
@@ -67,5 +79,18 @@ public class LightedJunction extends Junction{
      */
     public boolean canLeave(Vehicle vehicle){
         return lights.getTrafficLightsOn();
+    }
+
+
+    public String toString() {
+        return super.toString()+" (Lighted)";
+    }
+
+    public boolean equals(Object o){
+        if( o instanceof LightedJunction){
+            return super.equals(o) &&
+                    ((LightedJunction)o).lights.equals(lights);
+        }
+        return false;
     }
 }

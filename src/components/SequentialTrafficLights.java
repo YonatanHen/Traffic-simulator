@@ -28,4 +28,18 @@ public class SequentialTrafficLights extends TrafficLights {
     public void changeIndex(){
         setGreenLightIndex(increment);
     }
+
+    public int getIncrement() {
+        return increment;
+    }
+
+    public void setIncrement(int increment) {
+        this.increment = increment;
+    }
+
+    public String toString() {
+        return "Sequential " + super.toString();
+    }
+
+    //Equals,getters&setters are the exact from inherited class. Implementation not needed in this case.
 }

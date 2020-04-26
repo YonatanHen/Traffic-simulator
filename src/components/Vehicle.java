@@ -24,7 +24,7 @@ public class Vehicle implements Utilities,Timer {
     private int timeOnCurrentPart; //time in pulses from the checkIn at this part
     private static int objectCount=1; //Counter to num of objects
     private Road lastRoad; //Last road which car drove in or driving currently
-    private static String status=null; //Keep the status,will be in use for prints.
+    private String status=null; //Keep the status,will be in use for prints.
 
     /**
      * Vehicle randomal constructor.
@@ -81,7 +81,40 @@ public class Vehicle implements Utilities,Timer {
      * call move() function.
      */
     public void incrementDrivingTime(){
-
+        //Advance time in the route
+        timeFromStartRoute+=1;
+        //Advance time in current route part
+        timeOnCurrentPart+=1;
+        //Execute movement
+        move();
     }
+
+    public String toString(){
+        return "Vehicle " +  vehicleType.name() + ", average speed: "+ vehicleType.getAverageSpeed();
+    }
+
+    /*private int id;
+    private VehicleType vehicleType;
+    private Route currentRoute;
+    private RouteParts currentRouteParts;// The current type of route part when vehicle locating.
+    private int timeFromStartRoute; //time in pulses from the start
+    private int timeOnCurrentPart; //time in pulses from the checkIn at this part
+    private static int objectCount=1; //Counter to num of objects
+    private Road lastRoad; //Last road which car drove in or driving currently
+    private static String status=null; //Keep the status,will be in use for prints.*/
+
+    public boolean equals(Object o) {
+        if(o instanceof Vehicle){
+            return vehicleType.equals(((Vehicle) o).vehicleType) &&
+                    currentRoute.equals(((Vehicle) o).currentRoute) &&
+                    currentRouteParts.equals(((Vehicle) o).currentRouteParts) &&
+                    timeOnCurrentPart==((Vehicle) o).timeOnCurrentPart &&
+                    timeFromStartRoute==((Vehicle) o).timeFromStartRoute &&
+                    lastRoad.equals(((Vehicle) o).lastRoad) &&
+                    status.equals(((Vehicle) o).status);
+        }
+        return false;
+    }
+
 
 }
