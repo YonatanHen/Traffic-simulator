@@ -21,15 +21,23 @@ public class Route implements RouteParts {
      */
     public Route(RouteParts start, Vehicle vehicle){
         this.RouteParts = new ArrayList<RouteParts>();
-        RouteParts.add(start);
-        this.vehicle=vehicle;
-//        if(vehicle.getCurrentRouteParts().equals(vehicle.getLastRoad() )&& RouteParts.size()<10)
-//            vehicle.setCurrentRouteParts(new Junction());
+        if (vehicle.getCurrentRouteParts() instanceof Junction && vehicle.getLastRoad().getStartJunction().getExitingRoads().size()!=0) {
+            if (((Road) start) instanceof Road) {
+                RouteParts.add(start);
+                vehicle.setCurrentRouteParts(start);
+            }
+        }
+        else if (vehicle.getCurrentRouteParts() instanceof Road && vehicle.getLastRoad().getStartJunction().getExitingRoads().size()!=0){
+            if(((Junction)start) instanceof Junction){
+                RouteParts.add(start);
+                vehicle.setCurrentRouteParts(start);
+            }
+        }
     }
 
     //getters
     public ArrayList<RouteParts> getRouteParts(){return RouteParts;}
-
+    public Vehicle getVehicle() { return vehicle; }
 
     /**
      *Method calculates the estimated time to perform the route for this vehicle
@@ -83,7 +91,6 @@ public class Route implements RouteParts {
     }
 
     public RouteParts findNextPart(Vehicle vehicle){
-        //TODO:
     }
 
     /**

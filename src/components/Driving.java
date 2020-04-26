@@ -30,7 +30,7 @@ public class Driving implements Utilities, Timer {
      * @param numOfJunctions
      * @param numOfVehicles
      */
-    Driving(int numOfJunctions,int numOfVehicles){
+    public Driving(int numOfJunctions,int numOfVehicles){
         vehicles=new ArrayList<Vehicle>(numOfVehicles);
         map=new Map(numOfJunctions); //TODO:class Map
         drivingTime=0;
