@@ -54,7 +54,7 @@ public abstract class TrafficLights implements Timer, Utilities {
     public abstract void changeIndex();
 
     /**
-     * function that change to next junction to green and make sure that other junction with red light
+     * function that change next junction to green and make sure that other junction with red light
      */
     public void changeLights(){
         int temp=greenLightIndex;
@@ -68,8 +68,7 @@ public abstract class TrafficLights implements Timer, Utilities {
             }
             else roads.get(i).setGreenlight(false);
         }
-        //update green light index.
-        greenLightIndex=temp;
+        changeIndex();
         //Change delay time-happens when new light turn on.
         Random rand=new Random();
         delay=rand.nextInt(maxDelay+1)+minDelay;
@@ -106,6 +105,11 @@ public abstract class TrafficLights implements Timer, Utilities {
     public int getGreenLightIndex() { return greenLightIndex; }
     public int getObjectCount() { return objectCount; }
     public int getWorkingTime() { return workingTime; }
+
+
+    public String toString() {
+        return "traffic lights"+ objectCount;
+    }
 
     public boolean equals(Object o){
         if(o instanceof TrafficLights){
