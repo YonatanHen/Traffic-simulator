@@ -75,7 +75,6 @@ public class Road implements RouteParts, Utilities {
     public void setMaxSpeed(int maxSpeed) { this.maxSpeed = maxSpeed; }
     public void setEndJunction(Junction endJunction) { this.endJunction = endJunction; }
     public void setGreenlight(boolean greenlight) {this.greenlight = greenlight; }
-    public static void setAllowedSpeedOptions(int[] allowedSpeedOptions) { Road.allowedSpeedOptions = allowedSpeedOptions; }
     public void setStartJunction(Junction startJunction) { this.startJunction = startJunction; }
     public void setVehicleTypes(VehicleType[] vehicleTypes) { this.vehicleTypes = vehicleTypes; }
     public void setWaitingVehicles(ArrayList<Vehicle> waitingVehicles) { this.waitingVehicles = waitingVehicles; }

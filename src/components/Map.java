@@ -35,6 +35,9 @@ public class Map implements Utilities {
      */
     public Map(int numOfJunctions){
         Random rand=new Random();
+        junctions = new ArrayList<Junction>();
+        roads = new ArrayList<Road>();
+        lights = new ArrayList<TrafficLights>();
         //Array of types.
         String [] types=new String[]{Junction.class.getName(),LightedJunction.class.getName()};
         //Create Junctions

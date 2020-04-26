@@ -210,7 +210,7 @@ public class Junction extends Point implements RouteParts {
     }
 
     public String toString(){
-        return "Junction "+junctionName;
+        return  "Junction " + junctionName;
     }
 
     public boolean equals(Object o){

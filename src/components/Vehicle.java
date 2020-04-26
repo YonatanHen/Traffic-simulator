@@ -39,7 +39,7 @@ public class Vehicle implements Utilities,Timer {
         timeFromStartRoute=0;
         timeOnCurrentPart=0;
         currentRoute=new Route();//TODO:implement Route and then fill data when we need-suppose to be randomal route
-        lastRoad=new Road();//TODO
+        lastRoad=road;
     }
 
     //getters
