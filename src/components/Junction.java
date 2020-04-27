@@ -150,7 +150,7 @@ public class Junction extends Point implements RouteParts {
                 vehicle.setLastRoad(r);
             }
         }
-        vehicle.setCurrentRouteParts(this);
+        vehicle.setCurrentRoutePart(this);
         System.out.println(vehicle.getStatus());
     }
 
