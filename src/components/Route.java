@@ -23,10 +23,11 @@ public class Route implements RouteParts {
      * @param vehicle
      */
     public Route(RouteParts start, Vehicle vehicle) {
+        this.vehicle=vehicle;
         this.RouteParts = new ArrayList<>();
-        boolean hasNoExits=false;
-        RouteParts.add(start);//Add the first route part-following to instructions start is instance of Road.
-        //Add new 9 route parts to the RouteParts arrayList if exist.
+        /*Add the first route part-following to instructions start is instance of Road.
+        Add new 9 route parts to the RouteParts arrayList if exist.*/
+        RouteParts.add(start);
         for(int i=0;i<9 && RouteParts.get(RouteParts.size()-1).findNextPart(vehicle)!=null;i++){
             //add new part to the route.
             RouteParts.add((RouteParts.get(RouteParts.size()-1)).findNextPart(vehicle));
@@ -78,9 +79,7 @@ public class Route implements RouteParts {
      * @return true if yes .
      */
     public boolean canLeave(Vehicle vehicle){
-        if(RouteParts.get(RouteParts.size()-1).equals(vehicle.getCurrentRoute()))
-            return true;
-        return false;
+        return RouteParts.get(RouteParts.size()-1).equals(vehicle.getCurrentRoute());
     }
 
     /**
@@ -89,10 +88,10 @@ public class Route implements RouteParts {
      * @param vehicle
      */
     public void checkIn(Vehicle vehicle){ //TODO: check this function, if not clearly need to ask Sofi.
-        vehicle.setStatus("- is starting a new Route from "+ toString());
-        // put the vehicle in route
+        // put the vehicle in the route
         Route route = new Route(vehicle.getCurrentRoute(), vehicle);
         vehicle.setCurrentRoute(route);
+        vehicle.setStatus("- is starting a new "+ this);
         System.out.println(vehicle.getStatus());
     }
 
@@ -110,7 +109,33 @@ public class Route implements RouteParts {
             stayOnCurrentPart(vehicle);
     }
 
+    /**
+     * Check if vehicle reach the end of the route and make new route like that:
+     * if there aren't exit roads that match to the current situation, the new route will
+     * be create randomly from the beggining of the former route.
+     * else- there are exit roads; the new route will start from the last road which car drove.
+     * if car hasn't reach the end of the route, the method return next route part after the part
+     * which car locating.
+     * @param vehicle
+     * @return next route part
+     */
     public RouteParts findNextPart(Vehicle vehicle){
+        //Check if car reach the last part of the route
+        if(canLeave(vehicle)){
+            //last part of the route must be a Junction
+            //Check if Junction hasn't exit roads
+            if(((Junction)vehicle.getCurrentRouteParts()).getExitingRoads().size()==0){
+                //Make new route from beginning of former route.
+                vehicle.setCurrentRoute(new Route(this.getRouteParts().get(0),vehicle));
+            }
+            else{
+                //Make new route part from last road which car drove
+                vehicle.setCurrentRoute(new Route(vehicle.getLastRoad(),vehicle));
+                //retrun the next route part.
+                return this.RouteParts.get(1);
+            }
+        }
+        //TODO:What if vehicle didn't finish the route? wait for email response.
     }
 
     /**
@@ -118,6 +143,7 @@ public class Route implements RouteParts {
      * @param vehicle
      */
     public void stayOnCurrentPart(Vehicle vehicle){
+        //TODO: check implementation
         vehicle.getLastRoad().stayOnCurrentPart(vehicle);
     }
 

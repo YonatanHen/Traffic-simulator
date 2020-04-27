@@ -38,8 +38,8 @@ public class Vehicle implements Utilities,Timer {
         vehicleType=VehicleType.values()[rand.nextInt(VehicleType.values().length)];//Randomise car type
         timeFromStartRoute=0;
         timeOnCurrentPart=0;
-        currentRoute=new Route();//TODO:implement Route and then fill data when we need-suppose to be randomal route
         lastRoad=road;
+        currentRoute=new Route(road,this);
     }
 
     //getters
@@ -92,16 +92,6 @@ public class Vehicle implements Utilities,Timer {
     public String toString(){
         return "Vehicle " +  vehicleType.name() + ", average speed: "+ vehicleType.getAverageSpeed();
     }
-
-    /*private int id;
-    private VehicleType vehicleType;
-    private Route currentRoute;
-    private RouteParts currentRouteParts;// The current type of route part when vehicle locating.
-    private int timeFromStartRoute; //time in pulses from the start
-    private int timeOnCurrentPart; //time in pulses from the checkIn at this part
-    private static int objectCount=1; //Counter to num of objects
-    private Road lastRoad; //Last road which car drove in or driving currently
-    private static String status=null; //Keep the status,will be in use for prints.*/
 
     public boolean equals(Object o) {
         if(o instanceof Vehicle){
