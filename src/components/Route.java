@@ -1,6 +1,8 @@
 package components;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 /**
  * Class represent Route on the map.
  *
@@ -16,28 +18,46 @@ public class Route implements RouteParts {
     /***
      * constructor Route-Randomal constructor that looking for optional
      * route part from current position until he reach 10 route parts/ Junction without exists.
+     * start must be a road, last route part must be a junction.
      * @param start
      * @param vehicle
      */
-    public Route(RouteParts start, Vehicle vehicle){
-        this.RouteParts = new ArrayList<RouteParts>();
-        if (vehicle.getCurrentRouteParts() instanceof Junction && vehicle.getLastRoad().getStartJunction().getExitingRoads().size()!=0) {
-            if (((Road) start) instanceof Road) {
-                RouteParts.add(start);
-                vehicle.setCurrentRouteParts(start);
-            }
-        }
-        else if (vehicle.getCurrentRouteParts() instanceof Road && vehicle.getLastRoad().getStartJunction().getExitingRoads().size()!=0){
-            if(((Junction)start) instanceof Junction){
-                RouteParts.add(start);
-                vehicle.setCurrentRouteParts(start);
-            }
+    public Route(RouteParts start, Vehicle vehicle) {
+        this.RouteParts = new ArrayList<>();
+        boolean hasNoExits=false;
+        RouteParts.add(start);//Add the first route part-following to instructions start is instance of Road.
+        //Add new 9 route parts to the RouteParts arrayList if exist.
+        for(int i=0;i<9 && RouteParts.get(RouteParts.size()-1).findNextPart(vehicle)!=null;i++){
+            //add new part to the route.
+            RouteParts.add((RouteParts.get(RouteParts.size()-1)).findNextPart(vehicle));
         }
     }
+/*        if (vehicle.getCurrentRouteParts() instanceof Junction && vehicle.getLastRoad().getStartJunction().getExitingRoads().size()!=0) {
+            if (start instanceof Road) {
+                RouteParts.add(start);
+                vehicle.setCurrentRouteParts(start);
+            }
+        }}
+        else if (vehicle.getCurrentRouteParts() instanceof Road && vehicle.getLastRoad().getStartJunction().getExitingRoads().size()!=0){
+            if(start instanceof Junction){
+                RouteParts.add(start);
+                vehicle.setCurrentRouteParts(start);
+            }
+        }
+    }*/
 
     //getters
     public ArrayList<RouteParts> getRouteParts(){return RouteParts;}
     public Vehicle getVehicle() { return vehicle; }
+
+    //setters
+    public void setRouteParts(ArrayList<components.RouteParts> routeParts) {
+        RouteParts = routeParts;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
 
     /**
      *Method calculates the estimated time to perform the route for this vehicle
