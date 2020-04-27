@@ -105,6 +105,18 @@ public class Junction extends Point implements RouteParts {
      * @return true if car can leave the junction without interference, else false.
      */
     public boolean canLeave(Vehicle vehicle){
+        return checkAvailability(vehicle);
+    }
+
+    /**
+     * Utility method for canLeave, check if exist exiting roads to the junction and check
+     * the last road that vehicle came from in that way: if vehicle isn't the first in the waiting list,
+     * he would have to wait until cars before him will exit the junction.
+     *
+     * @param vehicle
+     * @return true when vehicle is first in the entering roads list,else false.
+     */
+    public boolean checkAvailability(Vehicle vehicle){
         for(RouteParts rp: vehicle.getCurrentRoute().getRouteParts()){
             if(rp.equals(this)){
                 for(Road r:exitingRoads){
@@ -112,7 +124,7 @@ public class Junction extends Point implements RouteParts {
                     if(vehicle.getCurrentRoute().getRouteParts().indexOf(rp)+1>=vehicle.getCurrentRoute().getRouteParts().size()) {
                         //Check if the current part equals to one of the exit roads of the junction-suppose to be...
                         if (r.equals(vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().indexOf(rp) + 1))) {
-                         //Check if waiting list of the exit road is empty. the car can leave if it is.
+                            //Check if waiting list of the exit road is empty. the car can leave if it is.
                             if (r.getWaitingVehicles().size() == 0) return true;
                         }
                     }
@@ -120,19 +132,6 @@ public class Junction extends Point implements RouteParts {
             }
         }
         //If one of the above conditions aren't true, return false.
-        return false;
-    }
-
-    /**
-     * Check if exist exiting ways to the junction and to road both.
-     * If the car isn't the first on the waiting list of the road, it would wait until
-     * cars before him exit from junction.
-     *
-     * @param vehicle
-     * @return true of vehicle is first in the entering roads list,else false.
-     */
-    public boolean checkAvailability(Vehicle vehicle){
-        if(enteringRoads.indexOf(vehicle.getLastRoad())==0) return true;
         return false;
     }
 
@@ -164,9 +163,6 @@ public class Junction extends Point implements RouteParts {
         if(canLeave(vehicle)) {
             vehicle.setStatus("- has left " + toString());
             System.out.println(vehicle.getStatus());
-        }
-        else{
-            stayOnCurrentPart(vehicle);
         }
     }
 
