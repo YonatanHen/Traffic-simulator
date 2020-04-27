@@ -4,6 +4,7 @@ import utilities.Timer;
 import utilities.Utilities;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class simulate driving of number of vehicles based on the map.
@@ -31,10 +32,58 @@ public class Driving implements Utilities, Timer {
      * @param numOfVehicles
      */
     public Driving(int numOfJunctions,int numOfVehicles){
-        vehicles=new ArrayList<Vehicle>(numOfVehicles);
-        map=new Map(numOfJunctions); //TODO:class Map
-        drivingTime=0;
+        map=new Map(numOfJunctions);
+        vehicles=new ArrayList<>();
         ArrayList<Timer> allTimedElements=new ArrayList<>();
+        drivingTime=0;
+        Random r =new Random();
+        //Make random starting roads to vehicles based on the map.
+        //Add the vehicles to allTimedElements
+        for(int i=0;i<numOfVehicles;i++) {
+            vehicles.add(new Vehicle(map.getRoads().get(r.nextInt(map.getRoads().size()))));
+            allTimedElements.add(vehicles.get(i));
+        }
+        //Add the lights to allTimedElements only if junction is LightedJunction
+        for(Junction j:map.getJunctions()){
+            if(j instanceof LightedJunction) allTimedElements.add(((LightedJunction) j).getLights());
+        }
+    }
+
+    //getters
+
+
+    public ArrayList<Timer> getAllTimedElements() {
+        return allTimedElements;
+    }
+
+    public ArrayList<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public int getDrivingTime() {
+        return drivingTime;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+     //setters
+
+
+    public void setAllTimedElements(ArrayList<Timer> allTimedElements) {
+        this.allTimedElements = allTimedElements;
+    }
+
+    public void setDrivingTime(int drivingTime) {
+        this.drivingTime = drivingTime;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    public void setVehicles(ArrayList<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
     /**
@@ -43,17 +92,17 @@ public class Driving implements Utilities, Timer {
      * @param numOfTurns
      */
     public void drive(int numOfTurns){
-    //TODO:Maybe need wider implementation
-        for(int i=0;i<numOfTurns;i++){
-            incrementDrivingTime();
-        }
+        if (numOfTurns>=drivingTime) incrementDrivingTime();
+        drivingTime++;
     }
 
     /**
      * Advance the pulses for Objects who affect by that.
      */
     public void incrementDrivingTime(){
-        //TODO:Implement
+        for(int i=0;i<allTimedElements.size();i++){
+            allTimedElements.get(i).incrementDrivingTime();
+        }
     }
 
     public String toString(){

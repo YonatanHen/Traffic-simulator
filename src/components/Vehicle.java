@@ -71,7 +71,6 @@ public class Vehicle implements Utilities,Timer {
     public void move(){
         if(currentRoutePart.canLeave(this)){
             currentRoutePart.checkOut(this);
-            //TODO:Something with route parts depend on the route probably.
             currentRoutePart.checkIn(this);
         }
     }
