@@ -142,7 +142,6 @@ public class Junction extends Point implements RouteParts {
      * @param vehicle
      */
     public void checkIn(Vehicle vehicle) {
-        vehicle.setStatus("- has arrived to "+ toString());
         //The last road suppose to be the road from the last end junction and to the current junction
         for(Road r:enteringRoads){
             if (r.getEndJunction().equals(this) && r.getStartJunction().equals(vehicle.getLastRoad().getEndJunction())){
@@ -150,6 +149,7 @@ public class Junction extends Point implements RouteParts {
             }
         }
         vehicle.setCurrentRoutePart(this);
+        vehicle.setStatus("- has arrived to "+ toString());
         System.out.println(vehicle.getStatus());
     }
 
