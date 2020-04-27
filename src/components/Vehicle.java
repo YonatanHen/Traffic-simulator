@@ -19,7 +19,7 @@ public class Vehicle implements Utilities,Timer {
     private int id;
     private VehicleType vehicleType;
     private Route currentRoute;
-    private RouteParts currentRouteParts;// The current type of route part when vehicle locating.
+    private RouteParts currentRoutePart;// The current type of route part when vehicle locating.
     private int timeFromStartRoute; //time in pulses from the start
     private int timeOnCurrentPart; //time in pulses from the checkIn at this part
     private static int objectCount=1; //Counter to num of objects
@@ -46,7 +46,7 @@ public class Vehicle implements Utilities,Timer {
     public int getId(){return id;}
     public VehicleType getVehicleType(){return vehicleType;}
     public Route getCurrentRoute(){return currentRoute;}
-    public RouteParts getCurrentRouteParts(){return currentRouteParts;}
+    public RouteParts getCurrentRoutePart(){return currentRoutePart;}
     public int getTimeFromStartRoute(){return timeFromStartRoute;}
     public int getTimeOnCurrentPart(){return timeOnCurrentPart;}
     public int getObjectCount(){return objectCount;}
@@ -57,7 +57,7 @@ public class Vehicle implements Utilities,Timer {
     public void setId(int id){this.id=id;}
     public void setVehicleType(VehicleType v){vehicleType=v;}
     public void setCurrentRoute(Route current){currentRoute=current;}
-    public void setCurrentRouteParts(RouteParts rp){currentRouteParts=rp;}
+    public void setCurrentRoutePart(RouteParts rp){currentRoutePart=rp;}
     public void setTimeFromStartRoute(int time){timeFromStartRoute=time;}
     public void setTimeOnCurrentPart(int time){timeOnCurrentPart=time;}
     public void setObjectCount(int oc){objectCount=oc;}
@@ -69,10 +69,10 @@ public class Vehicle implements Utilities,Timer {
      * else-stay at the part
      */
     public void move(){
-        if(currentRouteParts.canLeave(this)){
-            currentRouteParts.checkOut(this);
+        if(currentRoutePart.canLeave(this)){
+            currentRoutePart.checkOut(this);
             //TODO:Something with route parts depend on the route probably.
-            currentRouteParts.checkIn(this);
+            currentRoutePart.checkIn(this);
         }
     }
 
@@ -97,7 +97,7 @@ public class Vehicle implements Utilities,Timer {
         if(o instanceof Vehicle){
             return vehicleType.equals(((Vehicle) o).vehicleType) &&
                     currentRoute.equals(((Vehicle) o).currentRoute) &&
-                    currentRouteParts.equals(((Vehicle) o).currentRouteParts) &&
+                    currentRoutePart.equals(((Vehicle) o).currentRoutePart) &&
                     timeOnCurrentPart==((Vehicle) o).timeOnCurrentPart &&
                     timeFromStartRoute==((Vehicle) o).timeFromStartRoute &&
                     lastRoad.equals(((Vehicle) o).lastRoad) &&

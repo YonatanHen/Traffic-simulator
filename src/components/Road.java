@@ -123,7 +123,7 @@ public class Road implements RouteParts, Utilities {
      * @param vehicle
      */
     public void checkIn(Vehicle vehicle){
-        vehicle.setCurrentRouteParts(this);
+        vehicle.setCurrentRoutePart(this);
         vehicle.setLastRoad(this);
         vehicle.setStatus("- is starting to move on " +  toString() + ", " + vehicle.toString());
         System.out.println(vehicle.getStatus());
