@@ -56,6 +56,8 @@ public class Road implements RouteParts, Utilities {
             //Applying of the new value in the array if he does'nt exist already.
             vehicleTypes[i]=newVal;
         }
+        startJunction.addExitingRoad(this);
+        endJunction.addEnteringRoad(this);
         this.waitingVehicles = new ArrayList<>();
     }
     //getters

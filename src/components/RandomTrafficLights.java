@@ -17,7 +17,7 @@ public class RandomTrafficLights extends TrafficLights {
     public RandomTrafficLights(ArrayList<Road>roads){
         super(roads);
         Random random = new Random();
-        roads.get(random.nextInt(roads.size())).setGreenlight(true);
+        super.getRoads().get(random.nextInt(super.getRoads().size())).setGreenlight(true);
     }
 
     /**
