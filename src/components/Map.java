@@ -42,7 +42,7 @@ public class Map implements Utilities {
         String [] types=new String[]{Junction.class.getName(),LightedJunction.class.getName()};
         //Create Junctions
         for(int i=0;i<numOfJunctions;i++){
-            //Randomise one of junction types and make the type who type variable it receives.
+            //Randomise one of junction types and make a junction of type variable it receives.
             String type=types[rand.nextInt(types.length)];
             if(type.equals(Junction.class.getName())) junctions.add(new Junction());
             else junctions.add(new LightedJunction());
@@ -51,6 +51,7 @@ public class Map implements Utilities {
         setAllRoads();
         //turn lights on (randomly-executes inside the junction)
         turnLightsOn();
+
     }
 
     /**

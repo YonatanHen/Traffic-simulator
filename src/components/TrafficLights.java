@@ -15,7 +15,7 @@ import java.util.Random;
  * @see Road
  */
 public abstract class TrafficLights implements Timer, Utilities {
-    private int objectCount=0; //count the objects
+    private static int objectCount=0; //count the objects
     private int delay=0; //Delay time (in pulses) that passes between each traffic light switch.
     // The delay time is 0 when the traffic light is off and momentarily
     //This time light illuminator is magnified and ranges from 2 to 6

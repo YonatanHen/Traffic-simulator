@@ -13,7 +13,7 @@ import java.util.Random;
  * @see Road
  */
 public class Junction extends Point implements RouteParts {
-    private int objectsCount=1; //Count the number of created objects,initialized by the value of 1.
+    private static int objectsCount=1; //Count the number of created objects,initialized by the value of 1.
     private ArrayList<Road>enteringRoads; //list of entering Roads to junction
     private ArrayList<Road> exitingRoads; //list of exiting Roads to junction
     private String junctionName; //Name of the object.
@@ -28,6 +28,7 @@ public class Junction extends Point implements RouteParts {
         objectsCount++;//Advance the counter after using his value
         enteringRoads=new ArrayList<Road>();
         exitingRoads=new ArrayList<Road>();
+        super.successMessage(toString());
     }
 
     /**
