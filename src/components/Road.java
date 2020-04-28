@@ -172,8 +172,7 @@ public class Road implements RouteParts, Utilities {
 
     public String toString(){
         //Assume that implementation is correct,maybe need to fix this later.
-        if (greenlight) return "Road from "+ startJunction + " to " + endJunction + "(Lighted)";
-        else return "Road from "+ startJunction + " to " + endJunction;
+        return "Road from "+ startJunction + " to " + endJunction;
     }
 
     public boolean equals(Object obj){
