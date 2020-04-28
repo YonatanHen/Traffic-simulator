@@ -33,7 +33,6 @@ public class Vehicle implements Utilities,Timer {
      */
     public Vehicle(Road road){
         id=objectCount;
-        objectCount++;
         Random rand=new Random();
         vehicleType=VehicleType.values()[rand.nextInt(VehicleType.values().length)];//Randomise car type
         timeFromStartRoute=0;
@@ -43,7 +42,9 @@ public class Vehicle implements Utilities,Timer {
         //- is starting a new Route from Road from Junction 4 (Lighted) to Junction 3 (Lighted), length: 447, max speed 60 to Junction 8 (Lighted), estimated time for route: 93.0.
         setStatus("- is starting a new " + currentRoute.toString());
         successMessage(toString());
+        objectCount++;
         System.out.println(status);
+
     }
 
     //getters
@@ -93,7 +94,7 @@ public class Vehicle implements Utilities,Timer {
     }
 
     public String toString(){
-        return "Vehicle " +  vehicleType.name() + ", average speed: "+ vehicleType.getAverageSpeed();
+        return "Vehicle " + objectCount+ ": "+  vehicleType.name() + ", average speed: "+ vehicleType.getAverageSpeed();
     }
 
     public boolean equals(Object o) {
