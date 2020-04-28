@@ -44,8 +44,8 @@ public class Map implements Utilities {
         for(int i=0;i<numOfJunctions;i++){
             //Randomise one of junction types and make a junction of type variable it receives.
             String type=types[rand.nextInt(types.length)];
-            if(type.equals(Junction.class.getName())) junctions.add(new Junction());
-            else junctions.add(new LightedJunction());
+            /*if(type.equals(Junction.class.getName()))*/ junctions.add(new Junction());
+            //else junctions.add(new LightedJunction());
         }
         //Create roads
         setAllRoads();

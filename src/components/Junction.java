@@ -43,7 +43,6 @@ public class Junction extends Point implements RouteParts {
         objectsCount++;//Advance the counter but not using his value this time.
         enteringRoads=new ArrayList<Road>();
         exitingRoads=new ArrayList<Road>();
-        super.successMessage(toString());
     }
 
     //getters

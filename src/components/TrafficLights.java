@@ -33,7 +33,7 @@ public abstract class TrafficLights implements Timer, Utilities {
      */
 
     TrafficLights(ArrayList<Road> roads){
-        this.roads = new ArrayList<Road>();
+        this.roads = new ArrayList<>();
         this.roads.addAll(roads);
         //Initialize green light index
         for(Road r:roads){

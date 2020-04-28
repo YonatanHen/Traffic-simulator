@@ -28,9 +28,9 @@ public class Route implements RouteParts {
         /*Add the first route part-following to instructions start is instance of Road.
         Add new 9 route parts to the RouteParts arrayList if exist.*/
         RouteParts.add(start);
-        for(int i=0;i<9 && RouteParts.get(RouteParts.size()-1).findNextPart(vehicle)!=null;i++){
+        for(int i=0;i<9 && findNextPart(vehicle)!=null;i++){
             //add new part to the route.
-            RouteParts.add((RouteParts.get(RouteParts.size()-1)).findNextPart(vehicle));
+            RouteParts.add(findNextPart(vehicle));
         }
     }
 /*        if (vehicle.getCurrentRouteParts() instanceof Junction && vehicle.getLastRoad().getStartJunction().getExitingRoads().size()!=0) {

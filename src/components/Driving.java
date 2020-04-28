@@ -34,7 +34,7 @@ public class Driving implements Utilities, Timer {
     public Driving(int numOfJunctions,int numOfVehicles){
         map=new Map(numOfJunctions);
         vehicles=new ArrayList<>();
-        ArrayList<Timer> allTimedElements=new ArrayList<>();
+        allTimedElements=new ArrayList<>();
         drivingTime=0;
         Random r =new Random();
         //Make random starting roads to vehicles based on the map.
