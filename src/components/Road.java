@@ -97,8 +97,8 @@ public class Road implements RouteParts, Utilities {
      * @return calculate value round to up.
      */
     public double calcEstimatedTime(Object obj){
-        if(obj instanceof VehicleType)
-            return Math.round(length/ Math.min(maxSpeed,((VehicleType) obj).getAverageSpeed()));
+        if(obj instanceof Vehicle)
+            return Math.round(length/ Math.min(maxSpeed,((Vehicle) obj).getVehicleType().getAverageSpeed()));
         return 0;
     }
 
@@ -128,7 +128,7 @@ public class Road implements RouteParts, Utilities {
     public void checkIn(Vehicle vehicle){
         vehicle.setCurrentRoutePart(this);
         vehicle.setLastRoad(this);
-        vehicle.setStatus("- is starting to move on " +  toString() + ", " + vehicle.toString());
+        vehicle.setStatus("- is starting to move on " +  toString() + ", time to finish:"+ vehicle.getCurrentRoute().calcEstimatedTime(vehicle)) ;
         System.out.println(vehicle.getStatus());
     }
 
@@ -139,7 +139,7 @@ public class Road implements RouteParts, Utilities {
      */
     public void checkOut(Vehicle vehicle){
         removeVehicleFromWaitingVehicles(vehicle);
-        vehicle.setStatus("- has finished " + toString() + ", " + vehicle.toString());
+        vehicle.setStatus("- has finished " + toString());
         System.out.println(vehicle.getStatus());
     }
 
@@ -172,7 +172,10 @@ public class Road implements RouteParts, Utilities {
 
     public String toString(){
         //Assume that implementation is correct,maybe need to fix this later.
-        return "Road from "+ startJunction + " to " + endJunction;
+         /*
+        - is starting to move on Road from Junction 4 (Lighted) to Junction 3 (Lighted), length: 447, max speed 60, time to finish: 11.0.
+         */
+        return "Road from "+ startJunction + " to " + endJunction +", length:"+ (int)calcLength()+", max speed "+ maxSpeed;
     }
 
     public boolean equals(Object obj){
