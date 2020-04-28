@@ -46,7 +46,6 @@ public class Vehicle implements Utilities,Timer {
         System.out.println(status);
         currentRoutePart.checkIn(this);
         objectCount++;
-
     }
 
     //getters
