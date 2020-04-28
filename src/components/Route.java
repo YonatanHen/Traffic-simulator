@@ -155,7 +155,12 @@ public class Route implements RouteParts {
         return false;
     }
     public String toString(){
-        return "Route from " + vehicle.getLastRoad() + ", estimated time for route: "+ calcEstimatedTime(this) + ".";
+        double length=0;
+                for(int i=0;i<RouteParts.size();i++){
+                    if(RouteParts.get(i) instanceof Road)
+                    length+=((Road) RouteParts.get(i)).getLength();
+                }
+        return "Route from " + vehicle.getLastRoad() + ", length: " + (int)length + ", estimated time for route: "+ calcEstimatedTime(this) + ".";
     }
     
 }

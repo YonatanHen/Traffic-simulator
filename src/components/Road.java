@@ -59,6 +59,7 @@ public class Road implements RouteParts, Utilities {
         startJunction.addExitingRoad(this);
         endJunction.addEnteringRoad(this);
         this.waitingVehicles = new ArrayList<>();
+        successMessage(toString());
     }
     //getters
     public boolean getGreenLight(){return greenlight;}

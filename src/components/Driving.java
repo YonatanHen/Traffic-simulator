@@ -39,6 +39,7 @@ public class Driving implements Utilities, Timer {
         Random r =new Random();
         //Make random starting roads to vehicles based on the map.
         //Add the vehicles to allTimedElements
+        System.out.println("================= CREATING VEHICLES =================");
         for(int i=0;i<numOfVehicles;i++) {
             vehicles.add(new Vehicle(map.getRoads().get(r.nextInt(map.getRoads().size()))));
             allTimedElements.add(vehicles.get(i));

@@ -41,6 +41,7 @@ public class Map implements Utilities {
         //Array of types.
         String [] types=new String[]{Junction.class.getName(),LightedJunction.class.getName()};
         //Create Junctions
+        System.out.println("================= CREATING JUNCTIONS=================");
         for(int i=0;i<numOfJunctions;i++){
             //Randomise one of junction types and make a junction of type variable it receives.
             String type=types[rand.nextInt(types.length)];
@@ -48,10 +49,13 @@ public class Map implements Utilities {
             //else junctions.add(new LightedJunction());
         }
         //Create roads
+        System.out.println("================= CREATING ROADS=================");
         setAllRoads();
         //turn lights on (randomly-executes inside the junction)
+        System.out.println("================= TRAFFIC LIGHTS TURN ON =================");
         turnLightsOn();
-
+        System.out.println("================= GAME MAP HAS BEEN CREATED =================");
+        System.out.println();
     }
 
     /**
