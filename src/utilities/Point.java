@@ -44,7 +44,7 @@ public abstract class Point implements Utilities {
     public Point(){
         x=getRandomDouble(minVal,maxX);
         y=getRandomDouble(minVal,maxY);
-        successMessage(toString());
+        //successMessage(toString());
     }
 
 
