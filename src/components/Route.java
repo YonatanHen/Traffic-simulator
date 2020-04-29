@@ -86,7 +86,6 @@ public class Route implements RouteParts {
         vehicle.setCurrentRoute(this);
         vehicle.setCurrentRoutePart(RouteParts.get(0));
         vehicle.setStatus("- is starting a new "+ this);
-        System.out.println(vehicle.getStatus());
     }
 
     /**
