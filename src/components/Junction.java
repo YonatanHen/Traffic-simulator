@@ -124,7 +124,7 @@ public class Junction extends Point implements RouteParts {
                     //Check if the current part/current junction isn't the last one
                     if(vehicle.getCurrentRoute().getRouteParts().indexOf(rp)+1>=vehicle.getCurrentRoute().getRouteParts().size()) {
                         //Check if the current part equals to one of the exit roads of the junction-suppose to be...
-                        if (r.equals(vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().indexOf(rp) + 1))) {
+                        if (r.equals(vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().indexOf(rp)+1))) {
                             //Check if waiting list of the exit road is empty. the car can leave if it is.
                             if (r.getWaitingVehicles().size() == 0) return true;
                         }
@@ -209,8 +209,8 @@ public class Junction extends Point implements RouteParts {
 
     public boolean equals(Object o){
         if(o instanceof Junction){
-            return ((Junction) o).exitingRoads.equals(exitingRoads) &&
-                    ((Junction) o).enteringRoads.equals(enteringRoads) &&
+            return ((Junction) o).exitingRoads==exitingRoads &&
+                    ((Junction) o).enteringRoads==enteringRoads &&
                     ((Junction)o).junctionName.equals(junctionName);
         }
         return false;

@@ -28,13 +28,16 @@ public class Route implements RouteParts {
         /*Add the first route part-following to instructions start is instance of Road.
         Add new 9 route parts to the RouteParts arrayList if exist.*/
         RouteParts.add(start);
+        RouteParts rp=RouteParts.get(0).findNextPart(vehicle);
         for(int i=0;i<9;i++){
             //add new part to the route.
-            if(RouteParts.get(i) instanceof Junction){
-                if(((Junction)RouteParts.get(i)).getExitingRoads().size()==0) break;
+            if(rp!=null) {
+                RouteParts.add(rp);
+                rp = RouteParts.get(RouteParts.size() - 1).findNextPart(vehicle);
             }
-           //TODO: HOW TO ADD NEW ROUTE PART WITHOUT NULLPTRERROR?!?!?!?!?!!?!?!?
+            else break;
         }
+        checkIn(vehicle);
     }
 
     //getters
@@ -80,8 +83,8 @@ public class Route implements RouteParts {
      */
     public void checkIn(Vehicle vehicle){ //TODO: check this function, if not clearly need to ask Sofi.
         // put the vehicle in the route
-        Route route = new Route(vehicle.getCurrentRoute(), vehicle);
-        vehicle.setCurrentRoute(route);
+        vehicle.setCurrentRoute(this);
+        vehicle.setCurrentRoutePart(RouteParts.get(0));
         vehicle.setStatus("- is starting a new "+ this);
         System.out.println(vehicle.getStatus());
     }

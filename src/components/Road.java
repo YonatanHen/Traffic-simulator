@@ -5,6 +5,7 @@ import utilities.VehicleType;
 
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 /**
  * Class represent Road on the map.
@@ -172,14 +173,13 @@ public class Road implements RouteParts, Utilities {
 
     public boolean equals(Object obj){
         if(obj instanceof Road){
-            return ((Road)obj).allowedSpeedOptions.equals(allowedSpeedOptions) &&
-                    ((Road) obj).enable==enable &&
+            return  ((Road) obj).enable==enable &&
                     ((Road) obj).startJunction.equals(startJunction) &&
                     ((Road) obj).endJunction.equals(endJunction) &&
                     ((Road) obj).greenlight==greenlight &&
                     ((Road) obj).length==length &&
                     ((Road) obj).maxSpeed == maxSpeed &&
-                    ((Road) obj).vehicleTypes.equals(vehicleTypes) &&
+                    Arrays.equals(((Road) obj).vehicleTypes, vehicleTypes) &&
                     ((Road) obj).waitingVehicles.equals(waitingVehicles);
         }
         return  false;
