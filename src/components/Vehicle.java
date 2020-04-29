@@ -39,7 +39,6 @@ public class Vehicle implements Utilities,Timer {
         timeOnCurrentPart=0;
         lastRoad=road;
         currentRoute=new Route(road,this);
-        //- is starting a new Route from Road from Junction 4 (Lighted) to Junction 3 (Lighted), length: 447, max speed 60 to Junction 8 (Lighted), estimated time for route: 93.0.
         setStatus("- is starting a new " + currentRoute.toString());
         currentRoutePart=currentRoute.getRouteParts().get(0);
         successMessage(toString());
@@ -77,6 +76,7 @@ public class Vehicle implements Utilities,Timer {
     public void move(){
         if(currentRoutePart.canLeave(this)){
             currentRoutePart.checkOut(this);
+            currentRoutePart=currentRoute.findNextPart(this);
             currentRoutePart.checkIn(this);
         }
         else currentRoutePart.stayOnCurrentPart(this);

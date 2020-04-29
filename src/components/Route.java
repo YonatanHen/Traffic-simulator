@@ -28,24 +28,14 @@ public class Route implements RouteParts {
         /*Add the first route part-following to instructions start is instance of Road.
         Add new 9 route parts to the RouteParts arrayList if exist.*/
         RouteParts.add(start);
-        for(int i=0;i<9 && findNextPart(vehicle)!=null;i++){
+        for(int i=0;i<9;i++){
             //add new part to the route.
-            RouteParts.add(findNextPart(vehicle));
+            if(RouteParts.get(i) instanceof Junction){
+                if(((Junction)RouteParts.get(i)).getExitingRoads().size()==0) break;
+            }
+            RouteParts.add(RouteParts.get(RouteParts.size()-1).findNextPart(vehicle));
         }
     }
-/*        if (vehicle.getCurrentRouteParts() instanceof Junction && vehicle.getLastRoad().getStartJunction().getExitingRoads().size()!=0) {
-            if (start instanceof Road) {
-                RouteParts.add(start);
-                vehicle.setCurrentRouteParts(start);
-            }
-        }}
-        else if (vehicle.getCurrentRouteParts() instanceof Road && vehicle.getLastRoad().getStartJunction().getExitingRoads().size()!=0){
-            if(start instanceof Junction){
-                RouteParts.add(start);
-                vehicle.setCurrentRouteParts(start);
-            }
-        }
-    }*/
 
     //getters
     public ArrayList<RouteParts> getRouteParts(){return RouteParts;}
@@ -132,11 +122,9 @@ public class Route implements RouteParts {
             else{
                 //Make new route part from last road which car drove
                 vehicle.setCurrentRoute(new Route(vehicle.getLastRoad(),vehicle));
-                //return the next route part.
             }
-            return this.RouteParts.get(0);
         }
-        else return this.vehicle.getCurrentRoutePart();
+        return this.vehicle.getCurrentRoutePart().findNextPart(vehicle);
     }
 
     /**

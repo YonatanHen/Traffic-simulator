@@ -176,24 +176,21 @@ public class Junction extends Point implements RouteParts {
      * @return randomal road that match to the type of car or null
      */
     public RouteParts findNextPart(Vehicle vehicle){
-        //Make new array list that include all of enabled roads from the current junction
-        ArrayList<Road> enabledRoads=new ArrayList<>();
-        //iterate over route parts of current vehicle
-        for(RouteParts rp: vehicle.getCurrentRoute().getRouteParts()){
-            //Check if route part equal to current junction
-            if(rp.equals(this)){
-                        for(Road r:exitingRoads){
-                            //Add the roads to the arrayList
-                            if (r.getEnable()) enabledRoads.add(r);
-            }
-            break;
+        ArrayList<Road> enabledAndAllowed=new ArrayList<>();
+       //Next part must to be a Road
+        for(Road r:exitingRoads){
+            if(r.getEnable()){
+                for(int i=0;i<r.getVehicleTypes().length;i++) {
+                    if (vehicle.getVehicleType().equals(r.getVehicleTypes()[i])) {
+                        enabledAndAllowed.add(r);
+                        break;
+                    }
+                }
             }
         }
-        //If there are no roads,return null
-        if(enabledRoads.size()==0) return null;
-        //else
+        if(enabledAndAllowed.size()==0) return null;
         Random rand=new Random();
-        return enabledRoads.get(rand.nextInt(enabledRoads.size()));
+        return enabledAndAllowed.get(rand.nextInt(enabledAndAllowed.size()));
     }
 
     /**

@@ -43,19 +43,11 @@ public class Road implements RouteParts, Utilities {
         this.length=calcLength();
         this.maxSpeed= allowedSpeedOptions[random.nextInt(allowedSpeedOptions.length)];
         //Make vehicleTypes array based on randomal values-array size and types both.
-        VehicleType [] vehicleTypes=new VehicleType[random.nextInt(VehicleType.values().length)];
+        vehicleTypes=new VehicleType[getRandomInt(1,VehicleType.values().length)];
         for(int i=0;i<vehicleTypes.length;i++){
-            VehicleType newVal=VehicleType.values()[random.nextInt(vehicleTypes.length)];
-            for (int j=0;j<i;){
-                //Iterate over the same j index if the randomised value equals to composed value in the array.
-                //Randomise new value
-                if (newVal.equals(vehicleTypes[j])) newVal = VehicleType.values()[random.nextInt(vehicleTypes.length)];
-                //Advance j when value isn't equal
-                else j++;
-            }
-            //Applying of the new value in the array if he does'nt exist already.
-            vehicleTypes[i]=newVal;
+            vehicleTypes[i]=VehicleType.values()[random.nextInt(VehicleType.values().length)];
         }
+
         startJunction.addExitingRoad(this);
         endJunction.addEnteringRoad(this);
         this.waitingVehicles = new ArrayList<>();
