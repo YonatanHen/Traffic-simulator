@@ -33,7 +33,7 @@ public class Route implements RouteParts {
             if(RouteParts.get(i) instanceof Junction){
                 if(((Junction)RouteParts.get(i)).getExitingRoads().size()==0) break;
             }
-            RouteParts.add(RouteParts.get(RouteParts.size()-1).findNextPart(vehicle));
+           //TODO: HOW TO ADD NEW ROUTE PART WITHOUT NULLPTRERROR?!?!?!?!?!!?!?!?
         }
     }
 
