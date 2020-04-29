@@ -118,7 +118,9 @@ public class Junction extends Point implements RouteParts {
      * @return true when vehicle is first in the entering roads list,else false.
      */
     public boolean checkAvailability(Vehicle vehicle){
-     if(exitingRoads.size()>0 && vehicle.getCurrentRoutePart().findNextPart(vehicle)!=null && ((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().size() > 0) return true;
+     if(exitingRoads.size()>0 &&
+     vehicle.getCurrentRoutePart().findNextPart(vehicle)!=null &&
+     ((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().size() > 0) return true;
      return false;
     }
 
