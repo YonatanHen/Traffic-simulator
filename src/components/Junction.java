@@ -118,22 +118,8 @@ public class Junction extends Point implements RouteParts {
      * @return true when vehicle is first in the entering roads list,else false.
      */
     public boolean checkAvailability(Vehicle vehicle){
-        for(RouteParts rp: vehicle.getCurrentRoute().getRouteParts()){
-            if(rp.equals(this)){
-                for(Road r:exitingRoads){
-                    //Check if the current part/current junction isn't the last one
-                    if(vehicle.getCurrentRoute().getRouteParts().indexOf(rp)+1>=vehicle.getCurrentRoute().getRouteParts().size()) {
-                        //Check if the current part equals to one of the exit roads of the junction-suppose to be...
-                        if (r.equals(vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().indexOf(rp)+1))) {
-                            //Check if waiting list of the exit road is empty. the car can leave if it is.
-                            if (r.getWaitingVehicles().size() == 0) return true;
-                        }
-                    }
-                }
-            }
-        }
-        //If one of the above conditions aren't true, return false.
-        return false;
+     if(exitingRoads.size()>0 && vehicle.getCurrentRoutePart().findNextPart(vehicle)!=null && ((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().size() > 0) return true;
+     return false;
     }
 
     /**
