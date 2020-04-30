@@ -16,8 +16,6 @@ public class RandomTrafficLights extends TrafficLights {
      */
     public RandomTrafficLights(ArrayList<Road>roads){
         super(roads);
-        Random random = new Random();
-        if(roads.size()>0) super.getRoads().get(random.nextInt(super.getRoads().size())).setGreenlight(true);
 }
 
     /**
@@ -25,12 +23,8 @@ public class RandomTrafficLights extends TrafficLights {
      * NOTE:This method override abstract trafficLight method.
      */
     public void changeIndex(){
-        for(Road r:getRoads()){
-            if(r.getGreenLight()){
-                setGreenLightIndex(getRoads().indexOf(r));
-                break;
-            }
-        }
+        //TODO: getRoads isn't postive check why, and remove implementation of the if condition.
+        /*if(getRoads().size()>0)*/ setGreenLightIndex(getRandomInt(0,getRoads().size()));
     }
 
 

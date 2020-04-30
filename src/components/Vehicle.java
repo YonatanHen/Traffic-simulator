@@ -3,7 +3,6 @@ package components;
 import utilities.Utilities;
 import utilities.VehicleType;
 import utilities.Timer;
-import java.util.Random;
 
 /**
  * Class represent Vehicle on the map.
@@ -33,8 +32,7 @@ public class Vehicle implements Utilities,Timer {
      */
     public Vehicle(Road road){
         id=objectCount;
-        Random rand=new Random();
-        vehicleType=VehicleType.values()[rand.nextInt(VehicleType.values().length)];//Randomise car type
+        vehicleType=VehicleType.values()[getRandomInt(0,VehicleType.values().length)];//Randomise car type
         timeFromStartRoute=0;
         timeOnCurrentPart=0;
         lastRoad=road;
