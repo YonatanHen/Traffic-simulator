@@ -60,13 +60,15 @@ public class Map implements Utilities {
     /**
      * Method create the roads for the constructor.
      */
-    public void setAllRoads(){
-        for(int i=0;i<junctions.size();i++){
-            for(int j=0;j<junctions.size();j++){
+    public void setAllRoads() {
+        for (int i = 0; i < junctions.size(); i++) {
+            for (int j = 0; j < junctions.size(); j++) {
                 //connect between all junctions apart of junction to itself.
-                if(i!=j) roads.add(new Road(junctions.get(i),junctions.get(j)));
-                if(junctions.get(i) instanceof LightedJunction){
-                    ((LightedJunction) junctions.get(i)).getLights().getRoads().add(roads.get(roads.size()-1));
+                if (i != j) {
+                    roads.add(new Road(junctions.get(i), junctions.get(j)));
+                    if (junctions.get(j) instanceof LightedJunction) {
+                        ((LightedJunction) junctions.get(j)).getLights().getRoads().add(roads.get(roads.size() - 1));
+                    }
                 }
             }
         }
@@ -76,10 +78,17 @@ public class Map implements Utilities {
      * Method turn the lights on for the constructor.
      */
     public void turnLightsOn(){
-       for(Road r:roads){
+        ArrayList<Integer> lightedJuncs= new ArrayList<>();
+        for(Road r:roads){
            if (r.getEndJunction() instanceof LightedJunction){
-               if(((LightedJunction)r.getEndJunction()).getLights().getTrafficLightsOn()==false)
-                   ((LightedJunction)r.getEndJunction()).getLights().changeLights();
+               //Turn lights on when traffic lights on lightedJunction aren't lightening/lightening yet and random value is true.
+               if(!((LightedJunction)r.getEndJunction()).getLights().getTrafficLightsOn() &&
+                       !lightedJuncs.contains(((LightedJunction)r.getEndJunction()).getLights().getId()) &&getRandomBoolean()){
+                   System.out.println(((LightedJunction)r.getEndJunction()).getLights()+
+                           " turned ON, delay time: "+((LightedJunction)r.getEndJunction()).getLights().getDelay());
+                   ((LightedJunction) r.getEndJunction()).getLights().changeLights();
+                   lightedJuncs.add(((LightedJunction)r.getEndJunction()).getLights().getId());
+               }
            }
        }
     }
