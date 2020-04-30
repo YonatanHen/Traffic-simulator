@@ -37,7 +37,7 @@ public class Vehicle implements Utilities,Timer {
         timeOnCurrentPart=0;
         lastRoad=road;
         currentRoute=new Route(road,this);
-        setStatus("- is starting a new " + currentRoute.toString());
+        currentRoute.checkIn(this);
         currentRoutePart=currentRoute.getRouteParts().get(0);
         successMessage(toString());
         System.out.println(status);
@@ -72,10 +72,11 @@ public class Vehicle implements Utilities,Timer {
      * else-stay at the part
      */
     public void move(){
-        if(currentRoutePart.canLeave(this)){
-            currentRoutePart.checkOut(this);
-            currentRoutePart=currentRoute.findNextPart(this);
-            currentRoutePart.checkIn(this);
+        if(currentRoutePart.canLeave(this)) {
+            //Check if car reach the end of the Route
+                currentRoutePart.checkOut(this);
+                currentRoutePart = currentRoute.findNextPart(this);
+                currentRoutePart.checkIn(this);
         }
         else currentRoutePart.stayOnCurrentPart(this);
     }

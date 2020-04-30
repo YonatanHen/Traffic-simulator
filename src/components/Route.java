@@ -110,21 +110,20 @@ public class Route implements RouteParts {
      * @param vehicle
      * @return next route part
      */
-    public RouteParts findNextPart(Vehicle vehicle){
-        //Check if car reach the last part of the route
-        if(canLeave(vehicle)){
-            //last part of the route must be a Junction
-            //Check if Junction hasn't exit roads
-            if(((Junction)vehicle.getCurrentRoutePart()).getExitingRoads().size()==0){
-                //Make new route from beginning of former route.
-                vehicle.setCurrentRoute(new Route(this.getRouteParts().get(0),vehicle));
-            }
-            else{
-                //Make new route part from last road which car drove
-                vehicle.setCurrentRoute(new Route(vehicle.getLastRoad(),vehicle));
-            }
-        }
-        return this.vehicle.getCurrentRoutePart().findNextPart(vehicle);
+    public RouteParts findNextPart(Vehicle vehicle){//TODO: fix this,it's never get into if statement.
+       if(canLeave(vehicle) && vehicle.getCurrentRoutePart().equals(RouteParts.get(RouteParts.size()-1)) && vehicle.getCurrentRoutePart() instanceof Junction){
+           boolean flag=false;
+           for(Road r:((Junction) vehicle.getCurrentRoutePart()).getExitingRoads()){
+               for(int j=0;j<r.getVehicleTypes().length && !flag;j++){
+                   if(vehicle.getVehicleType().equals(r.getVehicleTypes()[j])) flag=true;
+               }
+               if(flag) break;
+           }
+           if (flag) vehicle.setCurrentRoute(new Route(vehicle.getLastRoad(),vehicle));
+           else vehicle.setCurrentRoute(new Route(vehicle.getCurrentRoute().getRouteParts().get(0),vehicle));
+           return vehicle.getCurrentRoute().getRouteParts().get(0);
+       }
+       return vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().indexOf(vehicle.getCurrentRoutePart())+1);
     }
 
     /**

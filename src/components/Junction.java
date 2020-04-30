@@ -185,7 +185,14 @@ public class Junction extends Point implements RouteParts {
      * @param vehicle
      */
     public void stayOnCurrentPart(Vehicle vehicle){
-        vehicle.setStatus("- is waiting at "+ toString()+"- there are previous cars on the same road.");
+        //Check if there are cars on roads with higher priority.
+        //if(exitingRoads.indexOf(vehicle.getLastRoad())!=0) {
+        //    vehicle.setStatus("- is waiting at " + toString() + "- there are cars on roads with higher priority.");
+        //}
+            //check if there are previous cars on the same road
+        //(vehicle.getLastRoad().getWaitingVehicles().size()>0)
+            vehicle.setStatus("- is waiting at "+ toString()+"- there are previous cars on the same road.");
+
         System.out.println(vehicle.getStatus());
     }
 
