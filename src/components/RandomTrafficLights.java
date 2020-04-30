@@ -23,8 +23,7 @@ public class RandomTrafficLights extends TrafficLights {
      * NOTE:This method override abstract trafficLight method.
      */
     public void changeIndex(){
-        //TODO: getRoads isn't postive check why, and remove implementation of the if condition.
-        /*if(getRoads().size()>0)*/ setGreenLightIndex(getRandomInt(0,getRoads().size()));
+        setGreenLightIndex(getRandomInt(0,getRoads().size()));
     }
 
 

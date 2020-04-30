@@ -52,20 +52,18 @@ public abstract class TrafficLights implements Timer, Utilities {
     /**
      * function that change next junction to green and make sure that other junction with red light
      */
-    public void changeLights(){
+    public void changeLights() {
         changeIndex();
-        for(int i=0;i<roads.size();i++){
-            if(i==greenLightIndex){
+        for (int i = 0; i < roads.size(); i++) {
+            if (i == greenLightIndex) {
                 roads.get(i).setGreenlight(true);
-                //Keep the index of the green light to implement it on green light index variable later
-                System.out.println(roads.get(i)+": green light.");
-            }
-            else roads.get(i).setGreenlight(false);
+                System.out.println("-" + roads.get(i) + ": green light.");
+            } else roads.get(i).setGreenlight(false);
         }
         //Change delay time-happens when new light turn on.
-        delay=getRandomInt(minDelay,maxDelay+1);
+        delay = getRandomInt(minDelay, maxDelay + 1);
         //Initialize the working time of the new light who turns on to 0.
-        workingTime=0;
+        workingTime = 0;
     }
 
     /**
@@ -74,13 +72,13 @@ public abstract class TrafficLights implements Timer, Utilities {
     public void incrementDrivingTime(){
         workingTime++;
         if(workingTime>=delay) changeLights();
+        else System.out.println(this+ "\n- on delay");
     }
     //setters
     public void setDelay(int delay) { this.delay = delay; }
     public void setGreenLightIndex(int greenLightIndex) { this.greenLightIndex = greenLightIndex; }
     public void setId(int id) { this.id = id; }
     public void setTrafficLightsOn(boolean trafficLightsOn) { this.trafficLightsOn = trafficLightsOn; }
-    public void setObjectCount(int objectCount) { this.objectCount = objectCount; }
     public void setRoads(ArrayList<Road> roads) {
         this.roads.clear();
         this.roads.addAll(roads);
@@ -100,7 +98,7 @@ public abstract class TrafficLights implements Timer, Utilities {
 
 
     public String toString() {
-        return "traffic lights"+ objectCount;
+        return "traffic lights "+ id;
     }
 
     public boolean equals(Object o){
@@ -108,7 +106,6 @@ public abstract class TrafficLights implements Timer, Utilities {
             return ((TrafficLights) o).delay == delay &&
                     ((TrafficLights) o).trafficLightsOn == trafficLightsOn &&
                     ((TrafficLights) o).id == id &&
-                    ((TrafficLights) o).objectCount == objectCount &&
                     ((TrafficLights) o).greenLightIndex == greenLightIndex &&
                     ((TrafficLights) o).roads == roads &&
                     ((TrafficLights) o).workingTime == workingTime;
