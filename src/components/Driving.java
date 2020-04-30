@@ -105,7 +105,7 @@ public class Driving implements Utilities, Timer {
      */
     public void incrementDrivingTime(){
         for(int i=0;i<allTimedElements.size();i++){
-            if(i<20) {
+            if(i<vehicles.size()) {
                 vehicles.get(i).setObjectCount(i+1);
                 System.out.println(allTimedElements.get(i).toString());
             }

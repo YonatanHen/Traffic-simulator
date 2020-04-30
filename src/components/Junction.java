@@ -117,13 +117,21 @@ public class Junction extends Point implements RouteParts {
      * @return true when vehicle is first in the entering roads list,else false.
      */
     public boolean checkAvailability(Vehicle vehicle){
-     if(exitingRoads.size()>0 &&
-     vehicle.getCurrentRoutePart().findNextPart(vehicle)!=null &&
-     ((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().size() > 0) return true;
-     return false;
+     if(exitingRoads.size()>0 && vehicle.getCurrentRoutePart().findNextPart(vehicle)!=null) {
+         if (((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().size()>0) {
+             if(((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().indexOf(vehicle)==0)
+             return true;
+             else{
+                 vehicle.setStatus("- is waiting at "+ toString()+"- there are previous cars on the same road.");
+                 return false;
+             }
+         }
+
+     }
+        return false;
     }
 
-    /**
+    /**}
      * Method writes the car in the junction and update all relevant data fields.
      * Finally,prints a message.
      *
@@ -185,14 +193,6 @@ public class Junction extends Point implements RouteParts {
      * @param vehicle
      */
     public void stayOnCurrentPart(Vehicle vehicle){
-        //Check if there are cars on roads with higher priority.
-        //if(exitingRoads.indexOf(vehicle.getLastRoad())!=0) {
-        //    vehicle.setStatus("- is waiting at " + toString() + "- there are cars on roads with higher priority.");
-        //}
-            //check if there are previous cars on the same road
-        //(vehicle.getLastRoad().getWaitingVehicles().size()>0)
-            vehicle.setStatus("- is waiting at "+ toString()+"- there are previous cars on the same road.");
-
         System.out.println(vehicle.getStatus());
     }
 
