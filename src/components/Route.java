@@ -1,7 +1,6 @@
 package components;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Class represent Route on the map.

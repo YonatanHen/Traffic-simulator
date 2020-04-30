@@ -76,7 +76,7 @@ public interface Utilities {
     default int getRandomInt(int min, int max){
 
         Random rand=new Random();
-        return rand.nextInt(max)+min;
+        return (rand.nextInt(max)+min);
     }
 
     /**

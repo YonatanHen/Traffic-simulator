@@ -34,17 +34,16 @@ public class Map implements Utilities {
      * @param numOfJunctions
      */
     public Map(int numOfJunctions){
-        Random rand=new Random();
-        junctions = new ArrayList<Junction>();
-        roads = new ArrayList<Road>();
-        lights = new ArrayList<TrafficLights>();
+        junctions = new ArrayList<>();
+        roads = new ArrayList<>();
+        lights = new ArrayList<>();
         //Array of types.
         String [] types=new String[]{Junction.class.getName(),LightedJunction.class.getName()};
         //Create Junctions
         System.out.println("================= CREATING JUNCTIONS=================");
         for(int i=0;i<numOfJunctions;i++){
             //Randomise one of junction types and make a junction of type variable it receives.
-            String type=types[rand.nextInt(types.length)];
+            String type=types[getRandomInt(0,types.length)];
             if(type.equals(Junction.class.getName())) junctions.add(new Junction());
             else junctions.add(new LightedJunction());
         }
@@ -66,6 +65,9 @@ public class Map implements Utilities {
             for(int j=0;j<junctions.size();j++){
                 //connect between all junctions apart of junction to itself.
                 if(i!=j) roads.add(new Road(junctions.get(i),junctions.get(j)));
+                if(junctions.get(i) instanceof LightedJunction){
+                    ((LightedJunction) junctions.get(i)).getLights().getRoads().add(roads.get(roads.size()-1));
+                }
             }
         }
     }
@@ -74,14 +76,12 @@ public class Map implements Utilities {
      * Method turn the lights on for the constructor.
      */
     public void turnLightsOn(){
-        Random rand=new Random();
-        for(Junction junc:junctions){
-            //Following to constructor instructions, lights turn on randomly.
-            //Check if junction is lights, change lights if it is.
-            if (junc instanceof LightedJunction && rand.nextBoolean()) {
-                ((LightedJunction) junc).getLights().changeLights();
-            }
-        }
+       for(Road r:roads){
+           if (r.getEndJunction() instanceof LightedJunction){
+               if(((LightedJunction)r.getEndJunction()).getLights().getTrafficLightsOn()==false)
+                   ((LightedJunction)r.getEndJunction()).getLights().changeLights();
+           }
+       }
     }
 
     //getters

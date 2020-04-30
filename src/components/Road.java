@@ -2,11 +2,9 @@ package components;
 
 import utilities.Utilities;
 import utilities.VehicleType;
-
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
+
 /**
  * Class represent Road on the map.
  *
@@ -36,19 +34,17 @@ public class Road implements RouteParts, Utilities {
      * @param end
      */
     public Road(Junction start, Junction end){
-        Random random = new Random();
-        this.enable=random.nextBoolean();
+        this.enable=getRandomBoolean();
         this.startJunction=start;
         this.endJunction=end;
-        this.greenlight=random.nextBoolean();
+        this.greenlight=getRandomBoolean();
         this.length=calcLength();
-        this.maxSpeed= allowedSpeedOptions[random.nextInt(allowedSpeedOptions.length)];
+        this.maxSpeed= allowedSpeedOptions[getRandomInt(0,allowedSpeedOptions.length)];
         //Make vehicleTypes array based on randomal values-array size and types both.
         vehicleTypes=new VehicleType[getRandomInt(1,VehicleType.values().length)];
         for(int i=0;i<vehicleTypes.length;i++){
-            vehicleTypes[i]=VehicleType.values()[random.nextInt(VehicleType.values().length)];
+            vehicleTypes[i]=VehicleType.values()[getRandomInt(0,VehicleType.values().length)];
         }
-
         startJunction.addExitingRoad(this);
         endJunction.addEnteringRoad(this);
         this.waitingVehicles = new ArrayList<>();

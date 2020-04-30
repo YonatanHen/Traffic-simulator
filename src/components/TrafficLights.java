@@ -1,11 +1,8 @@
 package components;
 
-import org.w3c.dom.ls.LSOutput;
 import utilities.Timer;
 import utilities.Utilities;
-
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Class represent TrafficLights in the junction.
@@ -43,8 +40,7 @@ public abstract class TrafficLights implements Timer, Utilities {
             }
         }
         //Make random value to traffic light delay.
-        Random rand=new Random();
-        delay=rand.nextInt(maxDelay+1)+minDelay;
+        delay=getRandomInt(minDelay,maxDelay+1);
         trafficLightsOn=false;
         objectCount++;
         id=objectCount;
@@ -57,21 +53,17 @@ public abstract class TrafficLights implements Timer, Utilities {
      * function that change next junction to green and make sure that other junction with red light
      */
     public void changeLights(){
-        int temp=greenLightIndex;
+        changeIndex();
         for(int i=0;i<roads.size();i++){
             if(i==greenLightIndex){
-                roads.get(i + 1).setGreenlight(true);
+                roads.get(i).setGreenlight(true);
                 //Keep the index of the green light to implement it on green light index variable later
-                temp=i+1;
-                //Print message
-                System.out.println(roads.get(i+1)+": green light.");
+                System.out.println(roads.get(i)+": green light.");
             }
             else roads.get(i).setGreenlight(false);
         }
-        changeIndex();
         //Change delay time-happens when new light turn on.
-        Random rand=new Random();
-        delay=rand.nextInt(maxDelay+1)+minDelay;
+        delay=getRandomInt(minDelay,maxDelay+1);
         //Initialize the working time of the new light who turns on to 0.
         workingTime=0;
     }

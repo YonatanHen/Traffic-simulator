@@ -3,7 +3,6 @@ package components;
 import utilities.Point;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Class represent Junction on the map.
@@ -177,8 +176,7 @@ public class Junction extends Point implements RouteParts {
             }
         }
         if(enabledAndAllowed.size()==0) return null;
-        Random rand=new Random();
-        return enabledAndAllowed.get(rand.nextInt(enabledAndAllowed.size()));
+        return enabledAndAllowed.get(getRandomInt(0,enabledAndAllowed.size()));
     }
 
     /**
