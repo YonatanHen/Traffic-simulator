@@ -36,7 +36,6 @@ public class Route implements RouteParts {
             }
             else break;
         }
-        checkIn(vehicle);
     }
 
     //getters
