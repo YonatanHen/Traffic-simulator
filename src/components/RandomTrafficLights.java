@@ -16,21 +16,14 @@ public class RandomTrafficLights extends TrafficLights {
      */
     public RandomTrafficLights(ArrayList<Road>roads){
         super(roads);
-        Random random = new Random();
-        roads.get(random.nextInt(roads.size())).setGreenlight(true);
-    }
+}
 
     /**
      * Change the index for road that suppose to get green light.
      * NOTE:This method override abstract trafficLight method.
      */
     public void changeIndex(){
-        for(Road r:getRoads()){
-            if(r.getGreenLight()){
-                setGreenLightIndex(getRoads().indexOf(r));
-                break;
-            }
-        }
+        setGreenLightIndex(getRandomInt(0,getRoads().size()));
     }
 
 

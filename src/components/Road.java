@@ -2,10 +2,9 @@ package components;
 
 import utilities.Utilities;
 import utilities.VehicleType;
-
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Arrays;
+
 /**
  * Class represent Road on the map.
  *
@@ -35,28 +34,21 @@ public class Road implements RouteParts, Utilities {
      * @param end
      */
     public Road(Junction start, Junction end){
-        Random random = new Random();
-        this.enable=random.nextBoolean();
+        this.enable=getRandomBoolean();
         this.startJunction=start;
         this.endJunction=end;
-        this.greenlight=random.nextBoolean();
+        this.greenlight=getRandomBoolean();
         this.length=calcLength();
-        this.maxSpeed= allowedSpeedOptions[random.nextInt(allowedSpeedOptions.length)];
+        this.maxSpeed= allowedSpeedOptions[getRandomInt(0,allowedSpeedOptions.length)];
         //Make vehicleTypes array based on randomal values-array size and types both.
-        VehicleType [] vehicleTypes=new VehicleType[random.nextInt(VehicleType.values().length)];
+        vehicleTypes=new VehicleType[getRandomInt(1,VehicleType.values().length)];
         for(int i=0;i<vehicleTypes.length;i++){
-            VehicleType newVal=VehicleType.values()[random.nextInt(vehicleTypes.length)];
-            for (int j=0;j<i;){
-                //Iterate over the same j index if the randomised value equals to composed value in the array.
-                //Randomise new value
-                if (newVal.equals(vehicleTypes[j])) newVal = VehicleType.values()[random.nextInt(vehicleTypes.length)];
-                //Advance j when value isn't equal
-                else j++;
-            }
-            //Applying of the new value in the array if he does'nt exist already.
-            vehicleTypes[i]=newVal;
+            vehicleTypes[i]=VehicleType.values()[getRandomInt(0,VehicleType.values().length)];
         }
+        startJunction.addExitingRoad(this);
+        endJunction.addEnteringRoad(this);
         this.waitingVehicles = new ArrayList<>();
+        successMessage(toString());
     }
     //getters
     public boolean getGreenLight(){return greenlight;}
@@ -94,8 +86,8 @@ public class Road implements RouteParts, Utilities {
      * @return calculate value round to up.
      */
     public double calcEstimatedTime(Object obj){
-        if(obj instanceof VehicleType)
-            return Math.round(length/ Math.min(maxSpeed,((VehicleType) obj).getAverageSpeed()));
+        if(obj instanceof Vehicle)
+            return Math.round(length/ Math.min(maxSpeed,((Vehicle) obj).getVehicleType().getAverageSpeed()));
         return 0;
     }
 
@@ -125,7 +117,7 @@ public class Road implements RouteParts, Utilities {
     public void checkIn(Vehicle vehicle){
         vehicle.setCurrentRoutePart(this);
         vehicle.setLastRoad(this);
-        vehicle.setStatus("- is starting to move on " +  toString() + ", " + vehicle.toString());
+        vehicle.setStatus("- is starting to move on " +  toString() + ", time to finish:"+ vehicle.getCurrentRoute().calcEstimatedTime(vehicle)) ;
         System.out.println(vehicle.getStatus());
     }
 
@@ -136,7 +128,7 @@ public class Road implements RouteParts, Utilities {
      */
     public void checkOut(Vehicle vehicle){
         removeVehicleFromWaitingVehicles(vehicle);
-        vehicle.setStatus("- has finished " + toString() + ", " + vehicle.toString());
+        vehicle.setStatus("- has finished " + toString());
         System.out.println(vehicle.getStatus());
     }
 
@@ -152,7 +144,7 @@ public class Road implements RouteParts, Utilities {
 
     public void stayOnCurrentPart(Vehicle vehicle) {
         //- is still moving on Road from Junction 10 to Junction 5 (Lighted), length: 526, max speed 30, time to arrive: 13.0
-        vehicle.setStatus("- is still moving on" + toString() + ", " + vehicle.toString());
+        vehicle.setStatus("- is still moving on " + toString() + ", " + vehicle.toString());
         System.out.println(vehicle.getStatus());
     }
 
@@ -169,20 +161,21 @@ public class Road implements RouteParts, Utilities {
 
     public String toString(){
         //Assume that implementation is correct,maybe need to fix this later.
-        if (greenlight) return "Road from "+ startJunction + " to " + endJunction + "(Lighted)";
-        else return "Road from "+ startJunction + " to " + endJunction;
+         /*
+        - is starting to move on Road from Junction 4 (Lighted) to Junction 3 (Lighted), length: 447, max speed 60, time to finish: 11.0.
+         */
+        return "Road from "+ startJunction + " to " + endJunction +", length:"+ (int)calcLength()+", max speed "+ maxSpeed;
     }
 
     public boolean equals(Object obj){
         if(obj instanceof Road){
-            return ((Road)obj).allowedSpeedOptions.equals(allowedSpeedOptions) &&
-                    ((Road) obj).enable==enable &&
+            return  ((Road) obj).enable==enable &&
                     ((Road) obj).startJunction.equals(startJunction) &&
                     ((Road) obj).endJunction.equals(endJunction) &&
                     ((Road) obj).greenlight==greenlight &&
                     ((Road) obj).length==length &&
                     ((Road) obj).maxSpeed == maxSpeed &&
-                    ((Road) obj).vehicleTypes.equals(vehicleTypes) &&
+                    Arrays.equals(((Road) obj).vehicleTypes, vehicleTypes) &&
                     ((Road) obj).waitingVehicles.equals(waitingVehicles);
         }
         return  false;

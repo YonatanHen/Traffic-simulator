@@ -34,11 +34,12 @@ public class Driving implements Utilities, Timer {
     public Driving(int numOfJunctions,int numOfVehicles){
         map=new Map(numOfJunctions);
         vehicles=new ArrayList<>();
-        ArrayList<Timer> allTimedElements=new ArrayList<>();
+        allTimedElements=new ArrayList<>();
         drivingTime=0;
         Random r =new Random();
         //Make random starting roads to vehicles based on the map.
         //Add the vehicles to allTimedElements
+        System.out.println("================= CREATING VEHICLES =================");
         for(int i=0;i<numOfVehicles;i++) {
             vehicles.add(new Vehicle(map.getRoads().get(r.nextInt(map.getRoads().size()))));
             allTimedElements.add(vehicles.get(i));
@@ -92,8 +93,11 @@ public class Driving implements Utilities, Timer {
      * @param numOfTurns
      */
     public void drive(int numOfTurns){
-        if (numOfTurns>=drivingTime) incrementDrivingTime();
-        drivingTime++;
+        while (numOfTurns >= drivingTime){
+            System.out.println("***************TURN" + drivingTime + "***************");
+            incrementDrivingTime();
+            drivingTime++;
+        }
     }
 
     /**
@@ -101,6 +105,10 @@ public class Driving implements Utilities, Timer {
      */
     public void incrementDrivingTime(){
         for(int i=0;i<allTimedElements.size();i++){
+            if(i<vehicles.size()) {
+                vehicles.get(i).setObjectCount(i+1);
+                System.out.println(allTimedElements.get(i).toString());
+            }
             allTimedElements.get(i).incrementDrivingTime();
         }
     }

@@ -19,7 +19,6 @@ public class SequentialTrafficLights extends TrafficLights {
      */
     public SequentialTrafficLights(ArrayList<Road> roads) {
         super(roads);
-        //Suppose to be here implementation of changing the traffic light - based on increment variable.
     }
 
     /**

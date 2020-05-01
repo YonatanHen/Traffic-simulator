@@ -3,7 +3,6 @@ package components;
 import utilities.Point;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Class represent Junction on the map.
@@ -118,25 +117,21 @@ public class Junction extends Point implements RouteParts {
      * @return true when vehicle is first in the entering roads list,else false.
      */
     public boolean checkAvailability(Vehicle vehicle){
-        for(RouteParts rp: vehicle.getCurrentRoute().getRouteParts()){
-            if(rp.equals(this)){
-                for(Road r:exitingRoads){
-                    //Check if the current part/current junction isn't the last one
-                    if(vehicle.getCurrentRoute().getRouteParts().indexOf(rp)+1>=vehicle.getCurrentRoute().getRouteParts().size()) {
-                        //Check if the current part equals to one of the exit roads of the junction-suppose to be...
-                        if (r.equals(vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().indexOf(rp) + 1))) {
-                            //Check if waiting list of the exit road is empty. the car can leave if it is.
-                            if (r.getWaitingVehicles().size() == 0) return true;
-                        }
-                    }
-                }
-            }
-        }
-        //If one of the above conditions aren't true, return false.
+     if(exitingRoads.size()>0 && vehicle.getCurrentRoutePart().findNextPart(vehicle)!=null) {
+         if (((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().size()>0) {
+             if(((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().indexOf(vehicle)==0)
+             return true;
+             else{
+                 vehicle.setStatus("- is waiting at "+ toString()+"- there are previous cars on the same road.");
+                 return false;
+             }
+         }
+
+     }
         return false;
     }
 
-    /**
+    /**}
      * Method writes the car in the junction and update all relevant data fields.
      * Finally,prints a message.
      *
@@ -176,24 +171,20 @@ public class Junction extends Point implements RouteParts {
      * @return randomal road that match to the type of car or null
      */
     public RouteParts findNextPart(Vehicle vehicle){
-        //Make new array list that include all of enabled roads from the current junction
-        ArrayList<Road> enabledRoads=new ArrayList<>();
-        //iterate over route parts of current vehicle
-        for(RouteParts rp: vehicle.getCurrentRoute().getRouteParts()){
-            //Check if route part equal to current junction
-            if(rp.equals(this)){
-                        for(Road r:exitingRoads){
-                            //Add the roads to the arrayList
-                            if (r.getEnable()) enabledRoads.add(r);
-            }
-            break;
+        ArrayList<Road> enabledAndAllowed=new ArrayList<>();
+       //Next part must to be a Road
+        for(Road r:exitingRoads){
+            if(r.getEnable()){
+                for(int i=0;i<r.getVehicleTypes().length;i++) {
+                    if (vehicle.getVehicleType().equals(r.getVehicleTypes()[i])) {
+                        enabledAndAllowed.add(r);
+                        break;
+                    }
+                }
             }
         }
-        //If there are no roads,return null
-        if(enabledRoads.size()==0) return null;
-        //else
-        Random rand=new Random();
-        return enabledRoads.get(rand.nextInt(enabledRoads.size()));
+        if(enabledAndAllowed.size()==0) return null;
+        return enabledAndAllowed.get(getRandomInt(0,enabledAndAllowed.size()));
     }
 
     /**
@@ -202,7 +193,6 @@ public class Junction extends Point implements RouteParts {
      * @param vehicle
      */
     public void stayOnCurrentPart(Vehicle vehicle){
-        vehicle.setStatus("- is waiting at "+ toString()+"- there are previous cars on the same road.");
         System.out.println(vehicle.getStatus());
     }
 
@@ -212,8 +202,8 @@ public class Junction extends Point implements RouteParts {
 
     public boolean equals(Object o){
         if(o instanceof Junction){
-            return ((Junction) o).exitingRoads.equals(exitingRoads) &&
-                    ((Junction) o).enteringRoads.equals(enteringRoads) &&
+            return ((Junction) o).exitingRoads==exitingRoads &&
+                    ((Junction) o).enteringRoads==enteringRoads &&
                     ((Junction)o).junctionName.equals(junctionName);
         }
         return false;
