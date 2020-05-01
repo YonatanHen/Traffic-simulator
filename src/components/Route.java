@@ -1,6 +1,7 @@
 package components;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class represent Route on the map.
@@ -71,7 +72,7 @@ public class Route implements RouteParts {
      * @return true if yes .
      */
     public boolean canLeave(Vehicle vehicle){
-        return RouteParts.get(RouteParts.size()-1).equals(vehicle.getCurrentRoute());
+        return RouteParts.get(RouteParts.size()-1).equals(vehicle.getCurrentRoutePart());
     }
 
     /**
@@ -79,11 +80,12 @@ public class Route implements RouteParts {
      * updates the relevant fields and prints an appropriate message.
      * @param vehicle
      */
-    public void checkIn(Vehicle vehicle){ //TODO: check this function, if not clearly need to ask Sofi.
+    public void checkIn(Vehicle vehicle){
         // put the vehicle in the route
         vehicle.setCurrentRoute(this);
         vehicle.setCurrentRoutePart(RouteParts.get(0));
         vehicle.setStatus("- is starting a new "+ this);
+        System.out.println(vehicle.getStatus());
     }
 
     /**
@@ -93,7 +95,7 @@ public class Route implements RouteParts {
      */
     public void checkOut(Vehicle vehicle){
         if(canLeave(vehicle)) {//check if vehicle arrived to last route
-            vehicle.setStatus(" has finished " + this);
+            vehicle.setStatus("- has finished " + this);
             System.out.println(vehicle.getStatus());
         }
         else
@@ -110,28 +112,28 @@ public class Route implements RouteParts {
      * @param vehicle
      * @return next route part
      */
-    public RouteParts findNextPart(Vehicle vehicle){//TODO: fix this,it's never get into if statement.
-       if(canLeave(vehicle) && vehicle.getCurrentRoutePart().equals(RouteParts.get(RouteParts.size()-1)) && vehicle.getCurrentRoutePart() instanceof Junction){
-           boolean flag=false;
-           for(Road r:((Junction) vehicle.getCurrentRoutePart()).getExitingRoads()){
-               for(int j=0;j<r.getVehicleTypes().length && !flag;j++){
-                   if(vehicle.getVehicleType().equals(r.getVehicleTypes()[j])) flag=true;
-               }
-               if(flag) break;
-           }
-           if (flag) vehicle.setCurrentRoute(new Route(vehicle.getLastRoad(),vehicle));
-           else vehicle.setCurrentRoute(new Route(vehicle.getCurrentRoute().getRouteParts().get(0),vehicle));
-           return vehicle.getCurrentRoute().getRouteParts().get(0);
-       }
-       return vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().indexOf(vehicle.getCurrentRoutePart())+1);
+    public RouteParts findNextPart(Vehicle vehicle){
+        if (canLeave(vehicle)) {
+            for (Road r : ((Junction) vehicle.getCurrentRoutePart()).getExitingRoads()) {
+                for (int i = 0; i < r.getVehicleTypes().length; i++) {
+                    if (r.getVehicleTypes()[i].equals(vehicle.getVehicleType())) {
+                        Road lastRoad = vehicle.getLastRoad();
+                        vehicle.setCurrentRoute(new Route(lastRoad, vehicle));
+                        return vehicle.getCurrentRoutePart();
+                    }
+                }
+            }
+            vehicle.setCurrentRoute(new Route(vehicle.getCurrentRoute().getRouteParts().get(0),vehicle));
+            return vehicle.getCurrentRoutePart();
+        }
+        else return vehicle.getCurrentRoutePart().findNextPart(vehicle);
     }
 
-    /**
-     * print a message that the vehicle continue in current route.
+     /** print a message that the vehicle continue in current route.
      * @param vehicle
      */
     public void stayOnCurrentPart(Vehicle vehicle){
-       vehicle.getLastRoad().stayOnCurrentPart(vehicle);
+       vehicle.getCurrentRoutePart().stayOnCurrentPart(vehicle);
     }
 
     public boolean equals(Object other){

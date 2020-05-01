@@ -111,6 +111,7 @@ public class Driving implements Utilities, Timer {
                 System.out.println(allTimedElements.get(i).toString());
             }
             allTimedElements.get(i).incrementDrivingTime();
+            System.out.println();
         }
     }
 
