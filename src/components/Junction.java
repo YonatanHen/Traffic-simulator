@@ -129,6 +129,11 @@ public class Junction extends Point implements RouteParts {
 
      }
         return false;
+
+//        if(vehicle.getLastRoad().getStartJunction().equals(vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().size()-1)))
+//            return false;
+//        if(vehicle.getCurrentRoutePart())
+//    }
     }
 
     /**}

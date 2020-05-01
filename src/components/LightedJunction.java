@@ -78,9 +78,12 @@ public class LightedJunction extends Junction{
      * @return true if the car can leave the junction else false.
      */
     public boolean canLeave(Vehicle vehicle){
-        if(lights.getTrafficLightsOn()) return true;
-        vehicle.setStatus("- is waiting at " + this + " for green light.");
-        return false;
+        if(lights.getTrafficLightsOn())
+            return true;
+        else {
+            vehicle.setStatus("- is waiting at " + this + " for green light.");
+            return false;
+        }
     }
 
 

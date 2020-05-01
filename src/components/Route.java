@@ -110,20 +110,13 @@ public class Route implements RouteParts {
      * @param vehicle
      * @return next route part
      */
-    public RouteParts findNextPart(Vehicle vehicle){//TODO: fix this,it's never get into if statement.
-       if(canLeave(vehicle) && vehicle.getCurrentRoutePart().equals(RouteParts.get(RouteParts.size()-1)) && vehicle.getCurrentRoutePart() instanceof Junction){
-           boolean flag=false;
-           for(Road r:((Junction) vehicle.getCurrentRoutePart()).getExitingRoads()){
-               for(int j=0;j<r.getVehicleTypes().length && !flag;j++){
-                   if(vehicle.getVehicleType().equals(r.getVehicleTypes()[j])) flag=true;
-               }
-               if(flag) break;
-           }
-           if (flag) vehicle.setCurrentRoute(new Route(vehicle.getLastRoad(),vehicle));
-           else vehicle.setCurrentRoute(new Route(vehicle.getCurrentRoute().getRouteParts().get(0),vehicle));
-           return vehicle.getCurrentRoute().getRouteParts().get(0);
-       }
-       return vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().indexOf(vehicle.getCurrentRoutePart())+1);
+    public RouteParts findNextPart(Vehicle vehicle){
+        if(vehicle.getCurrentRoutePart().equals(vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().size()-1))) {
+            vehicle.setCurrentRoute(new Route(vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().size()-1), vehicle));
+            return vehicle.getCurrentRoutePart();
+        }
+        else
+            return vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().indexOf(vehicle.getCurrentRoutePart())+1);
     }
 
     /**

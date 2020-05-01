@@ -109,6 +109,9 @@ public class Driving implements Utilities, Timer {
                 vehicles.get(i).setObjectCount(i+1);
                 System.out.println(allTimedElements.get(i).toString());
             }
+            System.out.println("---------------------------");
+
+            System.out.println("----------------------------");
             allTimedElements.get(i).incrementDrivingTime();
         }
     }
