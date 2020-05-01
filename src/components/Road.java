@@ -53,7 +53,7 @@ public class Road implements RouteParts, Utilities {
     //getters
     public boolean getGreenLight(){return greenlight;}
     public boolean getEnable(){return enable;}
-    public int getMaxSpeed() {return getMaxSpeed();}
+    public int getMaxSpeed() {return maxSpeed;}
     public double getLength() { return length;}
     public Junction getEndJunction() { return endJunction; }
     public Junction getStartJunction() {return startJunction; }
@@ -164,7 +164,7 @@ public class Road implements RouteParts, Utilities {
          /*
         - is starting to move on Road from Junction 4 (Lighted) to Junction 3 (Lighted), length: 447, max speed 60, time to finish: 11.0.
          */
-        return "Road from "+ startJunction + " to " + endJunction +", length:"+ (int)calcLength()+", max speed "+ maxSpeed;
+        return "Road from "+ startJunction + " to " + endJunction +", length: "+ (int)calcLength()+", max speed "+ maxSpeed;
     }
 
     public boolean equals(Object obj){

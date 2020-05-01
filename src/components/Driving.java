@@ -93,6 +93,7 @@ public class Driving implements Utilities, Timer {
      * @param numOfTurns
      */
     public void drive(int numOfTurns){
+        System.out.println("\n"+toString()+"\n");
         while (numOfTurns >= drivingTime){
             System.out.println("***************TURN" + drivingTime + "***************");
             incrementDrivingTime();

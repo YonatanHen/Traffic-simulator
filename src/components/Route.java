@@ -142,12 +142,20 @@ public class Route implements RouteParts {
         return false;
     }
     public String toString(){
-        double length=0;
-                for(int i=0;i<RouteParts.size();i++){
-                    if(RouteParts.get(i) instanceof Road)
-                    length+=((Road) RouteParts.get(i)).getLength();
+        //Search for the road with max speed and save the max speed value with end junction value.
+        int maxSpeed=0;
+        Junction endJunc=((Road)RouteParts.get(0)).getEndJunction();
+        for (RouteParts r:RouteParts){
+            if( r instanceof Road){
+                if(((Road) r).getMaxSpeed()>maxSpeed){
+                    maxSpeed=((Road)r).getMaxSpeed();
+                    endJunc=((Road) r).getEndJunction();
                 }
-        return "Route from " + vehicle.getLastRoad() + ", length: " + (int)length + ", estimated time for route: "+ calcEstimatedTime(this) + ".";
+            }
+        }
+        return "Route from Road from " + vehicle.getLastRoad().getStartJunction()+ " to "+
+                vehicle.getLastRoad().getEndJunction() +", length: "+ (int)vehicle.getLastRoad().getLength() + ", max speed "+ maxSpeed +" to "
+                + endJunc+", estimated time for route: "+ calcEstimatedTime(this) + ".";
     }
     
 }

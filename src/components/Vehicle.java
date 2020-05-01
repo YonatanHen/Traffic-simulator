@@ -75,8 +75,9 @@ public class Vehicle implements Utilities,Timer {
         if(currentRoutePart.canLeave(this)) {
             //Check if car reach the end of the Route
                 currentRoutePart.checkOut(this);
-                currentRoutePart = currentRoute.findNextPart(this);
+                currentRoutePart = currentRoutePart.findNextPart(this);
                 currentRoutePart.checkIn(this);
+            System.out.println(currentRoutePart+" -----------------------------------------------------");
         }
         else currentRoutePart.stayOnCurrentPart(this);
     }
