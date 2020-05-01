@@ -117,6 +117,7 @@ public class Road implements RouteParts, Utilities {
     public void checkIn(Vehicle vehicle){
         vehicle.setCurrentRoutePart(this);
         vehicle.setLastRoad(this);
+        addVehicleToWaitingVehicles(vehicle);
         vehicle.setStatus("- is starting to move on " +  toString() + ", time to finish:"+ vehicle.getCurrentRoute().calcEstimatedTime(vehicle)) ;
         System.out.println(vehicle.getStatus());
     }

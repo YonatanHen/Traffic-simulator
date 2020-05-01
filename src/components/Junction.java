@@ -116,18 +116,18 @@ public class Junction extends Point implements RouteParts {
      * @param vehicle
      * @return true when vehicle is first in the entering roads list,else false.
      */
-    public boolean checkAvailability(Vehicle vehicle){
-     if(exitingRoads.size()>0 && vehicle.getCurrentRoutePart().findNextPart(vehicle)!=null) {
-         if (((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().size()>0) {
-             if(((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().indexOf(vehicle)==0)
-             return true;
-             else{
-                 vehicle.setStatus("- is waiting at "+ toString()+"- there are previous cars on the same road.");
-                 return false;
-             }
-         }
-
-     }
+    public boolean checkAvailability(Vehicle vehicle) {
+        if(!vehicle.getLastRoad().getWaitingVehicles().get(0).equals(vehicle)){
+            vehicle.setStatus("- is waiting at "+ vehicle.getLastRoad().getStartJunction()+"- there are previous cars on the same road.");
+            return false;
+        }
+        else{
+            for(Road r:exitingRoads){
+                for(int i=0;i<r.getVehicleTypes().length;i++){
+                    if(r.getVehicleTypes()[i].equals(vehicle.getVehicleType())) return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +159,7 @@ public class Junction extends Point implements RouteParts {
         if(canLeave(vehicle)) {
             vehicle.setStatus("- has left " + toString());
             System.out.println(vehicle.getStatus());
+            vehicle.getLastRoad().getWaitingVehicles().remove(vehicle);
         }
     }
 

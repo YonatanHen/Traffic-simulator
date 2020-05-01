@@ -36,6 +36,7 @@ public class Vehicle implements Utilities,Timer {
         timeFromStartRoute=0;
         timeOnCurrentPart=0;
         lastRoad=road;
+        lastRoad.addVehicleToWaitingVehicles(this);
         currentRoute=new Route(road,this);
         currentRoute.checkIn(this);
         currentRoutePart=currentRoute.getRouteParts().get(0);
@@ -106,7 +107,6 @@ public class Vehicle implements Utilities,Timer {
     public boolean equals(Object o) {
         if(o instanceof Vehicle){
             return vehicleType.equals(((Vehicle) o).vehicleType) &&
-                    currentRoute.equals(((Vehicle) o).currentRoute) &&
                     currentRoutePart.equals(((Vehicle) o).currentRoutePart) &&
                     timeOnCurrentPart==((Vehicle) o).timeOnCurrentPart &&
                     timeFromStartRoute==((Vehicle) o).timeFromStartRoute &&
