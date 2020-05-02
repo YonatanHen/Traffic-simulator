@@ -75,8 +75,10 @@ public class Vehicle implements Utilities,Timer {
     public void move(){
         if(currentRoutePart.canLeave(this)){
             currentRoutePart.checkOut(this);
-            currentRoutePart=currentRoutePart.findNextPart(this);
-            currentRoutePart.checkIn(this);
+            if(currentRoutePart.findNextPart(this)!=null ) {
+                currentRoutePart = currentRoutePart.findNextPart(this);
+                currentRoutePart.checkIn(this);
+            }
         }
         else currentRoute.stayOnCurrentPart(this);
         if(currentRoute.canLeave(this)) {

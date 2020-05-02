@@ -57,6 +57,7 @@ public abstract class TrafficLights implements Timer, Utilities {
         for (int i = 0; i < roads.size(); i++) {
             if (i == greenLightIndex) {
                 roads.get(i).setGreenlight(true);
+                trafficLightsOn=true;
                 System.out.println("-" + roads.get(i) + ": green light.");
             } else roads.get(i).setGreenlight(false);
         }
