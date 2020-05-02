@@ -95,7 +95,7 @@ public class Route implements RouteParts {
      */
     public void checkOut(Vehicle vehicle){
         if(canLeave(vehicle)) {//check if vehicle arrived to last route
-            vehicle.setStatus("- has finished " + this);
+            vehicle.setStatus("- has finished " + this + " Time spent on the route: " + vehicle.getTimeFromStartRoute());
             System.out.println(vehicle.getStatus());
         }
         else
