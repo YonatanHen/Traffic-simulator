@@ -129,7 +129,7 @@ public class Road implements RouteParts, Utilities {
      */
     public void checkOut(Vehicle vehicle){
         removeVehicleFromWaitingVehicles(vehicle);
-        vehicle.setStatus("- has finished " + toString());
+        vehicle.setStatus("- has finished " + toString() + ", time spent on the road: "+ vehicle.getTimeOnCurrentPart() + ".");
         System.out.println(vehicle.getStatus());
     }
 
