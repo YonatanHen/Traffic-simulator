@@ -73,7 +73,10 @@ public abstract class TrafficLights implements Timer, Utilities {
     public void incrementDrivingTime(){
         workingTime++;
         if(workingTime>=delay) changeLights();
-        else System.out.println(this+ "\n- on delay");
+        else {
+            trafficLightsOn=false;
+            System.out.println(this+ "\n- on delay");
+        }
     }
     //setters
     public void setDelay(int delay) { this.delay = delay; }

@@ -1,5 +1,3 @@
-//Yehonatan Hen-207630112
-//Rotem Librati-
 
 package utilities;
 import components.Driving;
