@@ -75,7 +75,7 @@ public class Driving implements Utilities, Timer {
         this.allTimedElements = allTimedElements;
     }
 
-    public void setDrivingTime(int drivingTime) {
+    public void setDrivingTime(final int drivingTime) {
         this.drivingTime = drivingTime;
     }
 

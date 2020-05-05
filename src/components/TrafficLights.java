@@ -79,10 +79,10 @@ public abstract class TrafficLights implements Timer, Utilities {
         }
     }
     //setters
-    public void setDelay(int delay) { this.delay = delay; }
-    public void setGreenLightIndex(int greenLightIndex) { this.greenLightIndex = greenLightIndex; }
-    public void setId(int id) { this.id = id; }
-    public void setTrafficLightsOn(boolean trafficLightsOn) { this.trafficLightsOn = trafficLightsOn; }
+    public void setDelay(final int delay) { this.delay = delay; }
+    public void setGreenLightIndex(final int greenLightIndex) { this.greenLightIndex = greenLightIndex; }
+    public void setId(final int id) { this.id = id; }
+    public void setTrafficLightsOn(final boolean trafficLightsOn) { this.trafficLightsOn = trafficLightsOn; }
     public void setRoads(ArrayList<Road> roads) {
         this.roads.clear();
         this.roads.addAll(roads);

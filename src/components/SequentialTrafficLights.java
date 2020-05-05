@@ -32,7 +32,7 @@ public class SequentialTrafficLights extends TrafficLights {
         return increment;
     }
 
-    public void setIncrement(int increment) {
+    public void setIncrement(final int increment) {
         this.increment = increment;
     }
 

@@ -59,7 +59,7 @@ public class Junction extends Point implements RouteParts {
         exitingRoads.clear();
         exitingRoads.addAll(er);
     }
-    public void setJunctionName(String name){junctionName=name;}
+    public void setJunctionName(final String name){junctionName=name;}
 
     /**
      * Add new entering road to array list

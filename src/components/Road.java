@@ -62,11 +62,11 @@ public class Road implements RouteParts, Utilities {
     public static int[] getAllowedSpeedOptions() {return allowedSpeedOptions; }
 
     //setters
-    public void setLength(double length) {this.length = length; }
-    public void setEnable(boolean enable) { this.enable = enable; }
-    public void setMaxSpeed(int maxSpeed) { this.maxSpeed = maxSpeed; }
+    public void setLength(final double length) {this.length = length; }
+    public void setEnable(final boolean enable) { this.enable = enable; }
+    public void setMaxSpeed(final int maxSpeed) { this.maxSpeed = maxSpeed; }
     public void setEndJunction(Junction endJunction) { this.endJunction = endJunction; }
-    public void setGreenlight(boolean greenlight) {this.greenlight = greenlight; }
+    public void setGreenlight(final boolean greenlight) {this.greenlight = greenlight; }
     public void setStartJunction(Junction startJunction) { this.startJunction = startJunction; }
     public void setVehicleTypes(VehicleType[] vehicleTypes) { this.vehicleTypes = vehicleTypes; }
     public void setWaitingVehicles(ArrayList<Vehicle> waitingVehicles) { this.waitingVehicles = waitingVehicles; }

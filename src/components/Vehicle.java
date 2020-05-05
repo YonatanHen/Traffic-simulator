@@ -58,15 +58,15 @@ public class Vehicle implements Utilities,Timer {
     public String getStatus(){return status;}
 
     //setters
-    public void setId(int id){this.id=id;}
+    public void setId(final int id){this.id=id;}
     public void setVehicleType(VehicleType v){vehicleType=v;}
     public void setCurrentRoute(Route current){currentRoute=current;}
     public void setCurrentRoutePart(RouteParts rp){currentRoutePart=rp;}
-    public void setTimeFromStartRoute(int time){timeFromStartRoute=time;}
-    public void setTimeOnCurrentPart(int time){timeOnCurrentPart=time;}
-    public void setObjectCount(int oc){objectCount=oc;}
+    public void setTimeFromStartRoute(final int time){timeFromStartRoute=time;}
+    public void setTimeOnCurrentPart(final int time){timeOnCurrentPart=time;}
+    public void setObjectCount(final int oc){objectCount=oc;}
     public void setLastRoad(Road r){lastRoad=r;}
-    public void setStatus(String s){status=s;}
+    public void setStatus(final String s){status=s;}
 
     /**
      * Made check out if car can finish the current part and then checkIn to the next part.

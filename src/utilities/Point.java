@@ -53,8 +53,8 @@ public abstract class Point implements Utilities {
     public double getX(){return x;}
     public double getY(){return y;}
     //setters
-    public void setX(double x){this.x=x;}
-    public void setY(double y){this.y=y;}
+    public void setX(final double x){this.x=x;}
+    public void setY(final double y){this.y=y;}
 
     public String toString(){
         return "Point ("+x+" , "+y+")";
