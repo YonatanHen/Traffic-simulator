@@ -60,20 +60,25 @@ public class mainFrame extends JFrame {
         menuBar.add(vehicleColor);
         menuBar.add(help);
         setJMenuBar(menuBar);
-        ArrayList<JLabel> components=new ArrayList<>();
-        components.add(new JLabel("Create road system"));
-        components.add(new JLabel("Start"));
-        components.add(new JLabel("Stop"));
-        components.add(new JLabel("Resume"));
-        components.add(new JLabel("Info"));
+        ArrayList<JButton> components=new ArrayList<>();
+        components.add(new JButton(new AbstractAction("Create road system") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createRoadSystem createRoadSys=new createRoadSystem("Create road system");
+                createRoadSys.pack();
+                createRoadSys.setVisible(true);
+            }
+        }));
+        components.add(new JButton("Start"));
+        components.add(new JButton("Stop"));
+        components.add(new JButton("Resume"));
+        components.add(new JButton("Info"));
         Border border=BorderFactory.createLineBorder(Color.BLUE,1);
-        for(JLabel label:components){
-            label.setHorizontalAlignment(SwingConstants.CENTER);
-            label.setBorder(border);
-            container.add(label);
+        for(JButton button:components){
+            button.setBorder(border);
+            container.add(button);
         }
         container.setLayout(new GridLayout(1,0));
         add(container,BorderLayout.SOUTH);
-
     }
 }
