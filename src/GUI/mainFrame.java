@@ -30,8 +30,27 @@ public class mainFrame extends JFrame {
             }
         });
         background = new JMenu("Background");
-        blueBackGround = new JMenuItem("Blue");
-        noneBackground = new JMenuItem("None");
+        blueBackGround = new JMenuItem(new AbstractAction("Blue"){
+            @Override
+            /**
+             * change the color of background to blue
+             * @param e
+             */
+            public void actionPerformed(ActionEvent e) {
+                getContentPane().setBackground(Color.BLUE);
+            }
+        });
+
+        noneBackground = new JMenuItem(new AbstractAction("None"){
+            @Override
+            /**
+             * return the color of background to default
+             * @param e
+             */
+            public void actionPerformed(ActionEvent e) {
+                getContentPane().setBackground(Color.WHITE);
+            }
+        });
         vehicleColor = new JMenu("Vehicle color");
         blueVehicle = new JMenuItem("Blue");
         magentaVehicle = new JMenuItem("Magenta");
@@ -49,6 +68,7 @@ public class mainFrame extends JFrame {
                         "Home Work 3\n" + "GUI @ Threads");
             }
         });
+
         createRoadSys=crs;
         container=new JPanel();
         file.add(exit);
@@ -69,7 +89,7 @@ public class mainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 createRoadSys.pack();
-                createRoadSys.setSize(700,300);
+                createRoadSys.setSize(600,300);
                 createRoadSys.setVisible(true);
                 driving=createRoadSys.getD();
             }
