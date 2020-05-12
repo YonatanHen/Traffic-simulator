@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class implement "create road system" dialog
@@ -44,9 +45,17 @@ public class createRoadSystem extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 d=new Driving(numOfVehicles.getValue(),numOfJuncs.getValue());
                 dispose();
+
+                }
+        }));
+        buttons.add(new JButton(new AbstractAction("Cancel") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                dispose();
+
             }
         }));
-        buttons.add(new JButton("Cancel"));
         JPanel bottom=new JPanel();
         bottom.setLayout( new GridLayout(1,2,10,0));
         text1=new JLabel("Number of junctions",SwingConstants.CENTER);
