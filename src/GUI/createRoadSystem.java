@@ -1,7 +1,6 @@
 package GUI;
 
 import components.Driving;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -45,7 +44,6 @@ public class createRoadSystem extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 d=new Driving(numOfVehicles.getValue(),numOfJuncs.getValue());
                 dispose();
-
                 }
         }));
         buttons.add(new JButton(new AbstractAction("Cancel") {

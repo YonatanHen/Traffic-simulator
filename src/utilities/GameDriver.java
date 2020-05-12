@@ -16,14 +16,10 @@ import components.Driving;
 
 public class GameDriver{
     public static void main(String[] args) {
-        Driving driving;
-        createRoadSystem crs=new createRoadSystem("Create road system");
-        mainFrame main = new mainFrame("Road system",crs);
-        //System.out.println(crs.getD().getDrivingTime());
+        mainFrame main = new mainFrame("Road system");
         main.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        main.pack();
+        main.setSize(600,800);
         main.setVisible(true);
-        driving=main.getCreateRoadSys().getD();
         }
     }
 

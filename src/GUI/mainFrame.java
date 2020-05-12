@@ -12,10 +12,10 @@ public class mainFrame extends JFrame {
     JMenu file, background, vehicleColor, help;
     JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem;
     JPanel container;
-    createRoadSystem createRoadSys;
     Driving driving;
+    createRoadSystem createRoadSys;
 
-    public mainFrame(String title,createRoadSystem crs) {
+    public mainFrame(String title) {
         super(title);
         menuBar = new JMenuBar();
         file = new JMenu("File");
@@ -68,8 +68,7 @@ public class mainFrame extends JFrame {
                         "Home Work 3\n" + "GUI @ Threads");
             }
         });
-
-        createRoadSys=crs;
+        createRoadSys=new createRoadSystem("Create road system");
         container=new JPanel();
         file.add(exit);
         background.add(blueBackGround);

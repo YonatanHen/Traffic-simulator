@@ -52,6 +52,15 @@ public abstract class Point implements Utilities {
     //getters
     public double getX(){return x;}
     public double getY(){return y;}
+
+    public int getMaxX() {
+        return maxX;
+    }
+
+    public int getMaxY() {
+        return maxY;
+    }
+
     //setters
     public void setX(final double x){this.x=x;}
     public void setY(final double y){this.y=y;}
