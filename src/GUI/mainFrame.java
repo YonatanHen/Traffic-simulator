@@ -30,7 +30,7 @@ public class mainFrame extends JFrame {
             }
         });
         background = new JMenu("Background");
-        blueBackGround = new JMenuItem(new AbstractAction("Blue"){
+        blueBackGround = new JMenuItem(new AbstractAction("Blue") {
             @Override
             /**
              * change the color of background to blue
@@ -41,7 +41,7 @@ public class mainFrame extends JFrame {
             }
         });
 
-        noneBackground = new JMenuItem(new AbstractAction("None"){
+        noneBackground = new JMenuItem(new AbstractAction("None") {
             @Override
             /**
              * return the color of background to default
@@ -68,8 +68,8 @@ public class mainFrame extends JFrame {
                         "Home Work 3\n" + "GUI @ Threads");
             }
         });
-        createRoadSys=new createRoadSystem("Create road system");
-        container=new JPanel();
+        createRoadSys = new createRoadSystem("Create road system");
+        container = new JPanel();
         file.add(exit);
         background.add(blueBackGround);
         background.add(noneBackground);
@@ -83,14 +83,14 @@ public class mainFrame extends JFrame {
         menuBar.add(vehicleColor);
         menuBar.add(help);
         setJMenuBar(menuBar);
-        ArrayList<JButton> components=new ArrayList<>();
+        ArrayList<JButton> components = new ArrayList<>();
         components.add(new JButton(new AbstractAction("Create road system") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 createRoadSys.pack();
-                createRoadSys.setSize(600,300);
+                createRoadSys.setSize(600, 300);
                 createRoadSys.setVisible(true);
-                driving=createRoadSys.getD();
+                setDriving(createRoadSys.getD());
             }
         }));
         components.add(new JButton(new AbstractAction("Start") {
@@ -106,19 +106,28 @@ public class mainFrame extends JFrame {
         components.add(new JButton("Stop"));
         components.add(new JButton("Resume"));
         components.add(new JButton("Info"));
-        Border border=BorderFactory.createLineBorder(Color.BLUE,1);
-        for(JButton button:components){
+        Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
+        for (JButton button : components) {
             button.setBorder(border);
             container.add(button);
         }
-        container.setLayout(new GridLayout(1,0));
-        add(container,BorderLayout.SOUTH);
+        container.setLayout(new GridLayout(1, 0));
+        add(container, BorderLayout.SOUTH);
     }
-    public createRoadSystem getCreateRoadSys(){
+
+    public createRoadSystem getCreateRoadSys() {
         return createRoadSys;
     }
 
     public Driving getDriving() {
         return driving;
+    }
+    public void setDriving(Driving d){driving=d;}
+    public void paint(Graphics g) {
+        super.paint(g);
+        if(driving!=null) {
+            System.out.println("dsdsdsds");;
+            g.drawLine(30, 30, 60, 60);
+        }
     }
 }
