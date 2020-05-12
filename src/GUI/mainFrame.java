@@ -66,6 +66,7 @@ public class mainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 createRoadSystem createRoadSys=new createRoadSystem("Create road system");
                 createRoadSys.pack();
+                createRoadSys.setSize(700,300);
                 createRoadSys.setVisible(true);
             }
         }));
