@@ -1,5 +1,6 @@
 package GUI;
 
+import components.Driving;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -11,8 +12,10 @@ public class mainFrame extends JFrame {
     JMenu file, background, vehicleColor, help;
     JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem;
     JPanel container;
+    createRoadSystem createRoadSys;
+    Driving driving;
 
-    public mainFrame(String title) {
+    public mainFrame(String title,createRoadSystem crs) {
         super(title);
         menuBar = new JMenuBar();
         file = new JMenu("File");
@@ -46,6 +49,7 @@ public class mainFrame extends JFrame {
                         "Home Work 3\n" + "GUI @ Threads");
             }
         });
+        createRoadSys=crs;
         container=new JPanel();
         file.add(exit);
         background.add(blueBackGround);
@@ -64,13 +68,22 @@ public class mainFrame extends JFrame {
         components.add(new JButton(new AbstractAction("Create road system") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                createRoadSystem createRoadSys=new createRoadSystem("Create road system");
                 createRoadSys.pack();
                 createRoadSys.setSize(700,300);
                 createRoadSys.setVisible(true);
+                driving=createRoadSys.getD();
             }
         }));
-        components.add(new JButton("Start"));
+        components.add(new JButton(new AbstractAction("Start") {
+            /**
+             * start driving
+             * @param e
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createRoadSys.getD().drive(20);
+            }
+        }));
         components.add(new JButton("Stop"));
         components.add(new JButton("Resume"));
         components.add(new JButton("Info"));
@@ -81,5 +94,12 @@ public class mainFrame extends JFrame {
         }
         container.setLayout(new GridLayout(1,0));
         add(container,BorderLayout.SOUTH);
+    }
+    public createRoadSystem getCreateRoadSys(){
+        return createRoadSys;
+    }
+
+    public Driving getDriving() {
+        return driving;
     }
 }

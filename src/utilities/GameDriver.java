@@ -1,10 +1,11 @@
 
 package utilities;
-import components.Driving;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.locks.Lock;
+
 import GUI.*;
+import components.Driving;
 
 /**
  * class main.
@@ -13,15 +14,17 @@ import GUI.*;
  * @author Rotem Librati-307903732
  */
 
-public class GameDriver extends Component {
+public class GameDriver{
     public static void main(String[] args) {
-        mainFrame main = new mainFrame("Road system");
+        Driving driving;
+        createRoadSystem crs=new createRoadSystem("Create road system");
+        mainFrame main = new mainFrame("Road system",crs);
+        //System.out.println(crs.getD().getDrivingTime());
         main.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         main.pack();
         main.setVisible(true);
-        Driving driving = new Driving(10, 20);
-        driving.drive(20);
+        driving=main.getCreateRoadSys().getD();
+        }
     }
-}
 
 

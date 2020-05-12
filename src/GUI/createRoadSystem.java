@@ -1,7 +1,10 @@
 package GUI;
 
+import components.Driving;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 /**
@@ -12,11 +15,12 @@ public class createRoadSystem extends JFrame {
     static final int FPS_MIN2 = 0;
     static final int FPS_MAX1 = 20;
     static final int FPS_MAX2 = 50;
-    static final int FPS_INIT1 = 10;    //initial frames per second
-    static final int FPS_INIT2 = 25;    //initial frames per second
+    static final int FPS_INIT1 = 11;
+    static final int FPS_INIT2 = 25;
     JSlider numOfJuncs,numOfVehicles;
     JPanel frame;
     JLabel text1,text2;
+    Driving d;
     public createRoadSystem(String title) {
         super(title);
         numOfJuncs=new JSlider(JSlider.HORIZONTAL,FPS_MIN1,FPS_MAX1,FPS_INIT1);
@@ -31,7 +35,17 @@ public class createRoadSystem extends JFrame {
         frame =new JPanel();
         frame.setLayout(new GridLayout(5,1));
         ArrayList<JButton> buttons=new ArrayList<>();
-        buttons.add(new JButton("OK"));
+        buttons.add(new JButton(new AbstractAction("OK") {
+            @Override
+            /**
+             *function make new driving object
+             * @param e
+             */
+            public void actionPerformed(ActionEvent e) {
+                d=new Driving(numOfVehicles.getValue(),numOfJuncs.getValue());
+                dispose();
+            }
+        }));
         buttons.add(new JButton("Cancel"));
         JPanel bottom=new JPanel();
         bottom.setLayout( new GridLayout(1,2,10,0));
@@ -45,5 +59,9 @@ public class createRoadSystem extends JFrame {
         bottom.add(buttons.get(1));
         frame.add(bottom);
         add(frame);
+    }
+
+    public Driving getD() {
+        return d;
     }
 }
