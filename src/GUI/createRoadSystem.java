@@ -16,8 +16,8 @@ public class createRoadSystem extends JFrame implements ActionListener {
     static final int FPS_MIN2 = 0;
     static final int FPS_MAX1 = 20;
     static final int FPS_MAX2 = 50;
-    static final int FPS_INIT1 = 11;
-    static final int FPS_INIT2 = 25;
+    static final int FPS_INIT1 = 5;
+    static final int FPS_INIT2 = 4;
     JSlider numOfJuncs,numOfVehicles;
     JPanel frame;
     JLabel text1,text2;
