@@ -70,7 +70,7 @@ public class mainFrame extends JFrame implements ActionListener {
     }
 
     /**
-     * Perform actions
+     * Perform actions listeners
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
