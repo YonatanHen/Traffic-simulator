@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class mainFrame extends JFrame implements ActionListener {
-    final int RADIUS=10;
+    final int RADIUS = 10;
     JMenuBar menuBar;
     JMenu file, background, vehicleColor, help;
     JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem;
@@ -43,12 +43,12 @@ public class mainFrame extends JFrame implements ActionListener {
         helpItem = new JMenuItem("Help");
         helpItem.addActionListener(this);
         container = new JPanel();
-        btns=new JButton[5];
-        btns[0]=new JButton("Create road system");
-        btns[1]=new JButton("Start");
-        btns[2]=new JButton("Stop");
-        btns[3]=new JButton("Resume");
-        btns[4]=new JButton("Info");
+        btns = new JButton[5];
+        btns[0] = new JButton("Create road system");
+        btns[1] = new JButton("Start");
+        btns[2] = new JButton("Stop");
+        btns[3] = new JButton("Resume");
+        btns[4] = new JButton("Info");
         file.add(exit);
         background.add(blueBackGround);
         background.add(noneBackground);
@@ -63,7 +63,7 @@ public class mainFrame extends JFrame implements ActionListener {
         menuBar.add(help);
         setJMenuBar(menuBar);
         Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
-        for(int i=0;i<btns.length;i++) {
+        for (int i = 0; i < btns.length; i++) {
             btns[i].addActionListener(this);
             btns[i].setBorder(border);
             container.add(btns[i]);
@@ -74,23 +74,24 @@ public class mainFrame extends JFrame implements ActionListener {
 
     /**
      * Perform actions listeners
+     *
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
-            if (e.getSource()==exit){
-                System.exit(0);
-            }
-            if (e.getSource()==blueBackGround){
-                getContentPane().setBackground(Color.BLUE);
-            }
-            if (e.getSource()==noneBackground){
-                getContentPane().setBackground(Color.WHITE);
-            }
-            if (e.getSource()==helpItem){
-                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
-                        "Home Work 3\n" + "GUI @ Threads");
-            }
-        for(int i=0;i<btns.length;i++) {
+        if (e.getSource() == exit) {
+            System.exit(0);
+        }
+        if (e.getSource() == blueBackGround) {
+            getContentPane().setBackground(Color.BLUE);
+        }
+        if (e.getSource() == noneBackground) {
+            getContentPane().setBackground(Color.WHITE);
+        }
+        if (e.getSource() == helpItem) {
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
+                    "Home Work 3\n" + "GUI @ Threads");
+        }
+        for (int i = 0; i < btns.length; i++) {
             if (e.getSource() == btns[i]) {
                 switch (i) {
                     case 0: {
@@ -101,8 +102,9 @@ public class mainFrame extends JFrame implements ActionListener {
                         setDriving(createRoadSys.getD());
                     }
                     break;
-                    case 1:createRoadSys.getD().drive(20);
-                    break;
+                    case 1:
+                        createRoadSys.getD().drive(20);
+                        break;
                     case 2:
                         System.out.println("resume");
                         break;
@@ -116,23 +118,27 @@ public class mainFrame extends JFrame implements ActionListener {
             }
         }
     }
-    public void setDriving(Driving d){driving=d;}
+
+    public void setDriving(Driving d) {
+        driving = d;
+    }
+
     public void paint(Graphics g) {
         super.paint(g);
-        if(createRoadSys!=null){
-            if(createRoadSys.getFlag()){
-                for(Junction j:createRoadSys.getD().getMap().getJunctions()){
+        if (createRoadSys != null) {
+            if (createRoadSys.getFlag()) {
+                for (Junction j : createRoadSys.getD().getMap().getJunctions()) {
                     //g.drawOval((int)j.getX(),(int)j.getY(),RADIUS*2,RADIUS*2);
-                    g.fillOval((int)j.getX(),(int)j.getY(),RADIUS*2,RADIUS*2);
+                    g.fillOval((int) j.getX(), (int) j.getY(), RADIUS * 2, RADIUS * 2);
                 }
-                for(Road r:createRoadSys.getD().getMap().getRoads()) {
+                for (Road r : createRoadSys.getD().getMap().getRoads()) {
                     if (r.getEnable()) {
                         g.drawLine((int) r.getStartJunction().getX(), (int) r.getStartJunction().getY(),
                                 (int) r.getEndJunction().getX(), (int) r.getEndJunction().getY());
                     }
                 }
+            } else {//TODO:CLEAR }
             }
-            else {//TODO:CLEAR }
         }
     }
 }

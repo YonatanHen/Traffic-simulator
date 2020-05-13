@@ -62,7 +62,7 @@ public class createRoadSystem extends JFrame implements ActionListener {
      */
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==okBtn){
-            d=new Driving(numOfVehicles.getValue(),numOfJuncs.getValue());
+            d=new Driving(numOfJuncs.getValue(),numOfVehicles.getValue());
             flag=true;
             dispose();
         }
