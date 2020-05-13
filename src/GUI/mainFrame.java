@@ -5,13 +5,15 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class mainFrame extends JFrame {
+public class mainFrame extends JFrame implements ActionListener {
     JMenuBar menuBar;
     JMenu file, background, vehicleColor, help;
     JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem;
     JPanel container;
+    JButton btns[];
     Driving driving;
     createRoadSystem createRoadSys;
 
@@ -19,57 +21,31 @@ public class mainFrame extends JFrame {
         super(title);
         menuBar = new JMenuBar();
         file = new JMenu("File");
-        exit = new JMenuItem(new AbstractAction("Exit") {
-            @Override
-            /**
-             * exit the main frame when pressed.
-             * @param e
-             */
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        file.addActionListener(this);
+        exit = new JMenuItem("Exit");
+        exit.addActionListener(this);
         background = new JMenu("Background");
-        blueBackGround = new JMenuItem(new AbstractAction("Blue"){
-            @Override
-            /**
-             * change the color of background to blue
-             * @param e
-             */
-            public void actionPerformed(ActionEvent e) {
-                getContentPane().setBackground(Color.BLUE);
-            }
-        });
-
-        noneBackground = new JMenuItem(new AbstractAction("None"){
-            @Override
-            /**
-             * return the color of background to default
-             * @param e
-             */
-            public void actionPerformed(ActionEvent e) {
-                getContentPane().setBackground(Color.WHITE);
-            }
-        });
+        background.addActionListener(this);
+        blueBackGround = new JMenuItem("Blue");
+        blueBackGround.addActionListener(this);
+        noneBackground = new JMenuItem("None");
+        noneBackground.addActionListener(this);
         vehicleColor = new JMenu("Vehicle color");
         blueVehicle = new JMenuItem("Blue");
         magentaVehicle = new JMenuItem("Magenta");
         orangeVehicle = new JMenuItem("Orange");
         randomVehicle = new JMenuItem("Random");
         help = new JMenu("Help");
-        helpItem = new JMenuItem(new AbstractAction("Help") {
-            @Override
-            /**
-             *  show message dialog when "help" clicked.
-             * @param e
-             */
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
-                        "Home Work 3\n" + "GUI @ Threads");
-            }
-        });
-        createRoadSys=new createRoadSystem("Create road system");
-        container=new JPanel();
+        helpItem = new JMenuItem("Help");
+        helpItem.addActionListener(this);
+        createRoadSys = new createRoadSystem("Create road system");
+        container = new JPanel();
+        btns=new JButton[5];
+        btns[0]=new JButton("Create road system");
+        btns[1]=new JButton("Start");
+        btns[2]=new JButton("Stop");
+        btns[3]=new JButton("Resume");
+        btns[4]=new JButton("Info");
         file.add(exit);
         background.add(blueBackGround);
         background.add(noneBackground);
@@ -83,42 +59,61 @@ public class mainFrame extends JFrame {
         menuBar.add(vehicleColor);
         menuBar.add(help);
         setJMenuBar(menuBar);
-        ArrayList<JButton> components=new ArrayList<>();
-        components.add(new JButton(new AbstractAction("Create road system") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                createRoadSys.pack();
-                createRoadSys.setSize(600,300);
-                createRoadSys.setVisible(true);
-                driving=createRoadSys.getD();
-            }
-        }));
-        components.add(new JButton(new AbstractAction("Start") {
-            /**
-             * start driving
-             * @param e
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                createRoadSys.getD().drive(20);
-            }
-        }));
-        components.add(new JButton("Stop"));
-        components.add(new JButton("Resume"));
-        components.add(new JButton("Info"));
-        Border border=BorderFactory.createLineBorder(Color.BLUE,1);
-        for(JButton button:components){
-            button.setBorder(border);
-            container.add(button);
+        Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
+        for(int i=0;i<btns.length;i++) {
+            btns[i].addActionListener(this);
+            btns[i].setBorder(border);
+            container.add(btns[i]);
         }
-        container.setLayout(new GridLayout(1,0));
-        add(container,BorderLayout.SOUTH);
-    }
-    public createRoadSystem getCreateRoadSys(){
-        return createRoadSys;
+        container.setLayout(new GridLayout(1, 0));
+        add(container, BorderLayout.SOUTH);
     }
 
-    public Driving getDriving() {
-        return driving;
+    /**
+     * Perform actions
+     * @param e
+     */
+    public void actionPerformed(ActionEvent e) {
+            if (e.getSource()==exit){
+                System.exit(0);
+            }
+            if (e.getSource()==blueBackGround){
+                getContentPane().setBackground(Color.BLUE);
+            }
+            if (e.getSource()==noneBackground){
+                getContentPane().setBackground(Color.WHITE);
+            }
+            if (e.getSource()==helpItem){
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
+                        "Home Work 3\n" + "GUI @ Threads");
+            }
+        for(int i=0;i<btns.length;i++) {
+            if (e.getSource() == btns[i]) {
+                switch (i) {
+                    case 0: {
+                        createRoadSys.pack();
+                        createRoadSys.setSize(600, 300);
+                        createRoadSys.setVisible(true);
+                        setDriving(createRoadSys.getD());
+                    }
+                    break;
+                    case 1:createRoadSys.getD().drive(20);
+                    break;
+                    case 2:
+                        System.out.println("resume");
+                        break;
+                    case 3:
+                        System.out.println("stop");
+                        break;
+                    case 4:
+                        System.out.println("info");
+                        break;
+                }
+            }
+        }
+    }
+    public void setDriving(Driving d){driving=d;}
+    public void paint(Graphics g) {
+        super.paint(g);
     }
 }
