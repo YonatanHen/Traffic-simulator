@@ -2,6 +2,7 @@ package GUI;
 
 import components.Driving;
 import components.Junction;
+import components.LightedJunction;
 import components.Road;
 
 import javax.swing.*;
@@ -128,9 +129,14 @@ public class mainFrame extends JFrame implements ActionListener {
         if (createRoadSys != null) {
             if (createRoadSys.getFlag()) {
                 for (Junction j : createRoadSys.getD().getMap().getJunctions()) {
-                    //g.drawOval((int)j.getX(),(int)j.getY(),RADIUS*2,RADIUS*2);
+                    if(j instanceof LightedJunction){
+                        if(((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.GREEN);
+                        else if(!((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.RED);
+                        else g.setColor(Color.BLACK);
+                    }
                     g.fillOval((int) j.getX(), (int) j.getY(), RADIUS * 2, RADIUS * 2);
                 }
+                g.setColor(Color.BLACK);
                 for (Road r : createRoadSys.getD().getMap().getRoads()) {
                     if (r.getEnable()) {
                         g.drawLine((int) r.getStartJunction().getX(), (int) r.getStartJunction().getY(),
