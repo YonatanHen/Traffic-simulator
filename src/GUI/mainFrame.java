@@ -1,6 +1,9 @@
 package GUI;
 
 import components.Driving;
+import components.Junction;
+import components.Road;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -9,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class mainFrame extends JFrame implements ActionListener {
+    final int RADIUS=10;
     JMenuBar menuBar;
     JMenu file, background, vehicleColor, help;
     JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem;
@@ -38,7 +42,6 @@ public class mainFrame extends JFrame implements ActionListener {
         help = new JMenu("Help");
         helpItem = new JMenuItem("Help");
         helpItem.addActionListener(this);
-        createRoadSys = new createRoadSystem("Create road system");
         container = new JPanel();
         btns=new JButton[5];
         btns[0]=new JButton("Create road system");
@@ -91,6 +94,7 @@ public class mainFrame extends JFrame implements ActionListener {
             if (e.getSource() == btns[i]) {
                 switch (i) {
                     case 0: {
+                        createRoadSys = new createRoadSystem("Create road system");
                         createRoadSys.pack();
                         createRoadSys.setSize(600, 300);
                         createRoadSys.setVisible(true);
@@ -115,5 +119,20 @@ public class mainFrame extends JFrame implements ActionListener {
     public void setDriving(Driving d){driving=d;}
     public void paint(Graphics g) {
         super.paint(g);
+        if(createRoadSys!=null){
+            if(createRoadSys.getFlag()){
+                for(Junction j:createRoadSys.getD().getMap().getJunctions()){
+                    //g.drawOval((int)j.getX(),(int)j.getY(),RADIUS*2,RADIUS*2);
+                    g.fillOval((int)j.getX(),(int)j.getY(),RADIUS*2,RADIUS*2);
+                }
+                for(Road r:createRoadSys.getD().getMap().getRoads()) {
+                    if (r.getEnable()) {
+                        g.drawLine((int) r.getStartJunction().getX(), (int) r.getStartJunction().getY(),
+                                (int) r.getEndJunction().getX(), (int) r.getEndJunction().getY());
+                    }
+                }
+            }
+            else {//TODO:CLEAR }
+        }
     }
 }
