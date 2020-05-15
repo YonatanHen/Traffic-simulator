@@ -16,10 +16,12 @@ import components.Driving;
 
 public class GameDriver{
     public static void main(String[] args) {
-        mainFrame main = new mainFrame("Road system");
-        main.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        main.setSize(600,800);
-        main.setVisible(true);
+            mainFrame main = new mainFrame("Road system");
+            main.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            main.pack();
+            main.setSize(new Dimension(900, 700));
+            main.setLocationRelativeTo(null);
+            main.setVisible(true);
         }
     }
 

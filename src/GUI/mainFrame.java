@@ -9,19 +9,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class mainFrame<x> extends JFrame implements ActionListener {
-    final int RADIUS = 10;
+public class mainFrame extends JFrame implements ActionListener {
     JMenuBar menuBar;
     JMenu file, background, vehicleColor, help;
     JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem;
     JPanel container;
-    JButton btns[];
+    panel mainPanel;
+    JSplitPane splitPane;
+    JButton[] btns;
     Driving driving;
-    createRoadSystem createRoadSys;
-    Vehicle vehicle;
+
+
 
     public mainFrame(String title) {
         super(title);
+        splitPane=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        splitPane.setDividerLocation(0.2);
+        mainPanel=new panel();
         menuBar = new JMenuBar();
         file = new JMenu("File");
         file.addActionListener(this);
@@ -69,7 +73,8 @@ public class mainFrame<x> extends JFrame implements ActionListener {
             container.add(btns[i]);
         }
         container.setLayout(new GridLayout(1, 0));
-        add(container, BorderLayout.SOUTH);
+        add(mainPanel);
+        add(container,BorderLayout.SOUTH);
     }
 
     /**
@@ -82,10 +87,10 @@ public class mainFrame<x> extends JFrame implements ActionListener {
             System.exit(0);
         }
         if (e.getSource() == blueBackGround) {
-            getContentPane().setBackground(Color.BLUE);
+            mainPanel.setBackground(Color.BLUE);
         }
         if (e.getSource() == noneBackground) {
-            getContentPane().setBackground(Color.WHITE);
+            mainPanel.setBackground(Color.WHITE);
         }
         if (e.getSource() == helpItem) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
@@ -97,15 +102,13 @@ public class mainFrame<x> extends JFrame implements ActionListener {
             if (e.getSource() == btns[i]) {
                 switch (i) {
                     case 0: {
-                        createRoadSys = new createRoadSystem("Create road system");
-                        createRoadSys.pack();
-                        createRoadSys.setSize(600, 300);
-                        createRoadSys.setVisible(true);
-                        setDriving(createRoadSys.getD());
+                        mainPanel.actionPerformed(e);
+                        mainPanel.revalidate();
+                        mainPanel.repaint();
                     }
                     break;
                     case 1:
-                        createRoadSys.getD().drive(20);
+                        mainPanel.getCreateRoadSys().getD().drive(20);
                         break;
                     case 2:
                         System.out.println("resume");
@@ -123,15 +126,31 @@ public class mainFrame<x> extends JFrame implements ActionListener {
         }
     }
 
-    public void setDriving(Driving d) {
-        driving = d;
+
+
+
+}
+
+class panel extends JPanel implements ActionListener{
+    createRoadSystem createRoadSys;
+    final int RADIUS = 10;
+    public panel(){
+        setSize(new Dimension(800,600));
+        setVisible(true);
+        validate();
     }
 
-    public void paint(Graphics g) {
-        super.paint(g);
-        if (createRoadSys != null) {
-            if (createRoadSys.getFlag()) {
+    public void actionPerformed(ActionEvent e){
+        createRoadSys = new createRoadSystem("Create road system");
+        createRoadSys.pack();
+        createRoadSys.setSize(600, 300);
+        createRoadSys.setVisible(true);
+    }
 
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (createRoadSys != null) {
+           if (createRoadSys.getFlag()) {
                 for (Junction j : createRoadSys.getD().getMap().getJunctions()) {
                     if (j instanceof LightedJunction)
                         if (((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.GREEN);
@@ -150,10 +169,10 @@ public class mainFrame<x> extends JFrame implements ActionListener {
                         for(int i=0;i<r.getWaitingVehicles().size() ;i++)
                             drawRotetedVehicle(g,(int)r.getStartJunction().getX(), (int)r.getStartJunction().getY(),(int)r.getEndJunction().getX(),(int)r.getEndJunction().getY(),10,8);
                     }
-                }
-            } else {//TODO:CLEAR
+               }
             }
         }
+        repaint();
     }
     private void drawRotetedVehicle(Graphics g, int x1, int y1, int x2, int y2, int d, int h){
         int dx = x2 - x1, dy = y2 - y1, delta = 10;
@@ -182,5 +201,9 @@ public class mainFrame<x> extends JFrame implements ActionListener {
         g.fillOval((int) xm-2,(int) ym-2,4,4);
         g.fillOval((int) xn-2,(int) yn-2,4,4);
 
+    }
+
+    public createRoadSystem getCreateRoadSys() {
+        return createRoadSys;
     }
 }
