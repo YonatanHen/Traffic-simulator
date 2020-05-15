@@ -1,5 +1,7 @@
 package GUI;
 
+
+
 import components.*;
 
 import javax.swing.*;
@@ -7,6 +9,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.RowId;
 import java.util.Random;
 
 public class mainFrame extends JFrame implements ActionListener {
@@ -17,9 +20,6 @@ public class mainFrame extends JFrame implements ActionListener {
     panel mainPanel;
     JSplitPane splitPane;
     JButton[] btns;
-    Driving driving;
-
-
 
     public mainFrame(String title) {
         super(title);
@@ -41,8 +41,11 @@ public class mainFrame extends JFrame implements ActionListener {
         blueVehicle = new JMenuItem("Blue");
         blueVehicle.addActionListener(this);
         magentaVehicle = new JMenuItem("Magenta");
+        magentaVehicle.addActionListener(this);
         orangeVehicle = new JMenuItem("Orange");
+        orangeVehicle.addActionListener(this);
         randomVehicle = new JMenuItem("Random");
+        randomVehicle.addActionListener(this);
         help = new JMenu("Help");
         helpItem = new JMenuItem("Help");
         helpItem.addActionListener(this);
@@ -100,7 +103,7 @@ public class mainFrame extends JFrame implements ActionListener {
             mainPanel.setVehiclesColor("blue");
         }
         if(e.getSource() == magentaVehicle){
-            mainPanel.setVehiclesColor("magneta");
+            mainPanel.setVehiclesColor("magenta");
         }
         if(e.getSource() == orangeVehicle){
             mainPanel.setVehiclesColor("orange");
@@ -127,8 +130,6 @@ public class mainFrame extends JFrame implements ActionListener {
                         System.out.println("stop");
                         break;
                     case 4:
-                    {
-                        System.out.println("Info");
                     }
                         break;
                 }
@@ -139,10 +140,11 @@ public class mainFrame extends JFrame implements ActionListener {
 
 
 
-}
+
 
 class panel extends JPanel implements ActionListener{
     createRoadSystem createRoadSys;
+    Driving driving;
     final int RADIUS = 10;
     String vehiclesColor="blue";
     public panel(){
@@ -177,11 +179,11 @@ class panel extends JPanel implements ActionListener{
                        else g.setColor(Color.BLACK);
                    g.fillOval((int) j.getX(), (int) j.getY(), RADIUS * 2, RADIUS * 2);
                }
-               for (Road r : createRoadSys.getD().getMap().getRoads()) {
-                   if (r.getWaitingVehicles() != null) {
-                       for(int i=0;i<r.getWaitingVehicles().size() ;i++)
-                           drawRotetedVehicle(g,(int)r.getStartJunction().getX(), (int)r.getStartJunction().getY(),(int)r.getEndJunction().getX(),(int)r.getEndJunction().getY(),10,8);
-                   }
+               driving = createRoadSys.getD();
+               for (int i=0;i<driving.getVehicles().size();i++) {
+                   drawRotetedVehicle(g,(int)driving.getVehicles().get(i).getLastRoad().getStartJunction().getX(),(int)driving.getVehicles().get(i).getLastRoad().getStartJunction().getY(),
+                           (int)driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(),(int)driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(),10,8);
+
                }
             }
         }
@@ -194,7 +196,7 @@ class panel extends JPanel implements ActionListener{
      */
     public void paintVehicels(Graphics g){
         switch (vehiclesColor) {
-            case "magneta":
+            case "magenta":
                 g.setColor(Color.MAGENTA);
                 break;
             case "orange":
@@ -202,8 +204,9 @@ class panel extends JPanel implements ActionListener{
                 break;
             case "random":
             {
-                Random rand=new Random();
-                g.setColor(new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
+                Random r=new Random();
+                Color color = new Color(r.nextInt(256),r.nextInt(256),r.nextInt(256),r.nextInt(256));
+                g.setColor(color);
             }
             break;
             default:g.setColor(Color.BLUE);
@@ -246,4 +249,5 @@ class panel extends JPanel implements ActionListener{
     public void setVehiclesColor(String vehiclesColor) {
         this.vehiclesColor = vehiclesColor;
     }
+
 }
