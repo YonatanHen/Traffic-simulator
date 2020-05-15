@@ -7,7 +7,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.Random;
 
 public class mainFrame extends JFrame implements ActionListener {
     JMenuBar menuBar;
@@ -97,6 +97,16 @@ public class mainFrame extends JFrame implements ActionListener {
                     "Home Work 3\n" + "GUI @ Threads");
         }
         if(e.getSource() == blueVehicle){
+            mainPanel.setVehiclesColor("blue");
+        }
+        if(e.getSource() == magentaVehicle){
+            mainPanel.setVehiclesColor("magneta");
+        }
+        if(e.getSource() == orangeVehicle){
+            mainPanel.setVehiclesColor("orange");
+        }
+        if(e.getSource() == randomVehicle){
+            mainPanel.setVehiclesColor("random");
         }
         for (int i = 0; i < btns.length; i++) {
             if (e.getSource() == btns[i]) {
@@ -134,6 +144,7 @@ public class mainFrame extends JFrame implements ActionListener {
 class panel extends JPanel implements ActionListener{
     createRoadSystem createRoadSys;
     final int RADIUS = 10;
+    String vehiclesColor="blue";
     public panel(){
         setSize(new Dimension(800,600));
         setVisible(true);
@@ -151,26 +162,51 @@ class panel extends JPanel implements ActionListener{
         super.paintComponent(g);
         if (createRoadSys != null) {
            if (createRoadSys.getFlag()) {
-                for (Junction j : createRoadSys.getD().getMap().getJunctions()) {
-                    if (j instanceof LightedJunction)
-                        if (((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.GREEN);
-                        else if (!((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.RED);
-                        else g.setColor(Color.BLACK);
-
-                    g.fillOval((int) j.getX(), (int) j.getY(), RADIUS * 2, RADIUS * 2);
-                }
-                g.setColor(Color.BLACK);
                 for (Road r : createRoadSys.getD().getMap().getRoads()) {
                     if (r.getEnable()) {
                         g.drawLine((int) r.getStartJunction().getX()+4, (int) r.getStartJunction().getY()-3,
                                 (int) r.getEndJunction().getX()+4, (int) r.getEndJunction().getY()-2);
                     }
-                    if (r.getWaitingVehicles() != null) {
-                        for(int i=0;i<r.getWaitingVehicles().size() ;i++)
-                            drawRotetedVehicle(g,(int)r.getStartJunction().getX(), (int)r.getStartJunction().getY(),(int)r.getEndJunction().getX(),(int)r.getEndJunction().getY(),10,8);
-                    }
+
+               }
+               for (Junction j : createRoadSys.getD().getMap().getJunctions()) {
+                   if (j instanceof LightedJunction) {
+                       if (((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.GREEN);
+                       else g.setColor(Color.RED);
+                   }
+                       else g.setColor(Color.BLACK);
+                   g.fillOval((int) j.getX(), (int) j.getY(), RADIUS * 2, RADIUS * 2);
+               }
+               for (Road r : createRoadSys.getD().getMap().getRoads()) {
+                   if (r.getWaitingVehicles() != null) {
+                       for(int i=0;i<r.getWaitingVehicles().size() ;i++)
+                           drawRotetedVehicle(g,(int)r.getStartJunction().getX(), (int)r.getStartJunction().getY(),(int)r.getEndJunction().getX(),(int)r.getEndJunction().getY(),10,8);
+                   }
                }
             }
+        }
+        repaint();
+    }
+
+    /**
+     * function set the color of the vehicles.
+     * @param g
+     */
+    public void paintVehicels(Graphics g){
+        switch (vehiclesColor) {
+            case "magneta":
+                g.setColor(Color.MAGENTA);
+                break;
+            case "orange":
+                g.setColor(Color.ORANGE);
+                break;
+            case "random":
+            {
+                Random rand=new Random();
+                g.setColor(new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
+            }
+            break;
+            default:g.setColor(Color.BLUE);
         }
         repaint();
     }
@@ -195,7 +231,7 @@ class panel extends JPanel implements ActionListener{
         int[] xpoints = {(int) xm1, (int) xn1,  (int) xn, (int) xm};
         int[] ypoints = {(int) ym1, (int) yn1, (int) yn, (int) ym};
         g.fillPolygon(xpoints, ypoints, 4);
-        g.setColor(Color.BLACK);
+        paintVehicels(g);
         g.fillOval((int) xm1-2,(int) ym1-2,4,4);
         g.fillOval((int) xn1-2,(int) yn1-2,4,4);
         g.fillOval((int) xm-2,(int) ym-2,4,4);
@@ -205,5 +241,9 @@ class panel extends JPanel implements ActionListener{
 
     public createRoadSystem getCreateRoadSys() {
         return createRoadSys;
+    }
+
+    public void setVehiclesColor(String vehiclesColor) {
+        this.vehiclesColor = vehiclesColor;
     }
 }
