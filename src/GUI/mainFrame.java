@@ -20,6 +20,7 @@ public class mainFrame extends JFrame implements ActionListener {
     panel mainPanel;
     JSplitPane splitPane;
     JButton[] btns;
+    Timer timer;
 
     public mainFrame(String title) {
         super(title);
@@ -116,7 +117,8 @@ public class mainFrame extends JFrame implements ActionListener {
                 switch (i) {
                     case 0: {
                         mainPanel.actionPerformed(e);
-                        mainPanel.revalidate();
+                        timer=new Timer(100,(ae)->repaint());
+                        timer.start();
                     }
                     break;
                     case 1: {
@@ -152,7 +154,6 @@ class panel extends JPanel implements ActionListener,Runnable{
         setSize(new Dimension(800,600));
         setVisible(true);
         validate();
-        isMapCreated=false;
     }
 
     public void actionPerformed(ActionEvent e){
@@ -188,7 +189,6 @@ class panel extends JPanel implements ActionListener,Runnable{
                     }
                 }
             }
-        run();
     }
 
     /**
@@ -212,7 +212,7 @@ class panel extends JPanel implements ActionListener,Runnable{
             break;
             default:g.setColor(Color.BLUE);
         }
-        repaint();
+        //repaint();
     }
     private void drawRotetedVehicle(Graphics g, int x1, int y1, int x2, int y2, int d, int h){
         int dx = x2 - x1, dy = y2 - y1, delta = 10;
@@ -253,7 +253,6 @@ class panel extends JPanel implements ActionListener,Runnable{
 
     @Override
     public void run() {
-        repaint();
         try{
             Thread.sleep(100);
         }catch (InterruptedException err){}
