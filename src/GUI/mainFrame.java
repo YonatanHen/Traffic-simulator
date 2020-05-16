@@ -9,7 +9,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.RowId;
+
 import java.util.Random;
 
 public class mainFrame extends JFrame implements ActionListener {
@@ -117,17 +117,17 @@ public class mainFrame extends JFrame implements ActionListener {
                     case 0: {
                         mainPanel.actionPerformed(e);
                         mainPanel.revalidate();
-                        mainPanel.repaint();
                     }
                     break;
-                    case 1:
+                    case 1: {
                         mainPanel.getCreateRoadSys().getD().drive(20);
-                        break;
-                    case 2:
-                        System.out.println("resume");
-                        break;
-                    case 3:
+                    }
+                    case 2: {
                         System.out.println("stop");
+                    }
+                        break;
+                    case 3: {
+                        }
                         break;
                     case 4:
                     }
@@ -142,15 +142,17 @@ public class mainFrame extends JFrame implements ActionListener {
 
 
 
-class panel extends JPanel implements ActionListener{
+class panel extends JPanel implements ActionListener,Runnable{
     createRoadSystem createRoadSys;
     Driving driving;
     final int RADIUS = 10;
+    boolean isMapCreated;
     String vehiclesColor="blue";
     public panel(){
         setSize(new Dimension(800,600));
         setVisible(true);
         validate();
+        isMapCreated=false;
     }
 
     public void actionPerformed(ActionEvent e){
@@ -162,32 +164,31 @@ class panel extends JPanel implements ActionListener{
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (createRoadSys != null) {
-           if (createRoadSys.getFlag()) {
-                for (Road r : createRoadSys.getD().getMap().getRoads()) {
-                    if (r.getEnable()) {
-                        g.drawLine((int) r.getStartJunction().getX()+4, (int) r.getStartJunction().getY()-3,
-                                (int) r.getEndJunction().getX()+4, (int) r.getEndJunction().getY()-2);
+            if (createRoadSys != null) {
+                if (createRoadSys.getFlag()) {
+                    for (Road r : createRoadSys.getD().getMap().getRoads()) {
+                        if (r.getEnable()) {
+                            g.drawLine((int) r.getStartJunction().getX() + 4, (int) r.getStartJunction().getY() - 3,
+                                    (int) r.getEndJunction().getX() + 4, (int) r.getEndJunction().getY() - 2);
+                        }
+
                     }
-
-               }
-               for (Junction j : createRoadSys.getD().getMap().getJunctions()) {
-                   if (j instanceof LightedJunction) {
-                       if (((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.GREEN);
-                       else g.setColor(Color.RED);
-                   }
-                       else g.setColor(Color.BLACK);
-                   g.fillOval((int) j.getX(), (int) j.getY(), RADIUS * 2, RADIUS * 2);
-               }
-               driving = createRoadSys.getD();
-               for (int i=0;i<driving.getVehicles().size();i++) {
-                   drawRotetedVehicle(g,(int)driving.getVehicles().get(i).getLastRoad().getStartJunction().getX(),(int)driving.getVehicles().get(i).getLastRoad().getStartJunction().getY(),
-                           (int)driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(),(int)driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(),10,8);
-
-               }
+                    for (Junction j : createRoadSys.getD().getMap().getJunctions()) {
+                        if (j instanceof LightedJunction) {
+                            if (((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.GREEN);
+                            else g.setColor(Color.RED);
+                        } else g.setColor(Color.BLACK);
+                        g.fillOval((int) j.getX(), (int) j.getY(), RADIUS * 2, RADIUS * 2);
+                    }
+                    driving = createRoadSys.getD();
+                    isMapCreated = true;
+                    for (int i = 0; i < driving.getVehicles().size(); i++) {
+                        drawRotetedVehicle(g, (int) driving.getVehicles().get(i).getLastRoad().getStartJunction().getX(), (int) driving.getVehicles().get(i).getLastRoad().getStartJunction().getY(),
+                                (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(), (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(), 10, 8);
+                    }
+                }
             }
-        }
-        repaint();
+        run();
     }
 
     /**
@@ -250,4 +251,11 @@ class panel extends JPanel implements ActionListener{
         this.vehiclesColor = vehiclesColor;
     }
 
+    @Override
+    public void run() {
+        repaint();
+        try{
+            Thread.sleep(100);
+        }catch (InterruptedException err){}
+    }
 }

@@ -4,7 +4,6 @@ import utilities.Utilities;
 import utilities.VehicleType;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Class make the map
@@ -83,11 +82,11 @@ public class Map implements Utilities {
            if (r.getEndJunction() instanceof LightedJunction){
                //Turn lights on when traffic lights on lightedJunction aren't lightening/lightening yet and random value is true.
                if(!((LightedJunction)r.getEndJunction()).getLights().getTrafficLightsOn() &&
-                       !lightedJuncs.contains(((LightedJunction)r.getEndJunction()).getLights().getId()) &&getRandomBoolean()){
+                       !lightedJuncs.contains(((LightedJunction)r.getEndJunction()).getLights().getid()) &&getRandomBoolean()){
                    System.out.println(((LightedJunction)r.getEndJunction()).getLights()+
                            " turned ON, delay time: "+((LightedJunction)r.getEndJunction()).getLights().getDelay());
                    ((LightedJunction) r.getEndJunction()).getLights().changeLights();
-                   lightedJuncs.add(((LightedJunction)r.getEndJunction()).getLights().getId());
+                   lightedJuncs.add(((LightedJunction)r.getEndJunction()).getLights().getid());
                }
            }
        }

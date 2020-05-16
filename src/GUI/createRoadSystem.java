@@ -18,6 +18,7 @@ public class createRoadSystem extends JFrame implements ActionListener {
     static final int FPS_INIT2 = 4;
     JSlider numOfJuncs,numOfVehicles;
     JPanel frame;
+    panel p;
     JLabel text1,text2;
     JButton okBtn,cancelBtn;
     Driving d;

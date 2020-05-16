@@ -14,7 +14,7 @@ import utilities.Timer;
  * @see RouteParts
  * @see Road
  */
-public class Vehicle implements Utilities,Timer {
+public class Vehicle extends Thread implements Utilities,Timer{
     private int id;
     private VehicleType vehicleType;
     private Route currentRoute;
@@ -47,7 +47,7 @@ public class Vehicle implements Utilities,Timer {
     }
 
     //getters
-    public int getId(){return id;}
+    public int getid(){return id;}
     public VehicleType getVehicleType(){return vehicleType;}
     public Route getCurrentRoute(){return currentRoute;}
     public RouteParts getCurrentRoutePart(){return currentRoutePart;}
@@ -73,21 +73,22 @@ public class Vehicle implements Utilities,Timer {
      * else-stay at the part
      */
     public void move(){
-        if(currentRoutePart.canLeave(this)){
+        /*try {
+            sleep(vehicleType.getAverageSpeed() / 10);
+        }catch (InterruptedException err){}*/
+        if (currentRoutePart.canLeave(this)) {
             currentRoutePart.checkOut(this);
-            if(currentRoutePart.findNextPart(this)!=null ) {
+            if (currentRoutePart.findNextPart(this) != null) {
                 currentRoutePart = currentRoutePart.findNextPart(this);
                 currentRoutePart.checkIn(this);
             }
-        }
-        else currentRoute.stayOnCurrentPart(this);
-        if(currentRoute.canLeave(this)) {
+        } else currentRoute.stayOnCurrentPart(this);
+        if (currentRoute.canLeave(this)) {
             currentRoute.checkOut(this);
             currentRoutePart = currentRoute.findNextPart(this);
             currentRoute.checkIn(this);
             currentRoutePart.checkIn(this);
         }
-
     }
 
     /**

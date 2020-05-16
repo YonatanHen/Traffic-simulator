@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Rotem Librati-307903732
  * @see Road
  */
-public abstract class TrafficLights implements Timer, Utilities {
+public abstract class TrafficLights extends Thread implements Timer, Utilities {
     private static int objectCount=0; //count the objects
     private int delay=0; //Delay time (in pulses) that passes between each traffic light switch.
     // The delay time is 0 when the traffic light is off and momentarily
@@ -92,7 +92,7 @@ public abstract class TrafficLights implements Timer, Utilities {
     //getters
     public boolean getTrafficLightsOn(){return trafficLightsOn;}
     public int getDelay() { return delay; }
-    public int getId() { return id; }
+    public int getid() { return id; }
     public static int getMaxDelay() { return maxDelay; }
     public static int getMinDelay() { return minDelay; }
     public ArrayList<Road> getRoads() { return roads; }

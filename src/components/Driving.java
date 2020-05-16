@@ -16,7 +16,7 @@ import java.util.Random;
  * @see Map
  * @see Vehicle
  */
-public class Driving implements Utilities, Timer {
+public class Driving extends Thread implements Utilities, Timer {
     private Map map; //Map for current running
     private ArrayList<Vehicle> vehicles; //The vehicles who part of the running
     private int drivingTime; // Accumulate the time/number of pulses from the start
@@ -94,11 +94,20 @@ public class Driving implements Utilities, Timer {
      */
     public void drive(int numOfTurns){
         System.out.println("\n"+toString()+"\n");
+        this.start();
+        for(Timer t:allTimedElements){
+            if(t instanceof Vehicle) ((Vehicle)t).start();
+            if(t instanceof TrafficLights) ((TrafficLights)t).start();
+        }
         while (numOfTurns >= drivingTime){
+            try{
+                sleep ((100));
+            }catch (InterruptedException e){}
             System.out.println("***************TURN" + drivingTime + "***************");
             incrementDrivingTime();
             drivingTime++;
         }
+        this.interrupt();
     }
 
     /**
