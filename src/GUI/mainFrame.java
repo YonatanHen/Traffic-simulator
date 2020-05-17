@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 
 import java.util.Random;
 
-public class mainFrame extends JFrame implements ActionListener {
+public class mainFrame extends JFrame implements ActionListener,Runnable {
     JMenuBar menuBar;
     JMenu file, background, vehicleColor, help;
     JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem;
@@ -21,9 +21,11 @@ public class mainFrame extends JFrame implements ActionListener {
     JSplitPane splitPane;
     JButton[] btns;
     createRoadSystem createRoadSys;
+    Timer t;
 
     public mainFrame(String title) {
         super(title);
+        t=new Timer(100,this);
         splitPane=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setDividerLocation(0.2);
         menuBar = new JMenuBar();
@@ -91,11 +93,9 @@ public class mainFrame extends JFrame implements ActionListener {
         }
         if (e.getSource() == blueBackGround && mainPanel!=null) {
             mainPanel.setBackground(Color.BLUE);
-            repaint();
         }
         if (e.getSource() == noneBackground && mainPanel!=null) {
             mainPanel.setBackground(Color.GRAY);
-            repaint();
         }
         if (e.getSource() == helpItem) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
@@ -124,8 +124,10 @@ public class mainFrame extends JFrame implements ActionListener {
                     }
                     break;
                     case 1: {
+                        t.start();
                         mainPanel.getDriving().drive(20);
                     }
+                    break;
                     case 2: {
                         System.out.println("stop");
                     }
@@ -134,8 +136,8 @@ public class mainFrame extends JFrame implements ActionListener {
                         }
                         break;
                     case 4:
-                    }
                         break;
+                    }
                 }
             }
         }
@@ -145,25 +147,31 @@ public class mainFrame extends JFrame implements ActionListener {
         add(mainPanel,0);
     }
 
-    public void callrunOfPanel(){
-        mainPanel.run();
-        revalidate();
+    public void run() {
+        synchronized (mainPanel) {
+            try {
+                Thread.sleep(100);
+                mainPanel.repaint();
+                setMainPanel(mainPanel);
+            } catch (InterruptedException e) {}
+        }
     }
-
 }
 
 
-class panel extends JPanel{
+
+class panel extends JPanel {
 
     Driving driving;
     final int RADIUS = 10;
-    String vehiclesColor="blue";
+    String vehiclesColor = "blue";
     mainFrame mainFrame;
-    public panel(mainFrame mainFrame){
-        setSize(new Dimension(800,600));
+
+    public panel(mainFrame mainFrame) {
+        setSize(new Dimension(800, 600));
         setVisible(true);
         validate();
-        this.mainFrame=mainFrame;
+        this.mainFrame = mainFrame;
     }
 
     public void paintComponent(Graphics g) {
@@ -171,14 +179,14 @@ class panel extends JPanel{
         for (Road r : driving.getMap().getRoads()) {
             g.setColor(Color.BLACK);
             g.drawLine((int) r.getStartJunction().getX(),
-                     (int) r.getStartJunction().getY(),
+                    (int) r.getStartJunction().getY(),
                     (int) r.getEndJunction().getX(),
                     (int) r.getEndJunction().getY());
 
             g.setColor(Color.GREEN);
-            g.fillPolygon(new int[]{(int)r.getEndJunction().getX()-50,(int)r.getEndJunction().getX(),(int)r.getEndJunction().getX()-50}
-            ,new int[]{(int)r.getEndJunction().getY()+50,(int)r.getEndJunction().getY(),(int)r.getEndJunction().getY()+50},3);
-            
+            g.fillPolygon(new int[]{(int) r.getEndJunction().getX() - 50, (int) r.getEndJunction().getX(), (int) r.getEndJunction().getX() - 50}
+                    , new int[]{(int) r.getEndJunction().getY() + 50, (int) r.getEndJunction().getY(), (int) r.getEndJunction().getY() + 50}, 3);
+
         }
         for (Junction j : driving.getMap().getJunctions()) {
             if (j instanceof LightedJunction) {
@@ -198,9 +206,10 @@ class panel extends JPanel{
 
     /**
      * function set the color of the vehicles.
+     *
      * @param g
      */
-    public void paintVehicels(Graphics g){
+    public void paintVehicels(Graphics g) {
         switch (vehiclesColor) {
             case "magenta":
                 g.setColor(Color.MAGENTA);
@@ -208,43 +217,44 @@ class panel extends JPanel{
             case "orange":
                 g.setColor(Color.ORANGE);
                 break;
-            case "random":
-            {
-                Random r=new Random();
-                Color color = new Color(r.nextInt(256),r.nextInt(256),r.nextInt(256),r.nextInt(256));
+            case "random": {
+                Random r = new Random();
+                Color color = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256), r.nextInt(256));
                 g.setColor(color);
             }
             break;
-            default:g.setColor(Color.BLUE);
+            default:
+                g.setColor(Color.BLUE);
         }
 
     }
-    private void drawRotetedVehicle(Graphics g, int x1, int y1, int x2, int y2, int d, int h){
+
+    private void drawRotetedVehicle(Graphics g, int x1, int y1, int x2, int y2, int d, int h) {
         int dx = x2 - x1, dy = y2 - y1, delta = 10;
-        double D = Math.sqrt(dx*dx + dy*dy);
+        double D = Math.sqrt(dx * dx + dy * dy);
         double xm = delta, xn = xm, ym = h, yn = -h, x;
         double xm1 = delta + d, xn1 = xm1, ym1 = h, yn1 = -h, xx;
         double sin = dy / D, cos = dx / D;
-        x = xm*cos - ym*sin + x1;
-        xx = xm1*cos - ym1*sin + x1;
-        ym = xm*sin + ym*cos + y1;
-        ym1 = xm1*sin + ym1*cos + y1;
+        x = xm * cos - ym * sin + x1;
+        xx = xm1 * cos - ym1 * sin + x1;
+        ym = xm * sin + ym * cos + y1;
+        ym1 = xm1 * sin + ym1 * cos + y1;
         xm = x;
         xm1 = xx;
-        x = xn*cos - yn*sin + x1;
-        xx = xn1*cos - yn1*sin + x1;
-        yn = xn*sin + yn*cos + y1;
-        yn1 = xn1*sin + yn1*cos + y1;
+        x = xn * cos - yn * sin + x1;
+        xx = xn1 * cos - yn1 * sin + x1;
+        yn = xn * sin + yn * cos + y1;
+        yn1 = xn1 * sin + yn1 * cos + y1;
         xn = x;
         xn1 = xx;
-        int[] xpoints = {(int) xm1, (int) xn1,  (int) xn, (int) xm};
+        int[] xpoints = {(int) xm1, (int) xn1, (int) xn, (int) xm};
         int[] ypoints = {(int) ym1, (int) yn1, (int) yn, (int) ym};
         g.fillPolygon(xpoints, ypoints, 4);
         paintVehicels(g);
-        g.fillOval((int) xm1-2,(int) ym1-2,4,4);
-        g.fillOval((int) xn1-2,(int) yn1-2,4,4);
-        g.fillOval((int) xm-2,(int) ym-2,4,4);
-        g.fillOval((int) xn-2,(int) yn-2,4,4);
+        g.fillOval((int) xm1 - 2, (int) ym1 - 2, 4, 4);
+        g.fillOval((int) xn1 - 2, (int) yn1 - 2, 4, 4);
+        g.fillOval((int) xm - 2, (int) ym - 2, 4, 4);
+        g.fillOval((int) xn - 2, (int) yn - 2, 4, 4);
 
     }
 
@@ -255,16 +265,11 @@ class panel extends JPanel{
     }
 
     public void setDriving(Driving d) {
-        driving=d;
+        driving = d;
     }
 
     public Driving getDriving() {
         return driving;
     }
-
-    public void run() {
-        repaint();
-        mainFrame.revalidate();
-        mainFrame.repaint();
-    }
 }
+

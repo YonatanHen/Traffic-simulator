@@ -52,7 +52,7 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
     /**
      * function that change next junction to green and make sure that other junction with red light
      */
-    public void changeLights() {
+    public synchronized void changeLights() {
         changeIndex();
         for (int i = 0; i < roads.size(); i++) {
             if (i == greenLightIndex) {
@@ -62,7 +62,7 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
             } else roads.get(i).setGreenlight(false);
         }
         //Change delay time-happens when new light turn on.
-        delay = getRandomInt(minDelay, maxDelay + 1);
+        delay = (getRandomInt(minDelay, maxDelay + 1))*100;
         //Initialize the working time of the new light who turns on to 0.
         workingTime = 0;
     }
@@ -71,9 +71,6 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
      * Method check if it's time to change lights by advancing the index of light working time.
      */
     public void incrementDrivingTime(){
-        try {
-            sleep(delay*100);
-        }catch (InterruptedException e){}
         workingTime++;
         if(workingTime>=delay) changeLights();
         else {

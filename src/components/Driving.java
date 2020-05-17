@@ -43,7 +43,7 @@ public class Driving extends Thread implements Utilities, Timer {
         //Add the vehicles to allTimedElements
         System.out.println("================= CREATING VEHICLES =================");
         for(int i=0;i<numOfVehicles;i++) {
-            vehicles.add(new Vehicle(map.getRoads().get(r.nextInt(map.getRoads().size())),mainFrame));
+            vehicles.add(new Vehicle(map.getRoads().get(r.nextInt(map.getRoads().size()))));
             allTimedElements.add(vehicles.get(i));
         }
         //Add the lights to allTimedElements only if junction is LightedJunction
@@ -96,25 +96,20 @@ public class Driving extends Thread implements Utilities, Timer {
      */
     public void drive(int numOfTurns){
         System.out.println("\n"+toString()+"\n");
-        for(Timer t:allTimedElements){
-            if(t instanceof Vehicle) ((Vehicle)t).start();
-            if(t instanceof TrafficLights) ((TrafficLights)t).start();
+            for (Timer t : allTimedElements) {
+                if (t instanceof Vehicle) ((Vehicle) t).start();
+                if (t instanceof TrafficLights) ((TrafficLights) t).start();
+            }
+        while (numOfTurns >= drivingTime) {
+            synchronized (this) {
+                System.out.println("***************TURN" + drivingTime + "***************");
+                incrementDrivingTime();
+                drivingTime++;
+                //suppose to update graphics every 100 millis
+                mainFrame.run();
+                }
+            }
         }
-        this.start();
-        while (numOfTurns >= drivingTime){
-            System.out.println("***************TURN" + drivingTime + "***************");
-            incrementDrivingTime();
-            drivingTime++;
-            //Update graphics every 100 millis
-            try {
-                sleep(100);
-            }catch (InterruptedException e){}
-            mainFrame.callrunOfPanel();
-
-        }
-        //stop the driving thread
-        this.interrupt();
-    }
 
     /**
      * Advance the pulses for Objects who affect by that.

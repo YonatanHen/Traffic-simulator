@@ -67,7 +67,6 @@ public class createRoadSystem extends JFrame implements ActionListener {
             p.setDriving(d);
             mainFrame.setMainPanel(p);
             mainFrame.repaint();
-            p.run();
             dispose();
         }
         if(e.getSource()==cancelBtn){

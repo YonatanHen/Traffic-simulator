@@ -32,7 +32,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
      *
      * @param road
      */
-    public Vehicle(Road road,mainFrame GUIFrame){
+    public Vehicle(Road road){
         id=objectCount;
         vehicleType=VehicleType.values()[getRandomInt(0,VehicleType.values().length)];//Randomise car type
         timeFromStartRoute=0;
@@ -46,7 +46,6 @@ public class Vehicle extends Thread implements Utilities,Timer{
         System.out.println(status);
         currentRoutePart.checkIn(this);
         objectCount++;
-        mainFrame=GUIFrame;
     }
 
     //getters
@@ -75,10 +74,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
      * Made check out if car can finish the current part and then checkIn to the next part.
      * else-stay at the part
      */
-    public void move(){
-        try {
-            sleep(vehicleType.getAverageSpeed() * 10);
-        }catch (InterruptedException err){}
+    public synchronized void move(){
         if (currentRoutePart.canLeave(this)) {
             currentRoutePart.checkOut(this);
             if (currentRoutePart.findNextPart(this) != null) {
@@ -92,7 +88,6 @@ public class Vehicle extends Thread implements Utilities,Timer{
             currentRoute.checkIn(this);
             currentRoutePart.checkIn(this);
         }
-        mainFrame.callrunOfPanel();
     }
 
     /**
