@@ -23,10 +23,8 @@ public class createRoadSystem extends JFrame implements ActionListener {
     JLabel text1,text2;
     JButton okBtn,cancelBtn;
     Driving d;
-    boolean flag;
     public createRoadSystem(String title,panel mainPanel,mainFrame mainFrame) {
         super(title);
-        flag=false;
         numOfJuncs=new JSlider(JSlider.HORIZONTAL,FPS_MIN1,FPS_MAX1,FPS_INIT1);
         numOfJuncs.setMajorTickSpacing(1);
         numOfJuncs.setPaintTicks(true);
@@ -64,23 +62,20 @@ public class createRoadSystem extends JFrame implements ActionListener {
      */
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==okBtn){
-            d=new Driving(numOfJuncs.getValue(),numOfVehicles.getValue());
-            flag=true;
-            p=new panel();
+            d=new Driving(numOfJuncs.getValue(),numOfVehicles.getValue(),mainFrame);
+            p=new panel(mainFrame);
             p.setDriving(d);
             mainFrame.setMainPanel(p);
-
+            mainFrame.repaint();
             p.run();
             dispose();
         }
         if(e.getSource()==cancelBtn){
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            //flag=false;
             dispose();
         }
     }
     public Driving getDriving() {
         return d;
     }
-    public boolean getFlag(){return flag;}
 }

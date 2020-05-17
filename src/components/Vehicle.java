@@ -3,6 +3,7 @@ package components;
 import utilities.Utilities;
 import utilities.VehicleType;
 import utilities.Timer;
+import GUI.*;
 
 /**
  * Class represent Vehicle on the map.
@@ -24,13 +25,14 @@ public class Vehicle extends Thread implements Utilities,Timer{
     private static int objectCount=1; //Counter to num of objects
     private Road lastRoad; //Last road which car drove in or driving currently
     private String status=null; //Keep the status,will be in use for prints.
+    mainFrame mainFrame;
 
     /**
      * Vehicle randomal constructor.
      *
      * @param road
      */
-    public Vehicle(Road road){
+    public Vehicle(Road road,mainFrame GUIFrame){
         id=objectCount;
         vehicleType=VehicleType.values()[getRandomInt(0,VehicleType.values().length)];//Randomise car type
         timeFromStartRoute=0;
@@ -44,6 +46,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
         System.out.println(status);
         currentRoutePart.checkIn(this);
         objectCount++;
+        mainFrame=GUIFrame;
     }
 
     //getters
@@ -89,6 +92,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
             currentRoute.checkIn(this);
             currentRoutePart.checkIn(this);
         }
+        mainFrame.callrunOfPanel();
     }
 
     /**

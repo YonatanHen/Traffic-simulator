@@ -2,7 +2,7 @@ package components;
 
 import utilities.Timer;
 import utilities.Utilities;
-
+import GUI.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -21,6 +21,7 @@ public class Driving extends Thread implements Utilities, Timer {
     private ArrayList<Vehicle> vehicles; //The vehicles who part of the running
     private int drivingTime; // Accumulate the time/number of pulses from the start
     private ArrayList<Timer> allTimedElements; //Keep the whole elements who affected by the time pulses.
+    mainFrame mainFrame;
 
     /**
      * Driving constructor: receive number of junctions and
@@ -31,17 +32,18 @@ public class Driving extends Thread implements Utilities, Timer {
      * @param numOfJunctions
      * @param numOfVehicles
      */
-    public Driving(int numOfJunctions,int numOfVehicles){
+    public Driving(int numOfJunctions,int numOfVehicles,mainFrame GUIFrame){
         map=new Map(numOfJunctions);
         vehicles=new ArrayList<>();
         allTimedElements=new ArrayList<>();
         drivingTime=0;
         Random r =new Random();
+        mainFrame=GUIFrame;
         //Make random starting roads to vehicles based on the map.
         //Add the vehicles to allTimedElements
         System.out.println("================= CREATING VEHICLES =================");
         for(int i=0;i<numOfVehicles;i++) {
-            vehicles.add(new Vehicle(map.getRoads().get(r.nextInt(map.getRoads().size()))));
+            vehicles.add(new Vehicle(map.getRoads().get(r.nextInt(map.getRoads().size())),mainFrame));
             allTimedElements.add(vehicles.get(i));
         }
         //Add the lights to allTimedElements only if junction is LightedJunction
@@ -94,16 +96,23 @@ public class Driving extends Thread implements Utilities, Timer {
      */
     public void drive(int numOfTurns){
         System.out.println("\n"+toString()+"\n");
-        this.start();
         for(Timer t:allTimedElements){
             if(t instanceof Vehicle) ((Vehicle)t).start();
             if(t instanceof TrafficLights) ((TrafficLights)t).start();
         }
+        this.start();
         while (numOfTurns >= drivingTime){
             System.out.println("***************TURN" + drivingTime + "***************");
             incrementDrivingTime();
             drivingTime++;
+            //Update graphics every 100 millis
+            try {
+                sleep(100);
+            }catch (InterruptedException e){}
+            mainFrame.callrunOfPanel();
+
         }
+        //stop the driving thread
         this.interrupt();
     }
 

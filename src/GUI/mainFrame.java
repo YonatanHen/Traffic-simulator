@@ -20,7 +20,6 @@ public class mainFrame extends JFrame implements ActionListener {
     panel mainPanel;
     JSplitPane splitPane;
     JButton[] btns;
-    Timer timer;
     createRoadSystem createRoadSys;
 
     public mainFrame(String title) {
@@ -122,8 +121,6 @@ public class mainFrame extends JFrame implements ActionListener {
                         createRoadSys.pack();
                         createRoadSys.setSize(600, 300);
                         createRoadSys.setVisible(true);
-                        timer=new Timer(100,(ae)->repaint());
-                        timer.start();
                     }
                     break;
                     case 1: {
@@ -147,32 +144,41 @@ public class mainFrame extends JFrame implements ActionListener {
         this.mainPanel = mainPanel;
         add(mainPanel,0);
     }
+
+    public void callrunOfPanel(){
+        mainPanel.run();
+        revalidate();
+    }
+
 }
 
 
-
-
-
-
-class panel extends JPanel implements Runnable{
+class panel extends JPanel{
 
     Driving driving;
     final int RADIUS = 10;
     String vehiclesColor="blue";
-    public panel(){
+    mainFrame mainFrame;
+    public panel(mainFrame mainFrame){
         setSize(new Dimension(800,600));
         setVisible(true);
         validate();
+        this.mainFrame=mainFrame;
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (Road r : driving.getMap().getRoads()) {
-            if (r.getEnable()) {
-                g.drawLine((int) r.getStartJunction().getX() + 4, (int) r.getStartJunction().getY() - 3,
-                        (int) r.getEndJunction().getX() + 4, (int) r.getEndJunction().getY() - 2);
-            }
+            g.setColor(Color.BLACK);
+            g.drawLine((int) r.getStartJunction().getX(),
+                     (int) r.getStartJunction().getY(),
+                    (int) r.getEndJunction().getX(),
+                    (int) r.getEndJunction().getY());
 
+            g.setColor(Color.GREEN);
+            g.fillPolygon(new int[]{(int)r.getEndJunction().getX()-50,(int)r.getEndJunction().getX(),(int)r.getEndJunction().getX()-50}
+            ,new int[]{(int)r.getEndJunction().getY()+50,(int)r.getEndJunction().getY(),(int)r.getEndJunction().getY()+50},3);
+            
         }
         for (Junction j : driving.getMap().getJunctions()) {
             if (j instanceof LightedJunction) {
@@ -211,6 +217,7 @@ class panel extends JPanel implements Runnable{
             break;
             default:g.setColor(Color.BLUE);
         }
+
     }
     private void drawRotetedVehicle(Graphics g, int x1, int y1, int x2, int y2, int d, int h){
         int dx = x2 - x1, dy = y2 - y1, delta = 10;
@@ -244,6 +251,7 @@ class panel extends JPanel implements Runnable{
 
     public void setVehiclesColor(String vehiclesColor) {
         this.vehiclesColor = vehiclesColor;
+        repaint();
     }
 
     public void setDriving(Driving d) {
@@ -254,10 +262,9 @@ class panel extends JPanel implements Runnable{
         return driving;
     }
 
-    @Override
     public void run() {
-        try{
-            Thread.sleep(100);
-        }catch (InterruptedException err){}
+        repaint();
+        mainFrame.revalidate();
+        mainFrame.repaint();
     }
 }
