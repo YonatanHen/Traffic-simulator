@@ -21,12 +21,12 @@ public class mainFrame extends JFrame implements ActionListener {
     JSplitPane splitPane;
     JButton[] btns;
     Timer timer;
+    createRoadSystem createRoadSys;
 
     public mainFrame(String title) {
         super(title);
         splitPane=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setDividerLocation(0.2);
-        mainPanel=new panel();
         menuBar = new JMenuBar();
         file = new JMenu("File");
         file.addActionListener(this);
@@ -77,7 +77,7 @@ public class mainFrame extends JFrame implements ActionListener {
             container.add(btns[i]);
         }
         container.setLayout(new GridLayout(1, 0));
-        add(mainPanel);
+        add(new JPanel());
         add(container,BorderLayout.SOUTH);
     }
 
@@ -90,39 +90,44 @@ public class mainFrame extends JFrame implements ActionListener {
         if (e.getSource() == exit) {
             System.exit(0);
         }
-        if (e.getSource() == blueBackGround) {
+        if (e.getSource() == blueBackGround && mainPanel!=null) {
             mainPanel.setBackground(Color.BLUE);
+            repaint();
         }
-        if (e.getSource() == noneBackground) {
-            mainPanel.setBackground(Color.WHITE);
+        if (e.getSource() == noneBackground && mainPanel!=null) {
+            mainPanel.setBackground(Color.GRAY);
+            repaint();
         }
         if (e.getSource() == helpItem) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
                     "Home Work 3\n" + "GUI @ Threads");
         }
-        if(e.getSource() == blueVehicle){
+        if(e.getSource() == blueVehicle && mainPanel!=null){
             mainPanel.setVehiclesColor("blue");
         }
-        if(e.getSource() == magentaVehicle){
+        if(e.getSource() == magentaVehicle && mainPanel!=null){
             mainPanel.setVehiclesColor("magenta");
         }
-        if(e.getSource() == orangeVehicle){
+        if(e.getSource() == orangeVehicle && mainPanel!=null){
             mainPanel.setVehiclesColor("orange");
         }
-        if(e.getSource() == randomVehicle){
+        if(e.getSource() == randomVehicle && mainPanel!=null){
             mainPanel.setVehiclesColor("random");
         }
         for (int i = 0; i < btns.length; i++) {
             if (e.getSource() == btns[i]) {
                 switch (i) {
                     case 0: {
-                        mainPanel.actionPerformed(e);
+                        createRoadSys = new createRoadSystem("Create road system",mainPanel,this);
+                        createRoadSys.pack();
+                        createRoadSys.setSize(600, 300);
+                        createRoadSys.setVisible(true);
                         timer=new Timer(100,(ae)->repaint());
                         timer.start();
                     }
                     break;
                     case 1: {
-                        mainPanel.getCreateRoadSys().getD().drive(20);
+                        mainPanel.getDriving().drive(20);
                     }
                     case 2: {
                         System.out.println("stop");
@@ -137,18 +142,22 @@ public class mainFrame extends JFrame implements ActionListener {
                 }
             }
         }
+
+    public void setMainPanel(panel mainPanel) {
+        this.mainPanel = mainPanel;
+        add(mainPanel,0);
     }
+}
 
 
 
 
 
 
-class panel extends JPanel implements ActionListener,Runnable{
-    createRoadSystem createRoadSys;
+class panel extends JPanel implements Runnable{
+
     Driving driving;
     final int RADIUS = 10;
-    boolean isMapCreated;
     String vehiclesColor="blue";
     public panel(){
         setSize(new Dimension(800,600));
@@ -156,39 +165,29 @@ class panel extends JPanel implements ActionListener,Runnable{
         validate();
     }
 
-    public void actionPerformed(ActionEvent e){
-        createRoadSys = new createRoadSystem("Create road system");
-        createRoadSys.pack();
-        createRoadSys.setSize(600, 300);
-        createRoadSys.setVisible(true);
-    }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-            if (createRoadSys != null) {
-                if (createRoadSys.getFlag()) {
-                    for (Road r : createRoadSys.getD().getMap().getRoads()) {
-                        if (r.getEnable()) {
-                            g.drawLine((int) r.getStartJunction().getX() + 4, (int) r.getStartJunction().getY() - 3,
-                                    (int) r.getEndJunction().getX() + 4, (int) r.getEndJunction().getY() - 2);
-                        }
-
-                    }
-                    for (Junction j : createRoadSys.getD().getMap().getJunctions()) {
-                        if (j instanceof LightedJunction) {
-                            if (((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.GREEN);
-                            else g.setColor(Color.RED);
-                        } else g.setColor(Color.BLACK);
-                        g.fillOval((int) j.getX(), (int) j.getY(), RADIUS * 2, RADIUS * 2);
-                    }
-                    driving = createRoadSys.getD();
-                    isMapCreated = true;
-                    for (int i = 0; i < driving.getVehicles().size(); i++) {
-                        drawRotetedVehicle(g, (int) driving.getVehicles().get(i).getLastRoad().getStartJunction().getX(), (int) driving.getVehicles().get(i).getLastRoad().getStartJunction().getY(),
-                                (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(), (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(), 10, 8);
-                    }
-                }
+        for (Road r : driving.getMap().getRoads()) {
+            if (r.getEnable()) {
+                g.drawLine((int) r.getStartJunction().getX() + 4, (int) r.getStartJunction().getY() - 3,
+                        (int) r.getEndJunction().getX() + 4, (int) r.getEndJunction().getY() - 2);
             }
+
+        }
+        for (Junction j : driving.getMap().getJunctions()) {
+            if (j instanceof LightedJunction) {
+                if (((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.GREEN);
+                else g.setColor(Color.RED);
+            } else g.setColor(Color.BLACK);
+            g.fillOval((int) j.getX(), (int) j.getY(), RADIUS * 2, RADIUS * 2);
+        }
+        for (int i = 0; i < driving.getVehicles().size(); i++) {
+            drawRotetedVehicle(g,
+                    (int) driving.getVehicles().get(i).getLastRoad().getStartJunction().getX(),
+                    (int) driving.getVehicles().get(i).getLastRoad().getStartJunction().getY(),
+                    (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(),
+                    (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(), 10, 8);
+        }
     }
 
     /**
@@ -212,7 +211,6 @@ class panel extends JPanel implements ActionListener,Runnable{
             break;
             default:g.setColor(Color.BLUE);
         }
-        //repaint();
     }
     private void drawRotetedVehicle(Graphics g, int x1, int y1, int x2, int y2, int d, int h){
         int dx = x2 - x1, dy = y2 - y1, delta = 10;
@@ -243,12 +241,17 @@ class panel extends JPanel implements ActionListener,Runnable{
 
     }
 
-    public createRoadSystem getCreateRoadSys() {
-        return createRoadSys;
-    }
 
     public void setVehiclesColor(String vehiclesColor) {
         this.vehiclesColor = vehiclesColor;
+    }
+
+    public void setDriving(Driving d) {
+        driving=d;
+    }
+
+    public Driving getDriving() {
+        return driving;
     }
 
     @Override

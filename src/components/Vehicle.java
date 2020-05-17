@@ -73,9 +73,9 @@ public class Vehicle extends Thread implements Utilities,Timer{
      * else-stay at the part
      */
     public void move(){
-        /*try {
-            sleep(vehicleType.getAverageSpeed() / 10);
-        }catch (InterruptedException err){}*/
+        try {
+            sleep(vehicleType.getAverageSpeed() * 10);
+        }catch (InterruptedException err){}
         if (currentRoutePart.canLeave(this)) {
             currentRoutePart.checkOut(this);
             if (currentRoutePart.findNextPart(this) != null) {

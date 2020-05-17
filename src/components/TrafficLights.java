@@ -71,6 +71,9 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
      * Method check if it's time to change lights by advancing the index of light working time.
      */
     public void incrementDrivingTime(){
+        try {
+            sleep(delay*100);
+        }catch (InterruptedException e){}
         workingTime++;
         if(workingTime>=delay) changeLights();
         else {

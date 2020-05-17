@@ -18,12 +18,13 @@ public class createRoadSystem extends JFrame implements ActionListener {
     static final int FPS_INIT2 = 4;
     JSlider numOfJuncs,numOfVehicles;
     JPanel frame;
+    mainFrame mainFrame;
     panel p;
     JLabel text1,text2;
     JButton okBtn,cancelBtn;
     Driving d;
     boolean flag;
-    public createRoadSystem(String title) {
+    public createRoadSystem(String title,panel mainPanel,mainFrame mainFrame) {
         super(title);
         flag=false;
         numOfJuncs=new JSlider(JSlider.HORIZONTAL,FPS_MIN1,FPS_MAX1,FPS_INIT1);
@@ -53,6 +54,8 @@ public class createRoadSystem extends JFrame implements ActionListener {
         bottom.add(cancelBtn);
         frame.add(bottom);
         add(frame);
+        p=mainPanel;
+        this.mainFrame=mainFrame;
     }
 
     /**
@@ -63,15 +66,20 @@ public class createRoadSystem extends JFrame implements ActionListener {
         if(e.getSource()==okBtn){
             d=new Driving(numOfJuncs.getValue(),numOfVehicles.getValue());
             flag=true;
+            p=new panel();
+            p.setDriving(d);
+            mainFrame.setMainPanel(p);
+
+            p.run();
             dispose();
         }
         if(e.getSource()==cancelBtn){
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            flag=false;
+            //flag=false;
             dispose();
         }
     }
-    public Driving getD() {
+    public Driving getDriving() {
         return d;
     }
     public boolean getFlag(){return flag;}

@@ -19,7 +19,7 @@ public class GameDriver{
             mainFrame main = new mainFrame("Road system");
             main.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             main.pack();
-            main.setSize(new Dimension(900, 700));
+            main.setSize(new Dimension(800, 677));
             main.setLocationRelativeTo(null);
             main.setVisible(true);
         }

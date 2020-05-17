@@ -100,9 +100,6 @@ public class Driving extends Thread implements Utilities, Timer {
             if(t instanceof TrafficLights) ((TrafficLights)t).start();
         }
         while (numOfTurns >= drivingTime){
-            try{
-                sleep ((100));
-            }catch (InterruptedException e){}
             System.out.println("***************TURN" + drivingTime + "***************");
             incrementDrivingTime();
             drivingTime++;
