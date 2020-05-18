@@ -23,11 +23,9 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
     JSplitPane splitPane;
     JButton[] btns;
     createRoadSystem createRoadSys;
-    Timer t;
     Driving driving;
     public mainFrame(String title) {
         super(title);
-        t=new Timer(100,this);
         splitPane=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setDividerLocation(0.2);
         menuBar = new JMenuBar();
@@ -127,7 +125,6 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                     }
                     break;
                     case 1: {
-                        t.start();
                         mainPanel.getDriving().drive(20);
                     }
                     break;
@@ -178,13 +175,10 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
     }
 
     public void run() {
-        synchronized (mainPanel) {
             try {
                 Thread.sleep(100);
-                mainPanel.repaint();
-                setMainPanel(mainPanel);
             } catch (InterruptedException e) {}
-        }
+            mainPanel.repaint();
     }
 }
 
@@ -275,8 +269,9 @@ class panel extends JPanel {
         xn1 = xx;
         int[] xpoints = {(int) xm1, (int) xn1, (int) xn, (int) xm};
         int[] ypoints = {(int) ym1, (int) yn1, (int) yn, (int) ym};
-        g.fillPolygon(xpoints, ypoints, 4);
         paintVehicels(g);
+        g.fillPolygon(xpoints, ypoints, 4);
+        g.setColor(Color.BLACK);
         g.fillOval((int) xm1 - 2, (int) ym1 - 2, 4, 4);
         g.fillOval((int) xn1 - 2, (int) yn1 - 2, 4, 4);
         g.fillOval((int) xm - 2, (int) ym - 2, 4, 4);
