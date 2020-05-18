@@ -132,7 +132,7 @@ public class Junction extends Point implements RouteParts {
         return false;
     }
 
-    /**}
+    /**
      * Method writes the car in the junction and update all relevant data fields.
      * Finally,prints a message.
      *
@@ -141,7 +141,7 @@ public class Junction extends Point implements RouteParts {
     public void checkIn(Vehicle vehicle) {
         //The last road suppose to be the road from the last end junction and to the current junction
         for(Road r:enteringRoads){
-            if (r.getEndJunction().equals(this) && r.getStartJunction().equals(vehicle.getLastRoad().getEndJunction())){
+            if (r.getEndJunction().equals(this)){
                 vehicle.setLastRoad(r);
             }
         }

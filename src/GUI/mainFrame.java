@@ -245,7 +245,7 @@ class panel extends JPanel {
                 break;
             case "random": {
                 Random r = new Random();
-                Color color = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256), r.nextInt(256));
+                Color color = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256));
                 g.setColor(color);
             }
             break;
