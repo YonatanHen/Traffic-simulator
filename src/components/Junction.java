@@ -141,7 +141,7 @@ public class Junction extends Point implements RouteParts {
     public void checkIn(Vehicle vehicle) {
         //The last road suppose to be the road from the last end junction and to the current junction
         for(Road r:enteringRoads){
-            if (r.getEndJunction().equals(this)){
+            if (r.getEndJunction().equals(this) && r.getEndJunction().equals(vehicle.getLastRoad().getEndJunction())){
                 vehicle.setLastRoad(r);
             }
         }
