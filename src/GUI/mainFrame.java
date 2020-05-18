@@ -6,6 +6,8 @@ import components.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +24,7 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
     JButton[] btns;
     createRoadSystem createRoadSys;
     Timer t;
-
+    Driving driving;
     public mainFrame(String title) {
         super(title);
         t=new Timer(100,this);
@@ -80,6 +82,7 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
         container.setLayout(new GridLayout(1, 0));
         add(new JPanel());
         add(container,BorderLayout.SOUTH);
+
     }
 
     /**
@@ -136,15 +139,42 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                         }
                         break;
                     case 4:
+                        driving= mainPanel.getDriving();
+                        setMinimumSize(new Dimension(640, 480));
+                        String[] col = new String[] {
+                                "Vehicle #", "Type", "Location","Time on loc", "Speed"};
+                        String[][] data= new String[driving.getVehicles().size()][5];
+                        for(int j=0;j<driving.getVehicles().size();j++) {
+                            data[j][0] = String.valueOf(driving.getVehicles().get(j).getid());
+                            data[j][1] = driving.getVehicles().get(j).getVehicleType().toString();
+                            if(driving.getVehicles().get(j).getCurrentRoutePart() instanceof Road)
+                                data[j][2] = driving.getVehicles().get(j).getLastRoad().toString();
+                            else if(driving.getVehicles().get(j).getCurrentRoutePart() instanceof Junction)
+                                data[j][2] = driving.getVehicles().get(j).getLastRoad().getStartJunction().toString();
+                            data[j][3] = String.valueOf(driving.getVehicles().get(j).getTimeOnCurrentPart());
+                            data[j][4] = String.valueOf(driving.getVehicles().get(j).getVehicleType().getAverageSpeed());
+                        }
+                        JTable table = new JTable(data,col);
+                        table.setMinimumSize(new Dimension(200,200));
+                        JTableHeader header = table.getTableHeader();
+                        JScrollPane pane = new JScrollPane(table);
+                        pane.setMinimumSize(new Dimension(150, 23));
+                        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                        add(pane);
+                        setVisible(true);
+                    }
                         break;
                     }
                 }
             }
-        }
+
 
     public void setMainPanel(panel mainPanel) {
         this.mainPanel = mainPanel;
         add(mainPanel,0);
+    }
+    public panel getMainPanel(){
+        return mainPanel;
     }
 
     public void run() {
@@ -166,6 +196,7 @@ class panel extends JPanel {
     final int RADIUS = 10;
     String vehiclesColor = "blue";
     mainFrame mainFrame;
+
 
     public panel(mainFrame mainFrame) {
         setSize(new Dimension(800, 600));
@@ -270,6 +301,9 @@ class panel extends JPanel {
 
     public Driving getDriving() {
         return driving;
+    }
+    public mainFrame getMainFrame(){
+        return mainFrame;
     }
 }
 
