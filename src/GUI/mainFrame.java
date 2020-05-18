@@ -213,18 +213,13 @@ class panel extends JPanel {
                     (int) r.getStartJunction().getY(),
                     (int) r.getEndJunction().getX(),
                     (int) r.getEndJunction().getY());
-
-            g.setColor(Color.GREEN);
-            g.fillPolygon(new int[]{(int) r.getEndJunction().getX() - 50, (int) r.getEndJunction().getX(), (int) r.getEndJunction().getX() - 50}
-                    , new int[]{(int) r.getEndJunction().getY() + 50, (int) r.getEndJunction().getY(), (int) r.getEndJunction().getY() + 50}, 3);
-
         }
         for (Junction j : driving.getMap().getJunctions()) {
             if (j instanceof LightedJunction) {
                 if (((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.GREEN);
                 else g.setColor(Color.RED);
             } else g.setColor(Color.BLACK);
-            g.fillOval((int) j.getX(), (int) j.getY(), RADIUS * 2, RADIUS * 2);
+            g.fillOval((int) j.getX()-10, (int) j.getY()-10, RADIUS * 2, RADIUS * 2);
         }
         for (int i = 0; i < driving.getVehicles().size(); i++) {
             drawRotetedVehicle(g,
