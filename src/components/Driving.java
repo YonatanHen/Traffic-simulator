@@ -101,10 +101,10 @@ public class Driving extends Thread implements Utilities, Timer {
             @Override
             public void run() {
                 System.out.println("\n"+toString()+"\n");
-                for (Timer t : allTimedElements) {
-                    if (t instanceof Vehicle) ((Vehicle) t).start();
-                    if (t instanceof TrafficLights) ((TrafficLights) t).start();
-                }
+//                for (Timer t : allTimedElements) {
+//                    if (t instanceof Vehicle) ((Vehicle) t).start();
+//                    if (t instanceof TrafficLights) ((TrafficLights) t).start();
+//                }
                 while (numOfTurns >= drivingTime) {
                     synchronized (this) {
                         if(forWait) {
@@ -116,21 +116,29 @@ public class Driving extends Thread implements Utilities, Timer {
                         drivingTime++;
                         //suppose to update graphics every 100 millis
                         mainFrame.run();
-                    }
+                        }
                     }
                 }
             }
-            private void Stop() {
-                try {
-                    this.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            public void Stop() {
+                if (!forWait) {
+                    notify();
+                }
+                else {
+                    //    synchronized (this) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+        //    }
         });
         thread.start();
 
         }
+
     /**
      * Advance the pulses for Objects who affect by that.
      */

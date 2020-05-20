@@ -139,8 +139,10 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                         mainPanel.getDriving().setForWait(true);
                         }
                     break;
-                    case 3: {
-
+                    case 3: {synchronized (mainPanel.getDriving()) {
+                        mainPanel.getDriving().setForWait(false);
+                        mainPanel.getDriving().drive(20);
+                    }
                     }
                     break;
                     case 4:
