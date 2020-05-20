@@ -159,12 +159,11 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                     }
                     break;
                     case 4:
-                        JPanel previous = new JPanel();
-                        previous = container;
                         countPressInfo++;
                         if(countPressInfo%2==0 && countPressInfo!=0) {
-                            add(previous);
-                            setVisible(true);
+                           setMainPanel(mainPanel);
+                           revalidate();
+                           repaint();
                             }
                         else {
                             driving = mainPanel.getDriving();
@@ -189,7 +188,8 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                             pane.setMinimumSize(new Dimension(150, 23));
                             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                             add(pane);
-                            setVisible(true);
+                            //setVisible(true);
+                            revalidate();
                         }
                 }
                 break;
