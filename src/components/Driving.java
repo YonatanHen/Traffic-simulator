@@ -100,8 +100,8 @@ public class Driving extends Thread implements Utilities, Timer {
     public synchronized void drive(int numOfTurns){
         this.numOfTurns=numOfTurns;
         for (Timer t : allTimedElements) {
-            if (t instanceof Vehicle) ((Vehicle) t).start();
-            if (t instanceof TrafficLights) ((TrafficLights) t).start();
+            if (t instanceof Vehicle) new Thread((Vehicle) t).start();
+            if (t instanceof TrafficLights) new Thread((TrafficLights) t).start();
         }
         this.start();
         System.out.println("\n"+toString()+"\n");
@@ -140,6 +140,9 @@ public class Driving extends Thread implements Utilities, Timer {
     public void run() {
             while (numOfTurns >= drivingTime && !isOnStop) {
                     System.out.println("***************TURN" + drivingTime + "***************");
+                    try {
+                        sleep(100);
+                    }catch (InterruptedException e){}
                     incrementDrivingTime();
                     drivingTime++;
                     //suppose to update graphics every 100 millis
