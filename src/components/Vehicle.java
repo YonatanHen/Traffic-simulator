@@ -94,7 +94,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
      * Advance values of timeFromStartRoute and timeOnCurrentPart
      * call move() function.
      */
-    public void incrementDrivingTime(){
+    public synchronized void incrementDrivingTime(){
         //Advance time in the route
         timeFromStartRoute+=1;
         //Advance time in current route part
