@@ -30,6 +30,7 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
      */
 
     TrafficLights(ArrayList<Road> roads){
+        super();
         this.roads = new ArrayList<>();
         this.roads.addAll(roads);
         //Initialize green light index
@@ -67,9 +68,8 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
     /**
      * Method check if it's time to change lights by advancing the index of light working time.
      */
-    public synchronized void incrementDrivingTime(){
+    public void incrementDrivingTime(){
         workingTime++;
-        System.out.println("WORKING TIME IS:"+ workingTime);
         if(workingTime>=delay){
             changeLights();
             workingTime = 0;
