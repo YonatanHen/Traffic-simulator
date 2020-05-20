@@ -40,7 +40,7 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
             }
         }
         //Make random value to traffic light delay.
-        delay=getRandomInt(minDelay,maxDelay+1);
+        delay=getRandomInt(minDelay,maxDelay+1)*100;
         trafficLightsOn=false;
         objectCount++;
         id=objectCount;
@@ -52,27 +52,27 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
     /**
      * function that change next junction to green and make sure that other junction with red light
      */
-    public synchronized void changeLights() {
-        changeIndex();
+    public void changeLights() {
         for (int i = 0; i < roads.size(); i++) {
-            if (i == greenLightIndex) {
-                roads.get(i).setGreenlight(true);
-                trafficLightsOn=true;
-                System.out.println("-" + roads.get(i) + ": green light.");
-            } else roads.get(i).setGreenlight(false);
+            roads.get(i).setGreenlight(false);
         }
-        //Change delay time-happens when new light turn on.
-        delay = (getRandomInt(minDelay, maxDelay + 1))*100;
-        //Initialize the working time of the new light who turns on to 0.
-        workingTime = 0;
+        changeIndex();
+        roads.get(getGreenLightIndex()).setGreenlight(true);
+        trafficLightsOn = true;
+        System.out.println("-" + roads.get(getGreenLightIndex()) + ": green light.");
+            //Change delay time-happens when new light turn on.
+            delay = (getRandomInt(minDelay, maxDelay + 1)) * 100;
     }
 
     /**
      * Method check if it's time to change lights by advancing the index of light working time.
      */
-    public void incrementDrivingTime(){
+    public synchronized void incrementDrivingTime(){
         workingTime++;
-        if(workingTime>=delay) changeLights();
+        if(workingTime>=delay){
+            changeLights();
+            workingTime = 0;
+        }
         else {
             trafficLightsOn=false;
             System.out.println(this+ "\n- on delay");

@@ -114,12 +114,14 @@ public class Driving extends Thread implements Utilities, Timer {
     /**
      * Advance the pulses for Objects who affect by that.
      */
-    public void incrementDrivingTime(){
+    public synchronized void incrementDrivingTime(){
         for(int i=0;i<allTimedElements.size();i++){
             if(i<vehicles.size()) {
                 vehicles.get(i).setObjectCount(i+1);
                 System.out.println(allTimedElements.get(i).toString());
             }
+            if(i<allTimedElements.size() && i>=vehicles.size())
+            if(allTimedElements.get(i) instanceof TrafficLights) ((TrafficLights)allTimedElements.get(i)).changeLights();
             allTimedElements.get(i).incrementDrivingTime();
             System.out.println();
         }

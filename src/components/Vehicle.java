@@ -25,7 +25,6 @@ public class Vehicle extends Thread implements Utilities,Timer{
     private static int objectCount=1; //Counter to num of objects
     private Road lastRoad; //Last road which car drove in or driving currently
     private String status=null; //Keep the status,will be in use for prints.
-    mainFrame mainFrame;
 
     /**
      * Vehicle randomal constructor.
@@ -74,7 +73,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
      * Made check out if car can finish the current part and then checkIn to the next part.
      * else-stay at the part
      */
-    public synchronized void move(){
+    public void move() {
         if (currentRoutePart.canLeave(this)) {
             currentRoutePart.checkOut(this);
             if (currentRoutePart.findNextPart(this) != null) {
@@ -94,7 +93,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
      * Advance values of timeFromStartRoute and timeOnCurrentPart
      * call move() function.
      */
-    public void incrementDrivingTime(){
+    public synchronized void incrementDrivingTime(){
         //Advance time in the route
         timeFromStartRoute+=1;
         //Advance time in current route part

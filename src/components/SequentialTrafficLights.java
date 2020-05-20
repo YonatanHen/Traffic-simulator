@@ -26,6 +26,7 @@ public class SequentialTrafficLights extends TrafficLights {
      */
     public void changeIndex(){
         setGreenLightIndex(increment);
+        increment++;
     }
 
     public int getIncrement() {

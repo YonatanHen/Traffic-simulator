@@ -23,7 +23,8 @@ public class RandomTrafficLights extends TrafficLights {
      * NOTE:This method override abstract trafficLight method.
      */
     public void changeIndex(){
-        setGreenLightIndex(getRandomInt(0,getRoads().size()));
+        int index=getRandomInt(0,getRoads().size()-1);
+        setGreenLightIndex(index);
     }
 
 
