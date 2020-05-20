@@ -25,6 +25,8 @@ public class Vehicle extends Thread implements Utilities,Timer{
     private static int objectCount=1; //Counter to num of objects
     private Road lastRoad; //Last road which car drove in or driving currently
     private String status=null; //Keep the status,will be in use for prints.
+    private double X;//location of vehicle in X axis
+    private double Y;//location of vehicle in Y axis
 
     /**
      * Vehicle randomal constructor.
@@ -46,6 +48,8 @@ public class Vehicle extends Thread implements Utilities,Timer{
         System.out.println(status);
         currentRoutePart.checkIn(this);
         objectCount++;
+        X=lastRoad.getStartJunction().getX();
+        Y=lastRoad.getStartJunction().getY();
     }
 
     //getters
@@ -119,5 +123,33 @@ public class Vehicle extends Thread implements Utilities,Timer{
         return false;
     }
 
+    @Override
+    public void run() {
+        if(!currentRoutePart.canLeave(this) && currentRoutePart instanceof Road) {
+            double A=timeOnCurrentPart*Math.min(getLastRoad().getMaxSpeed(),vehicleType.getAverageSpeed());
+            double B=lastRoad.getLength()-A;
+            X=((lastRoad.getStartJunction().getX()*A+lastRoad.getEndJunction().getX()*B)/(A+B));
+            Y=((lastRoad.getStartJunction().getY()*A+lastRoad.getEndJunction().getY()*B)/(A+B));
+        }
+        else{
+            X=lastRoad.getStartJunction().getX();
+            Y=lastRoad.getStartJunction().getY();
+        }
+    }
 
+    public double getX() {
+        return X;
+    }
+
+    public double getY() {
+        return Y;
+    }
+
+    public void setX(int x) {
+        X = x;
+    }
+
+    public void setY(int y) {
+        Y = y;
+    }
 }

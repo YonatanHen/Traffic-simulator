@@ -131,7 +131,7 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                     }
                     break;
                     case 1: {
-                            mainPanel.getDriving().drive(20);
+                            mainPanel.getDriving().drive(50);
                     }
                     break;
                     case 2: {
@@ -236,8 +236,8 @@ class panel extends JPanel {
         }
         for (int i = 0; i < driving.getVehicles().size(); i++) {
             drawRotetedVehicle(g,
-                    (int) driving.getVehicles().get(i).getLastRoad().getStartJunction().getX(),
-                    (int) driving.getVehicles().get(i).getLastRoad().getStartJunction().getY(),
+                    (int) driving.getVehicles().get(i).getX(),
+                    (int) driving.getVehicles().get(i).getY(),
                     (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(),
                     (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(), 10, 8);
         }
