@@ -24,6 +24,7 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
     JButton[] btns;
     createRoadSystem createRoadSys;
     Driving driving;
+    int countPressInfo=0;
     public mainFrame(String title) {
         super(title);
         splitPane=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -126,44 +127,54 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                     break;
                     case 1: {
                         mainPanel.getDriving().drive(20);
+
                     }
                     break;
                     case 2: {
                         System.out.println("stop");
                     }
-                        break;
+                    break;
                     case 3: {
-                        }
-                        break;
+                    }
+                    break;
                     case 4:
-                        driving= mainPanel.getDriving();
-                        setMinimumSize(new Dimension(640, 480));
-                        String[] col = new String[] {
-                                "Vehicle #", "Type", "Location","Time on loc", "Speed"};
-                        String[][] data= new String[driving.getVehicles().size()][5];
-                        for(int j=0;j<driving.getVehicles().size();j++) {
-                            data[j][0] = String.valueOf(driving.getVehicles().get(j).getid());
-                            data[j][1] = driving.getVehicles().get(j).getVehicleType().toString();
-                            if(driving.getVehicles().get(j).getCurrentRoutePart() instanceof Road)
-                                data[j][2] = driving.getVehicles().get(j).getLastRoad().toString();
-                            else if(driving.getVehicles().get(j).getCurrentRoutePart() instanceof Junction)
-                                data[j][2] = driving.getVehicles().get(j).getLastRoad().getStartJunction().toString();
-                            data[j][3] = String.valueOf(driving.getVehicles().get(j).getTimeOnCurrentPart());
-                            data[j][4] = String.valueOf(driving.getVehicles().get(j).getVehicleType().getAverageSpeed());
+                        JPanel previous = new JPanel();
+                        previous = container;
+                        countPressInfo++;
+                        if(countPressInfo%2==0 && countPressInfo!=0) {
+                            add(previous);
+                            setVisible(true);
+                            }
+                        else {
+                            driving = mainPanel.getDriving();
+                            setMinimumSize(new Dimension(640, 480));
+                            String[] col = new String[]{
+                                    "Vehicle #", "Type", "Location", "Time on loc", "Speed"};
+                            String[][] data = new String[driving.getVehicles().size()][5];
+                            for (int j = 0; j < driving.getVehicles().size(); j++) {
+                                data[j][0] = String.valueOf(driving.getVehicles().get(j).getid());
+                                data[j][1] = driving.getVehicles().get(j).getVehicleType().toString();
+                                if (driving.getVehicles().get(j).getCurrentRoutePart() instanceof Road)
+                                    data[j][2] = driving.getVehicles().get(j).getLastRoad().toString();
+                                else if (driving.getVehicles().get(j).getCurrentRoutePart() instanceof Junction)
+                                    data[j][2] = driving.getVehicles().get(j).getLastRoad().getStartJunction().toString();
+                                data[j][3] = String.valueOf(driving.getVehicles().get(j).getTimeOnCurrentPart());
+                                data[j][4] = String.valueOf(driving.getVehicles().get(j).getVehicleType().getAverageSpeed());
+                            }
+                            JTable table = new JTable(data, col);
+                            table.setMinimumSize(new Dimension(200, 200));
+                            JTableHeader header = table.getTableHeader();
+                            JScrollPane pane = new JScrollPane(table);
+                            pane.setMinimumSize(new Dimension(150, 23));
+                            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                            add(pane);
+                            setVisible(true);
                         }
-                        JTable table = new JTable(data,col);
-                        table.setMinimumSize(new Dimension(200,200));
-                        JTableHeader header = table.getTableHeader();
-                        JScrollPane pane = new JScrollPane(table);
-                        pane.setMinimumSize(new Dimension(150, 23));
-                        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-                        add(pane);
-                        setVisible(true);
-                    }
-                        break;
-                    }
                 }
+                break;
             }
+        }
+    }
 
 
     public void setMainPanel(panel mainPanel) {
@@ -175,10 +186,10 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
     }
 
     public void run() {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {}
-            mainPanel.repaint();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {}
+        mainPanel.repaint();
     }
 }
 
@@ -296,4 +307,3 @@ class panel extends JPanel {
         return mainFrame;
     }
 }
-
