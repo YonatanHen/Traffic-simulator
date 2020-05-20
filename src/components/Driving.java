@@ -23,6 +23,7 @@ public class Driving extends Thread implements Utilities, Timer {
     private ArrayList<Timer> allTimedElements; //Keep the whole elements who affected by the time pulses.
     mainFrame mainFrame;
     int numOfTurns;
+    boolean isOnStop=false;
 
     /**
      * Driving constructor: receive number of junctions and
@@ -96,7 +97,7 @@ public class Driving extends Thread implements Utilities, Timer {
      * @param numOfTurns
      */
 
-    public void drive(int numOfTurns){
+    public synchronized void drive(int numOfTurns){
         this.numOfTurns=numOfTurns;
         for (Timer t : allTimedElements) {
             if (t instanceof Vehicle) ((Vehicle) t).start();
@@ -109,7 +110,7 @@ public class Driving extends Thread implements Utilities, Timer {
     /**
      * Advance the pulses for Objects who affect by that.
      */
-    public void incrementDrivingTime(){
+    public synchronized void incrementDrivingTime(){
         for(int i=0;i<allTimedElements.size();i++){
             if(i<vehicles.size()) {
                 vehicles.get(i).setObjectCount(i+1);
@@ -137,12 +138,25 @@ public class Driving extends Thread implements Utilities, Timer {
 
     @Override
     public void run() {
-        while (numOfTurns >= drivingTime) {
-            System.out.println("***************TURN" + drivingTime + "***************");
-            incrementDrivingTime();
-            drivingTime++;
-            //suppose to update graphics every 100 millis
-            mainFrame.run();
+            while (numOfTurns >= drivingTime && !isOnStop) {
+                    System.out.println("***************TURN" + drivingTime + "***************");
+                    incrementDrivingTime();
+                    drivingTime++;
+                    //suppose to update graphics every 100 millis
+                    mainFrame.run();
+            }
+    }
+    public void Stop() throws InterruptedException{
+        synchronized (this) {
+            isOnStop = true;
+                wait();
+            }
+    }
+    public void Continue() {
+        synchronized (this) {
+            isOnStop=false;
+            this.notify();
+            run();
         }
     }
 }

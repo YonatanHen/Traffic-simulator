@@ -136,12 +136,13 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                     break;
                     case 2: {
                             try {
-                                mainPanel.getDriving().wait();
-                            } catch (InterruptedException er) { }
+                                mainPanel.getDriving().Stop();
+                            } catch (InterruptedException er) {
+                            }
                     }
                     break;
                     case 3: {
-                        mainPanel.getDriving().notify();
+                            mainPanel.getDriving().Continue();
                     }
                     break;
                     case 4:
