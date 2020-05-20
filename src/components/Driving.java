@@ -23,6 +23,7 @@ public class Driving extends Thread implements Utilities, Timer {
     private ArrayList<Timer> allTimedElements; //Keep the whole elements who affected by the time pulses.
     mainFrame mainFrame;
     Thread thread;
+    boolean forWait=false;
 
     /**
      * Driving constructor: receive number of junctions and
@@ -106,19 +107,30 @@ public class Driving extends Thread implements Utilities, Timer {
                 }
                 while (numOfTurns >= drivingTime) {
                     synchronized (this) {
+                        if(forWait) {
+                            Stop();
+                        }
+                        else{
                         System.out.println("***************TURN" + drivingTime + "***************");
                         incrementDrivingTime();
                         drivingTime++;
                         //suppose to update graphics every 100 millis
                         mainFrame.run();
                     }
+                    }
+                }
+            }
+            private void Stop() {
+                try {
+                    this.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
         thread.start();
 
         }
-
     /**
      * Advance the pulses for Objects who affect by that.
      */
@@ -146,5 +158,17 @@ public class Driving extends Thread implements Utilities, Timer {
             allTimedElements.equals(((Driving) o).allTimedElements);
         }
         return false;
+    }
+
+    public Thread getThread() {
+        return thread;
+    }
+
+    public void setForWait(boolean forWait) {
+        this.forWait = forWait;
+    }
+
+    public boolean isForWait() {
+        return forWait;
     }
 }
