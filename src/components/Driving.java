@@ -32,26 +32,25 @@ public class Driving extends Thread implements Utilities, Timer {
      * @param numOfJunctions
      * @param numOfVehicles
      */
-    public Driving(int numOfJunctions,int numOfVehicles,mainFrame GUIFrame){
-        map=new Map(numOfJunctions);
-        vehicles=new ArrayList<>();
-        allTimedElements=new ArrayList<>();
-        drivingTime=0;
-        Random r =new Random();
-        mainFrame=GUIFrame;
+    public Driving(int numOfJunctions,int numOfVehicles,mainFrame GUIFrame) {
+        map = new Map(numOfJunctions);
+        vehicles = new ArrayList<>();
+        allTimedElements = new ArrayList<>();
+        drivingTime = 0;
+        Random r = new Random();
+        mainFrame = GUIFrame;
         //Make random starting roads to vehicles based on the map.
         //Add the vehicles to allTimedElements
         System.out.println("================= CREATING VEHICLES =================");
-        for(int i=0;i<numOfVehicles;i++) {
+        for (int i = 0; i < numOfVehicles; i++) {
             vehicles.add(new Vehicle(map.getRoads().get(r.nextInt(map.getRoads().size()))));
             allTimedElements.add(vehicles.get(i));
         }
         //Add the lights to allTimedElements only if junction is LightedJunction
-        for(Junction j:map.getJunctions()){
-            if(j instanceof LightedJunction) allTimedElements.add(((LightedJunction) j).getLights());
+        for (Junction j : map.getJunctions()) {
+            if (j instanceof LightedJunction) allTimedElements.add(((LightedJunction) j).getLights());
         }
     }
-
     //getters
 
 
@@ -94,6 +93,7 @@ public class Driving extends Thread implements Utilities, Timer {
      *
      * @param numOfTurns
      */
+
     public void drive(int numOfTurns){
         System.out.println("\n"+toString()+"\n");
             for (Timer t : allTimedElements) {

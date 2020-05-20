@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 
 import java.util.Random;
 
+import static java.lang.Thread.sleep;
+
 public class mainFrame extends JFrame implements ActionListener,Runnable {
     JMenuBar menuBar;
     JMenu file, background, vehicleColor, help;
@@ -126,12 +128,30 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                     }
                     break;
                     case 1: {
-                        mainPanel.getDriving().drive(20);
-
+                        synchronized (this) {
+                            Thread thread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mainPanel.getDriving().drive(20);
+                                    try {
+                                        sleep((long) (Math.random() * 1000));
+                                        repaint();
+                                    } catch (InterruptedException e) {
+                                    }
+                                }
+                            });
+                            thread.start();
+                        }
                     }
                     break;
                     case 2: {
-                        System.out.println("stop");
+                        synchronized (this) {
+                            try {
+                                wait();
+                            } catch (InterruptedException E) {
+                            }
+                            System.out.println("stop");
+                        }
                     }
                     break;
                     case 3: {
@@ -154,7 +174,7 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                             for (int j = 0; j < driving.getVehicles().size(); j++) {
                                 data[j][0] = String.valueOf(driving.getVehicles().get(j).getid());
                                 data[j][1] = driving.getVehicles().get(j).getVehicleType().toString();
-                                if (driving.getVehicles().get(j).getCurrentRoutePart() instanceof Road)
+                                if (driving.getVehicles().get(j).getCurrentRoutePart() instanceof Road)//TODO": check how to write like the example
                                     data[j][2] = driving.getVehicles().get(j).getLastRoad().toString();
                                 else if (driving.getVehicles().get(j).getCurrentRoutePart() instanceof Junction)
                                     data[j][2] = driving.getVehicles().get(j).getLastRoad().getStartJunction().toString();
@@ -187,7 +207,7 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
 
     public void run() {
         try {
-            Thread.sleep(100);
+            sleep(100);
         } catch (InterruptedException e) {}
         mainPanel.repaint();
     }
@@ -305,5 +325,11 @@ class panel extends JPanel {
     }
     public mainFrame getMainFrame(){
         return mainFrame;
+    }
+    public void run() {
+        try {
+            sleep(100);
+        } catch (InterruptedException e) {}
+        getMainFrame().repaint();
     }
 }
