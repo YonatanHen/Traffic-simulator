@@ -32,6 +32,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
      * @param road
      */
     public Vehicle(Road road){
+        super();
         id=objectCount;
         vehicleType=VehicleType.values()[getRandomInt(0,VehicleType.values().length)];//Randomise car type
         timeFromStartRoute=0;
@@ -93,7 +94,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
      * Advance values of timeFromStartRoute and timeOnCurrentPart
      * call move() function.
      */
-    public synchronized void incrementDrivingTime(){
+    public void incrementDrivingTime(){
         //Advance time in the route
         timeFromStartRoute+=1;
         //Advance time in current route part

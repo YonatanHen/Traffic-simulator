@@ -22,7 +22,7 @@ public class Driving extends Thread implements Utilities, Timer {
     private int drivingTime; // Accumulate the time/number of pulses from the start
     private ArrayList<Timer> allTimedElements; //Keep the whole elements who affected by the time pulses.
     mainFrame mainFrame;
-    Thread thread;
+    int numOfTurns;
 
     /**
      * Driving constructor: receive number of junctions and
@@ -34,6 +34,7 @@ public class Driving extends Thread implements Utilities, Timer {
      * @param numOfVehicles
      */
     public Driving(int numOfJunctions,int numOfVehicles,mainFrame GUIFrame) {
+        super();
         map = new Map(numOfJunctions);
         vehicles = new ArrayList<>();
         allTimedElements = new ArrayList<>();
@@ -96,33 +97,19 @@ public class Driving extends Thread implements Utilities, Timer {
      */
 
     public void drive(int numOfTurns){
-        thread= new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("\n"+toString()+"\n");
-                for (Timer t : allTimedElements) {
-                    if (t instanceof Vehicle) ((Vehicle) t).start();
-                    if (t instanceof TrafficLights) ((TrafficLights) t).start();
-                }
-                while (numOfTurns >= drivingTime) {
-                    synchronized (this) {
-                        System.out.println("***************TURN" + drivingTime + "***************");
-                        incrementDrivingTime();
-                        drivingTime++;
-                        //suppose to update graphics every 100 millis
-                        mainFrame.run();
-                    }
-                }
-            }
-        });
-        thread.start();
-
+        this.numOfTurns=numOfTurns;
+        for (Timer t : allTimedElements) {
+            if (t instanceof Vehicle) ((Vehicle) t).start();
+            if (t instanceof TrafficLights) ((TrafficLights) t).start();
+        }
+        this.start();
+        System.out.println("\n"+toString()+"\n");
         }
 
     /**
      * Advance the pulses for Objects who affect by that.
      */
-    public synchronized void incrementDrivingTime(){
+    public void incrementDrivingTime(){
         for(int i=0;i<allTimedElements.size();i++){
             if(i<vehicles.size()) {
                 vehicles.get(i).setObjectCount(i+1);
@@ -146,5 +133,16 @@ public class Driving extends Thread implements Utilities, Timer {
             allTimedElements.equals(((Driving) o).allTimedElements);
         }
         return false;
+    }
+
+    @Override
+    public void run() {
+        while (numOfTurns >= drivingTime) {
+            System.out.println("***************TURN" + drivingTime + "***************");
+            incrementDrivingTime();
+            drivingTime++;
+            //suppose to update graphics every 100 millis
+            mainFrame.run();
+        }
     }
 }

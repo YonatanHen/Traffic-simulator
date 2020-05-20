@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.lang.management.ThreadInfo;
 import java.util.Random;
 
+import static java.lang.Thread.MAX_PRIORITY;
 import static java.lang.Thread.sleep;
 
 public class mainFrame extends JFrame implements ActionListener,Runnable {
@@ -130,23 +131,17 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                     }
                     break;
                     case 1: {
-                        synchronized (this) {
                             mainPanel.getDriving().drive(20);
-                        }
                     }
                     break;
                     case 2: {
-                        synchronized (this) {
-                        try {
-                            this.wait();
-
-                        }  catch(InterruptedException ex){
-                                ex.printStackTrace();
-                            }
-                        }
+                            try {
+                                mainPanel.getDriving().wait();
+                            } catch (InterruptedException er) { }
                     }
                     break;
                     case 3: {
+                        mainPanel.getDriving().notify();
                     }
                     break;
                     case 4:
