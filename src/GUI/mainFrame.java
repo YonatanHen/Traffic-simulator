@@ -92,7 +92,7 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
      *
      * @param e
      */
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed (ActionEvent e) {
         if (e.getSource() == exit) {
             System.exit(0);
         }
@@ -146,13 +146,13 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                     }
                     break;
                     case 2: {
-                        synchronized (this) {
                             try {
-                                wait();
+                                synchronized (this) {
+                                    this.wait();
+                                }
                             } catch (InterruptedException E) {
                             }
                             System.out.println("stop");
-                        }
                     }
                     break;
                     case 3: {
