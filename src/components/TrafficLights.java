@@ -40,7 +40,7 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
             }
         }
         //Make random value to traffic light delay.
-        delay=getRandomInt(minDelay,maxDelay+1)*100;
+        delay=getRandomInt(minDelay,maxDelay+1);
         trafficLightsOn=false;
         objectCount++;
         id=objectCount;
@@ -61,7 +61,7 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
         trafficLightsOn = true;
         System.out.println("-" + roads.get(getGreenLightIndex()) + ": green light.");
             //Change delay time-happens when new light turn on.
-            delay = (getRandomInt(minDelay, maxDelay + 1)) * 100;
+            delay = (getRandomInt(minDelay, maxDelay + 1));
     }
 
     /**
@@ -69,6 +69,7 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
      */
     public synchronized void incrementDrivingTime(){
         workingTime++;
+        System.out.println("WORKING TIME IS:"+ workingTime);
         if(workingTime>=delay){
             changeLights();
             workingTime = 0;
