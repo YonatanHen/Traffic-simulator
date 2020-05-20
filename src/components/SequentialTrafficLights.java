@@ -27,6 +27,8 @@ public class SequentialTrafficLights extends TrafficLights {
     public void changeIndex(){
         setGreenLightIndex(increment);
         increment++;
+        if(getRoads().size()>=increment)
+            increment=0;
     }
 
     public int getIncrement() {
