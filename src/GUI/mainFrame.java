@@ -28,6 +28,7 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
     createRoadSystem createRoadSys;
     Driving driving;
     int countPressInfo=0;
+
     public mainFrame(String title) {
         super(title);
         splitPane=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -130,29 +131,19 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                     break;
                     case 1: {
                         synchronized (this) {
-                            Thread thread = new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mainPanel.getDriving().drive(20);
-                                    try {
-                                        sleep((long) (Math.random() * 1000));
-                                        repaint();
-                                    } catch (InterruptedException e) {
-                                    }
-                                }
-                            });
-                            thread.start();
+                            mainPanel.getDriving().drive(20);
                         }
                     }
                     break;
                     case 2: {
-                            try {
-                                synchronized (this) {
-                                    this.wait();
-                                }
-                            } catch (InterruptedException E) {
+                        synchronized (this) {
+                        try {
+                            this.wait();
+
+                        }  catch(InterruptedException ex){
+                                ex.printStackTrace();
                             }
-                            System.out.println("stop");
+                        }
                     }
                     break;
                     case 3: {
