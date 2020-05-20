@@ -120,8 +120,6 @@ public class Driving extends Thread implements Utilities, Timer {
                 vehicles.get(i).setObjectCount(i+1);
                 System.out.println(allTimedElements.get(i).toString());
             }
-            //if(i<allTimedElements.size() && i>=vehicles.size())
-            //if(allTimedElements.get(i) instanceof TrafficLights) ((TrafficLights)allTimedElements.get(i)).changeLights();
             allTimedElements.get(i).incrementDrivingTime();
             System.out.println();
         }
