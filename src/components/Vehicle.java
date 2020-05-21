@@ -78,20 +78,23 @@ public class Vehicle extends Thread implements Utilities,Timer{
      * Made check out if car can finish the current part and then checkIn to the next part.
      * else-stay at the part
      */
-    public void move() {
+    public synchronized void move() {
         if (currentRoutePart.canLeave(this)) {
             currentRoutePart.checkOut(this);
             if (currentRoutePart.findNextPart(this) != null) {
                 currentRoutePart = currentRoutePart.findNextPart(this);
                 currentRoutePart.checkIn(this);
+                timeOnCurrentPart=0;
             }
-        } else currentRoute.stayOnCurrentPart(this);
-        if (currentRoute.canLeave(this)) {
+            else if (currentRoute.canLeave(this)) {
             currentRoute.checkOut(this);
             currentRoutePart = currentRoute.findNextPart(this);
             currentRoute.checkIn(this);
             currentRoutePart.checkIn(this);
+            timeOnCurrentPart = 0;
+            timeFromStartRoute = 0;
         }
+        }else currentRoute.stayOnCurrentPart(this);
     }
 
     /**
@@ -130,10 +133,6 @@ public class Vehicle extends Thread implements Utilities,Timer{
             double B=lastRoad.getLength()-A;
             X=((lastRoad.getStartJunction().getX()*A+lastRoad.getEndJunction().getX()*B)/(A+B));
             Y=((lastRoad.getStartJunction().getY()*A+lastRoad.getEndJunction().getY()*B)/(A+B));
-        }
-        else{
-            X=lastRoad.getStartJunction().getX();
-            Y=lastRoad.getStartJunction().getY();
         }
     }
 

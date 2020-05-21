@@ -131,7 +131,7 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                     }
                     break;
                     case 1: {
-                            mainPanel.getDriving().drive(50);
+                            mainPanel.getDriving().drive(100);
                     }
                     break;
                     case 2: {
