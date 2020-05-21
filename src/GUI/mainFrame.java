@@ -84,7 +84,6 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
             container.add(btns[i]);
         }
         container.setLayout(new GridLayout(1, 0));
-        add(new JPanel());
         add(container,BorderLayout.SOUTH);
 
     }
@@ -100,9 +99,11 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
         }
         if (e.getSource() == blueBackGround && mainPanel!=null) {
             mainPanel.setBackground(Color.BLUE);
+            revalidate();
         }
         if (e.getSource() == noneBackground && mainPanel!=null) {
             mainPanel.setBackground(Color.GRAY);
+            revalidate();
         }
         if (e.getSource() == helpItem) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
@@ -161,10 +162,10 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                             for (int j = 0; j < driving.getVehicles().size(); j++) {
                                 data[j][0] = String.valueOf(driving.getVehicles().get(j).getid());
                                 data[j][1] = driving.getVehicles().get(j).getVehicleType().toString();
-                                if (driving.getVehicles().get(j).getCurrentRoutePart() instanceof Road)//TODO": check how to write like the example
-                                    data[j][2] = driving.getVehicles().get(j).getLastRoad().toString();
+                                if (driving.getVehicles().get(j).getCurrentRoutePart() instanceof Road)
+                                    data[j][2] = "Road " + driving.getVehicles().get(j).getLastRoad().getStartJunction().getJunctionName()+"-"+driving.getVehicles().get(j).getLastRoad().getEndJunction().getJunctionName();
                                 else if (driving.getVehicles().get(j).getCurrentRoutePart() instanceof Junction)
-                                    data[j][2] = driving.getVehicles().get(j).getLastRoad().getStartJunction().toString();
+                                    data[j][2] = "Junction"+ ((Junction)driving.getVehicles().get(j).getCurrentRoutePart()).getJunctionName();
                                 data[j][3] = String.valueOf(driving.getVehicles().get(j).getTimeOnCurrentPart());
                                 data[j][4] = String.valueOf(driving.getVehicles().get(j).getVehicleType().getAverageSpeed());
                             }
@@ -209,6 +210,8 @@ class panel extends JPanel {
     final int RADIUS = 10;
     String vehiclesColor = "blue";
     mainFrame mainFrame;
+    boolean isRandomalColor=false;
+    Color c;
 
 
     public panel(mainFrame mainFrame) {
@@ -250,20 +253,28 @@ class panel extends JPanel {
      */
     public void paintVehicels(Graphics g) {
         switch (vehiclesColor) {
-            case "magenta":
+            case "magenta": {
+                isRandomalColor=false;
                 g.setColor(Color.MAGENTA);
+            }
                 break;
-            case "orange":
+            case "orange": {
+                isRandomalColor=false;
                 g.setColor(Color.ORANGE);
+            }
                 break;
             case "random": {
-                Random r = new Random();
-                Color color = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256));
-                g.setColor(color);
+                    Random r = new Random();
+                    Color color = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256));
+                    g.setColor(color);
+                    c=color;
+                    isRandomalColor=true;
             }
             break;
-            default:
+            default: {
+                isRandomalColor=false;
                 g.setColor(Color.BLUE);
+            }
         }
 
     }
@@ -289,6 +300,7 @@ class panel extends JPanel {
         int[] xpoints = {(int) xm1, (int) xn1, (int) xn, (int) xm};
         int[] ypoints = {(int) ym1, (int) yn1, (int) yn, (int) ym};
         paintVehicels(g);
+        if(isRandomalColor) g.setColor(c);
         g.fillPolygon(xpoints, ypoints, 4);
         g.setColor(Color.BLACK);
         g.fillOval((int) xm1 - 2, (int) ym1 - 2, 4, 4);
