@@ -15,8 +15,7 @@ import java.awt.event.ActionListener;
 import java.lang.management.ThreadInfo;
 import java.util.Random;
 
-import static java.lang.Thread.MAX_PRIORITY;
-import static java.lang.Thread.sleep;
+import static java.lang.Thread.*;
 
 public class mainFrame extends JFrame implements ActionListener,Runnable {
     JMenuBar menuBar;
@@ -215,7 +214,7 @@ class panel extends JPanel {
 
 
     public panel(mainFrame mainFrame) {
-        setSize(new Dimension(800, 600));
+        setSize(new Dimension(820, 600));
         setVisible(true);
         validate();
         this.mainFrame = mainFrame;
@@ -229,6 +228,15 @@ class panel extends JPanel {
                     (int) r.getStartJunction().getY(),
                     (int) r.getEndJunction().getX(),
                     (int) r.getEndJunction().getY());
+            if(r.getEnable()) {
+                double DT = Math.sqrt(Math.pow((r.getStartJunction().getX() - r.getEndJunction().getX()), 2) + Math.pow((r.getStartJunction().getY() - r.getEndJunction().getY()), 2));
+                double D = 19, x, y, T = D / DT;
+                x = (1 - T) * r.getEndJunction().getX() + T * r.getStartJunction().getX();
+                y = (1 - T) * r.getEndJunction().getY() + T * r.getStartJunction().getY();
+                g.setColor(Color.GREEN);
+                g.fillPolygon(new int[]{(int) r.getEndJunction().getX(), (int) x + 5, (int) x - 3},
+                        new int[]{(int) r.getEndJunction().getY(), (int) y + 5, (int) y - 3}, 3);
+            }
         }
         for (Junction j : driving.getMap().getJunctions()) {
             if (j instanceof LightedJunction) {
