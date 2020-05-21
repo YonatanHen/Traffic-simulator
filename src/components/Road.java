@@ -87,7 +87,7 @@ public class Road implements RouteParts, Utilities {
      */
     public double calcEstimatedTime(Object obj){
         if(obj instanceof Vehicle)
-            return Math.round(length/ Math.min(maxSpeed,((Vehicle) obj).getVehicleType().getAverageSpeed()));
+            return Math.round(Math.abs(length)/ Math.min(maxSpeed,((Vehicle) obj).getVehicleType().getAverageSpeed()));
         return 0;
     }
 

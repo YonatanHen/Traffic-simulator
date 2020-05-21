@@ -53,7 +53,7 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
     /**
      * function that change next junction to green and make sure that other junction with red light
      */
-    public void changeLights() {
+    public synchronized void changeLights() {
         for (int i = 0; i < roads.size(); i++) {
             roads.get(i).setGreenlight(false);
         }
