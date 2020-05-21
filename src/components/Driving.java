@@ -138,28 +138,29 @@ public class Driving extends Thread implements Utilities, Timer {
 
     @Override
     public void run() {
-            while (numOfTurns >= drivingTime && !isOnStop) {
-                    System.out.println("***************TURN" + drivingTime + "***************");
-                    try {
-                        sleep(100);
-                    }catch (InterruptedException e){}
-                    incrementDrivingTime();
-                    drivingTime++;
-                    //suppose to update graphics every 100 millis
-                    mainFrame.run();
+        while (numOfTurns >= drivingTime && !isOnStop) {
+            System.out.println("***************TURN" + drivingTime + "***************");
+            try {
+                sleep(100);
+            } catch (InterruptedException e) {
             }
+            incrementDrivingTime();
+            drivingTime++;
+            //suppose to update graphics every 100 millis
+            mainFrame.run();
+        }
     }
     public void Stop() throws InterruptedException{
         synchronized (this) {
             isOnStop = true;
-                wait();
+            wait();
             }
     }
     public void Continue() {
-        synchronized (this) {
-            isOnStop=false;
-            this.notify();
-            run();
+       synchronized (this) {
+           isOnStop = false;
+           this.notify();
+           run();
         }
     }
 }

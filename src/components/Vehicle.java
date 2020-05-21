@@ -42,10 +42,10 @@ public class Vehicle extends Thread implements Utilities,Timer{
         lastRoad=road;
         lastRoad.addVehicleToWaitingVehicles(this);
         currentRoute=new Route(road,this);
-        currentRoute.checkIn(this);
         currentRoutePart=currentRoute.getRouteParts().get(0);
         successMessage(toString());
-        System.out.println(status);
+        currentRoute.checkIn(this);
+        //System.out.println(status);
         currentRoutePart.checkIn(this);
         objectCount++;
         X=lastRoad.getStartJunction().getX();
@@ -128,11 +128,17 @@ public class Vehicle extends Thread implements Utilities,Timer{
 
     @Override
     public void run() {
-        if(!currentRoutePart.canLeave(this) && currentRoutePart instanceof Road) {
-            double A=timeOnCurrentPart*Math.min(getLastRoad().getMaxSpeed(),vehicleType.getAverageSpeed());
-            double B=lastRoad.getLength()-A;
-            X=((lastRoad.getStartJunction().getX()*A+lastRoad.getEndJunction().getX()*B)/(A+B));
-            Y=((lastRoad.getStartJunction().getY()*A+lastRoad.getEndJunction().getY()*B)/(A+B));
+        if(!currentRoutePart.canLeave(this)) {
+            if(currentRoutePart instanceof Road) {
+                double A = timeOnCurrentPart * Math.min(getLastRoad().getMaxSpeed(), vehicleType.getAverageSpeed());
+                double B = lastRoad.getLength() - A;
+                X = ((lastRoad.getStartJunction().getX() * A + lastRoad.getEndJunction().getX() * B) / (A + B));
+                Y = ((lastRoad.getStartJunction().getY() * A + lastRoad.getEndJunction().getY() * B) / (A + B));
+            }
+            else if(currentRoutePart instanceof Junction){
+               X=lastRoad.getEndJunction().getX();
+               Y=lastRoad.getEndJunction().getY();
+            }
         }
     }
 
