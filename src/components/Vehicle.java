@@ -45,7 +45,6 @@ public class Vehicle extends Thread implements Utilities,Timer{
         currentRoutePart=currentRoute.getRouteParts().get(0);
         successMessage(toString());
         currentRoute.checkIn(this);
-        //System.out.println(status);
         currentRoutePart.checkIn(this);
         objectCount++;
         X=lastRoad.getStartJunction().getX();
@@ -78,7 +77,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
      * Made check out if car can finish the current part and then checkIn to the next part.
      * else-stay at the part
      */
-    public synchronized void move() {
+    public void move() {
         if (currentRoutePart.canLeave(this)) {
             currentRoutePart.checkOut(this);
             if (currentRoutePart.findNextPart(this) != null) {
@@ -128,16 +127,15 @@ public class Vehicle extends Thread implements Utilities,Timer{
 
     @Override
     public void run() {
-        if(!currentRoutePart.canLeave(this)) {
-            if(currentRoutePart instanceof Road) {
+        if (!currentRoutePart.canLeave(this)) {
+            if (currentRoutePart instanceof Road) {
                 double A = timeOnCurrentPart * Math.min(getLastRoad().getMaxSpeed(), vehicleType.getAverageSpeed());
                 double B = lastRoad.getLength() - A;
                 X = ((lastRoad.getStartJunction().getX() * A + lastRoad.getEndJunction().getX() * B) / (A + B));
                 Y = ((lastRoad.getStartJunction().getY() * A + lastRoad.getEndJunction().getY() * B) / (A + B));
-            }
-            else if(currentRoutePart instanceof Junction){
-               X=lastRoad.getEndJunction().getX();
-               Y=lastRoad.getEndJunction().getY();
+            } else if (currentRoutePart instanceof Junction) {
+                X = lastRoad.getEndJunction().getX();
+                Y = lastRoad.getEndJunction().getY();
             }
         }
     }
