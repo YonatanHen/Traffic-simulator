@@ -28,6 +28,7 @@ public class mainFrame extends JFrame implements ActionListener {
     createRoadSystem createRoadSys;
     Driving driving;
     int countPressInfo=0;
+    boolean isCreated=false;
 
     public mainFrame(String title) {
         super(title);
@@ -124,10 +125,12 @@ public class mainFrame extends JFrame implements ActionListener {
             if (e.getSource() == btns[i]) {
                 switch (i) {
                     case 0: {
-                        createRoadSys = new createRoadSystem("Create road system",mainPanel,this);
+                        if(isCreated) mainPanel.getDriving().setRunning(false);
+                        createRoadSys = new createRoadSystem("Create road system", mainPanel, this);
                         createRoadSys.pack();
                         createRoadSys.setSize(600, 300);
                         createRoadSys.setVisible(true);
+                        isCreated=true;
                     }
                     break;
                         case 1: {
@@ -163,7 +166,7 @@ public class mainFrame extends JFrame implements ActionListener {
                                 else if (driving.getVehicles().get(j).getCurrentRoutePart() instanceof Junction)
                                     data[j][2] = "Junction"+ ((Junction)driving.getVehicles().get(j).getCurrentRoutePart()).getJunctionName();
                                 data[j][3] = String.valueOf(driving.getVehicles().get(j).getTimeOnCurrentPart());
-                                data[j][4] = String.valueOf(driving.getVehicles().get(j).getVehicleType().getAverageSpeed());
+                                data[j][4] = String.valueOf(driving.getVehicles().get(j).getVehicleType().getAverageSpeed()*10);
                             }
                             JTable table = new JTable(data, col);
                             table.setMinimumSize(new Dimension(200, 200));
@@ -172,7 +175,6 @@ public class mainFrame extends JFrame implements ActionListener {
                             pane.setMinimumSize(new Dimension(150, 23));
                             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                             add(pane);
-                            //setVisible(true);
                             revalidate();
                         }
                 }
@@ -210,6 +212,7 @@ class panel extends JPanel {
     mainFrame mainFrame;
     boolean isRandomalColor=false;
     Color c;
+    int countRandomalColoredVehicels=0;
 
 
     public panel(mainFrame mainFrame) {
@@ -245,11 +248,19 @@ class panel extends JPanel {
             g.fillOval((int) j.getX()-10, (int) j.getY()-10, RADIUS * 2, RADIUS * 2);
         }
         for (int i = 0; i < driving.getVehicles().size(); i++) {
-            drawRotetedVehicle(g,
-                    (int) driving.getVehicles().get(i).getX(),
-                    (int) driving.getVehicles().get(i).getY(),
-                    (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(),
-                    (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(), 10, 8);
+            if(driving.getVehicles().get(i).getCurrentRoutePart() instanceof Junction){
+                drawRotetedVehicle(g,
+                        (int) driving.getVehicles().get(i).getX(),
+                        (int) driving.getVehicles().get(i).getY(),
+                        (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(),
+                        (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(), 8, 4);
+            }else {
+                drawRotetedVehicle(g,
+                        (int) driving.getVehicles().get(i).getX(),
+                        (int) driving.getVehicles().get(i).getY(),
+                        (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(),
+                        (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(), 10, 4);
+            }
         }
 
     }
@@ -272,10 +283,13 @@ class panel extends JPanel {
             }
                 break;
             case "random": {
+                if(getDriving().getVehicles().size()>=countRandomalColoredVehicels) {
                     Random r = new Random();
                     Color color = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256));
                     g.setColor(color);
-                    c=color;
+                    c = color;
+                    countRandomalColoredVehicels++;
+                }
                     isRandomalColor=true;
             }
             break;
