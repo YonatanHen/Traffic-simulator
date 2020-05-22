@@ -17,7 +17,7 @@ import java.util.Random;
 
 import static java.lang.Thread.*;
 
-public class mainFrame extends JFrame implements ActionListener,Runnable {
+public class mainFrame extends JFrame implements ActionListener {
     JMenuBar menuBar;
     JMenu file, background, vehicleColor, help;
     JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem;
@@ -130,20 +130,17 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
                         createRoadSys.setVisible(true);
                     }
                     break;
-                    case 1: {
-                            mainPanel.getDriving().drive(100);
-                    }
-                    break;
-                    case 2: {
-                            try {
+                        case 1: {
+                                mainPanel.getDriving().drive(100);
+                        }
+                        break;
+                        case 2: {
                                 mainPanel.getDriving().Stop();
-                            } catch (InterruptedException er) {
-                            }
-                    }
-                    break;
-                    case 3: {
-                            mainPanel.getDriving().Continue();
-                    }
+                        }
+                        break;
+                        case 3: {
+                                mainPanel.getDriving().Continue();
+                        }
                     break;
                     case 4:
                         countPressInfo++;
@@ -196,7 +193,9 @@ public class mainFrame extends JFrame implements ActionListener,Runnable {
     public void run() {
         try {
             sleep(100);
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+        }
+        revalidate();
         mainPanel.repaint();
     }
 }
@@ -252,6 +251,7 @@ class panel extends JPanel {
                     (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(),
                     (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(), 10, 8);
         }
+
     }
 
     /**

@@ -3,6 +3,8 @@ package components;
 import utilities.Timer;
 import utilities.Utilities;
 import GUI.*;
+
+import javax.print.attribute.standard.JobKOctets;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -24,7 +26,7 @@ public class Driving extends Thread implements Utilities, Timer {
     mainFrame mainFrame;
     int numOfTurns;
     boolean isOnStop=false;
-
+    Object o=new Object();
     /**
      * Driving constructor: receive number of junctions and
      * number of vehicles.
@@ -103,15 +105,16 @@ public class Driving extends Thread implements Utilities, Timer {
             if (t instanceof Vehicle) new Thread((Vehicle) t).start();
             if (t instanceof TrafficLights) new Thread((TrafficLights) t).start();
         }
-        this.start();
+        new Thread(this).start();
         System.out.println("\n"+toString()+"\n");
+
         }
 
     /**
      * Advance the pulses for Objects who affect by that.
      */
     public synchronized void incrementDrivingTime(){
-        for(int i=0;i<allTimedElements.size();i++){
+        for(int i=0;i<allTimedElements.size() && !isOnStop;i++){
             if(i<vehicles.size()) {
                 vehicles.get(i).setObjectCount(i+1);
                 System.out.println(allTimedElements.get(i).toString());
@@ -138,29 +141,34 @@ public class Driving extends Thread implements Utilities, Timer {
 
     @Override
     public void run() {
-        while (numOfTurns >= drivingTime && !isOnStop) {
-            System.out.println("***************TURN" + drivingTime + "***************");
-            try {
-                sleep(100);
-            } catch (InterruptedException e) {
-            }
-            incrementDrivingTime();
-            drivingTime++;
-            //suppose to update graphics every 100 millis
-            mainFrame.run();
+            while (true) {
+                System.out.println("***************TURN" + drivingTime + "***************");
+                try {
+                    sleep(100);
+                } catch (InterruptedException e) {
+                }
+                if(isOnStop){
+                    try{
+                        synchronized (this){
+                            wait();
+                        }
+                    }catch (InterruptedException e){}
+                }
+                incrementDrivingTime();
+                drivingTime++;
+                //suppose to update graphics every 100 millis
+                mainFrame.run();
         }
     }
-    public void Stop() throws InterruptedException{
-        synchronized (this) {
-            isOnStop = true;
-            wait();
-            }
+    public synchronized void Stop(){
+        isOnStop = true;
     }
-    public void Continue() {
-       synchronized (this) {
-           isOnStop = false;
-           this.notify();
-           run();
-        }
+    public synchronized void Continue() {
+        isOnStop = false;
+        notifyAll();
+    }
+
+    public Object getO() {
+        return o;
     }
 }
