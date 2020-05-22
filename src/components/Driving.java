@@ -23,10 +23,10 @@ public class Driving extends Thread implements Utilities, Timer {
     private ArrayList<Vehicle> vehicles; //The vehicles who part of the running
     private int drivingTime; // Accumulate the time/number of pulses from the start
     private ArrayList<Timer> allTimedElements; //Keep the whole elements who affected by the time pulses.
-    mainFrame mainFrame;
-    int numOfTurns;
-    boolean isOnStop=false;
-    Object o=new Object();
+    private mainFrame mainFrame;
+    private int numOfTurns;
+    private boolean isOnStop=false;
+    private boolean isRunning;
     /**
      * Driving constructor: receive number of junctions and
      * number of vehicles.
@@ -105,9 +105,9 @@ public class Driving extends Thread implements Utilities, Timer {
             if (t instanceof Vehicle) new Thread((Vehicle) t).start();
             if (t instanceof TrafficLights) new Thread((TrafficLights) t).start();
         }
+        isRunning=true;
         new Thread(this).start();
         System.out.println("\n"+toString()+"\n");
-
         }
 
     /**
@@ -141,25 +141,28 @@ public class Driving extends Thread implements Utilities, Timer {
 
     @Override
     public void run() {
-            while (true) {
-                System.out.println("***************TURN" + drivingTime + "***************");
+        while (isRunning) {
+            try {
+            System.out.println("***************TURN" + drivingTime + "***************");
+
+                sleep(100);
+            } catch (InterruptedException e) {
+            }
+            if (isOnStop) {
                 try {
-                    sleep(100);
+                    synchronized (this) {
+                        wait();
+                    }
                 } catch (InterruptedException e) {
                 }
-                if(isOnStop){
-                    try{
-                        synchronized (this){
-                            wait();
-                        }
-                    }catch (InterruptedException e){}
-                }
-                incrementDrivingTime();
-                drivingTime++;
-                //suppose to update graphics every 100 millis
-                mainFrame.run();
+            }
+            incrementDrivingTime();
+            drivingTime++;
+            //suppose to update graphics every 100 millis
+            mainFrame.run();
         }
     }
+
     public synchronized void Stop(){
         isOnStop = true;
     }
@@ -168,7 +171,7 @@ public class Driving extends Thread implements Utilities, Timer {
         notifyAll();
     }
 
-    public Object getO() {
-        return o;
+    public void setRunning(boolean running) {
+        isRunning = running;
     }
 }

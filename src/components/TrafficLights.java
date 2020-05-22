@@ -120,4 +120,9 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
         }
         return false;
     }
+
+    @Override
+    public void run() {
+        incrementDrivingTime();
+    }
 }
