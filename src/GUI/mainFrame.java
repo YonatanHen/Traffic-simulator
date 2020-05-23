@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.lang.management.ThreadInfo;
+import java.util.ArrayList;
 import java.util.Random;
 
 import static java.lang.Thread.*;
@@ -260,17 +261,9 @@ class panel extends JPanel {
                     (int) r.getStartJunction().getY(),
                     (int) r.getEndJunction().getX(),
                     (int) r.getEndJunction().getY());
-            //drwaing green arrows
-            if(r.getEnable()) {
-                double DT = Math.sqrt(Math.pow((r.getStartJunction().getX() - r.getEndJunction().getX()), 2) + Math.pow((r.getStartJunction().getY() - r.getEndJunction().getY()), 2));
-                double D = 19, x, y, T = D / DT;
-                x = (1 - T) * r.getEndJunction().getX() + T * r.getStartJunction().getX();
-                y = (1 - T) * r.getEndJunction().getY() + T * r.getStartJunction().getY();
-                g2d.setColor(Color.GREEN);
-                g2d.fillPolygon(new int[]{(int) r.getEndJunction().getX(), (int) x + 5, (int) x - 3},
-                        new int[]{(int) r.getEndJunction().getY(), (int) y + 5, (int) y - 3}, 3);
-            }
         }
+        //drawing green arrows
+        drawArrows(driving.getMap().getRoads(),g2d);
         //drawing junctions
         for (Junction j : driving.getMap().getJunctions()) {
             if (j instanceof LightedJunction) {
@@ -364,6 +357,34 @@ class panel extends JPanel {
         g.fillOval((int) xn - 2, (int) yn - 2, 4, 4);
     }
 
+    public void drawArrows(ArrayList<Road> roads,Graphics2D g2d) {
+        for (Road r : roads) {
+            if (r.getEnable()) {
+                double x1 = r.getEndJunction().getX(), y1 = r.getEndJunction().getY(), h = 4, d = 14;
+                int dx = (int) (r.getStartJunction().getX() - r.getEndJunction().getX()), dy = (int) (r.getStartJunction().getY() - r.getEndJunction().getY()), delta = 10;
+                double D = Math.sqrt(dx * dx + dy * dy);
+                double xm = delta, xn = xm, ym = h, yn = -h, x;
+                double xm1 = delta + d, xn1 = xm1, ym1 = h, yn1 = -h, xx;
+                double sin = dy / D, cos = dx / D;
+                x = xm * cos - ym * sin + x1;
+                xx = xm1 * cos - ym1 * sin + x1;
+                ym = xm * sin + ym * cos + y1;
+                ym1 = xm1 * sin + ym1 * cos + y1;
+                xm = x;
+                xm1 = xx;
+                x = xn * cos - yn * sin + x1;
+                xx = xn1 * cos - yn1 * sin + x1;
+                yn = xn * sin + yn * cos + y1;
+                yn1 = xn1 * sin + yn1 * cos + y1;
+                xn = x;
+                xn1 = xx;
+                int[] xpoints = {(int) xm1, (int) xn1, (int) (xn + xm) / 2};
+                int[] ypoints = {(int) ym1, (int) yn1, (int) (yn + ym) / 2};
+                g2d.setColor(Color.GREEN);
+                g2d.fillPolygon(xpoints, ypoints, 3);
+            }
+        }
+    }
 
     /**
      * set vehicles color and repaint

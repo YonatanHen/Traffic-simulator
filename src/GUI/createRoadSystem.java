@@ -23,6 +23,13 @@ public class createRoadSystem extends JFrame implements ActionListener {
     JLabel text1,text2;
     JButton okBtn,cancelBtn;
     Driving d;
+
+    /**
+     * create road system constructor
+     * @param title
+     * @param mainPanel
+     * @param mainFrame
+     */
     public createRoadSystem(String title,panel mainPanel,mainFrame mainFrame) {
         super(title);
         numOfJuncs=new JSlider(JSlider.HORIZONTAL,FPS_MIN1,FPS_MAX1,FPS_INIT1);
@@ -73,8 +80,5 @@ public class createRoadSystem extends JFrame implements ActionListener {
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             dispose();
         }
-    }
-    public Driving getDriving() {
-        return d;
     }
 }
