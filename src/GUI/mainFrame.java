@@ -359,7 +359,7 @@ class panel extends JPanel {
 
     public void drawArrows(ArrayList<Road> roads,Graphics2D g2d) {
         for (Road r : roads) {
-            if (r.getEnable()) {
+            if (r.getEnable() && r.getEndJunction() instanceof LightedJunction) {
                 double x1 = r.getEndJunction().getX(), y1 = r.getEndJunction().getY(), h = 4, d = 14;
                 int dx = (int) (r.getStartJunction().getX() - r.getEndJunction().getX()), dy = (int) (r.getStartJunction().getY() - r.getEndJunction().getY()), delta = 10;
                 double D = Math.sqrt(dx * dx + dy * dy);
