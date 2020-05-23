@@ -53,7 +53,7 @@ public class Road implements RouteParts, Utilities {
     //getters
     public boolean getGreenLight(){return greenlight;}
     public boolean getEnable(){return enable;}
-    public int getMaxSpeed() {return maxSpeed;}
+    public int getMaxSpeed() {return maxSpeed/10;}
     public double getLength() { return length;}
     public Junction getEndJunction() { return endJunction; }
     public Junction getStartJunction() {return startJunction; }
@@ -161,6 +161,7 @@ public class Road implements RouteParts, Utilities {
         }
     }
 
+    @Override
     public String toString(){
         //Assume that implementation is correct,maybe need to fix this later.
          /*
@@ -169,6 +170,7 @@ public class Road implements RouteParts, Utilities {
         return "Road from "+ startJunction + " to " + endJunction +", length: "+ (int)calcLength()+", max speed "+ maxSpeed;
     }
 
+    @Override
     public boolean equals(Object obj){
         if(obj instanceof Road){
             return  ((Road) obj).enable==enable &&

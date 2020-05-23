@@ -100,20 +100,20 @@ public class Driving extends Thread implements Utilities, Timer {
      */
 
     public synchronized void drive(int numOfTurns){
+        System.out.println("\n"+toString()+"\n");
         this.numOfTurns=numOfTurns;
         for (Timer t : allTimedElements) {
             if (t instanceof Vehicle) new Thread((Vehicle) t).start();
             if (t instanceof TrafficLights) new Thread((TrafficLights) t).start();
         }
-        isRunning=true;
         new Thread(this).start();
-        System.out.println("\n"+toString()+"\n");
+        isRunning=true;
         }
 
     /**
      * Advance the pulses for Objects who affect by that.
      */
-    public synchronized void incrementDrivingTime(){
+    public void incrementDrivingTime(){
         for(int i=0;i<allTimedElements.size() && !isOnStop;i++){
             if(i<vehicles.size()) {
                 vehicles.get(i).setObjectCount(i+1);
@@ -124,11 +124,12 @@ public class Driving extends Thread implements Utilities, Timer {
         }
     }
 
+    @Override
     public String toString(){
         return "=====================START DRIVING====================";
     }
 
-
+    @Override
     public boolean equals(Object o){
         if(o instanceof Driving){
             return map.equals(((Driving)o).map) &&
@@ -144,7 +145,6 @@ public class Driving extends Thread implements Utilities, Timer {
         while (isRunning) {
             try {
             System.out.println("***************TURN" + drivingTime + "***************");
-
                 sleep(100);
             } catch (InterruptedException e) {
             }

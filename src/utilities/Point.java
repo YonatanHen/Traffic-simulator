@@ -65,10 +65,12 @@ public abstract class Point implements Utilities {
     public void setX(final double x){this.x=x;}
     public void setY(final double y){this.y=y;}
 
+    @Override
     public String toString(){
         return "Point ("+x+" , "+y+")";
     }
 
+    @Override
     public boolean equals(Object o){
         if (o instanceof Point){
             return (((Point) o).x==x && ((Point)o).y==y);

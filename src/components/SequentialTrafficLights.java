@@ -39,6 +39,7 @@ public class SequentialTrafficLights extends TrafficLights {
         this.increment = increment;
     }
 
+    @Override
     public String toString() {
         return "Sequential " + super.toString();
     }

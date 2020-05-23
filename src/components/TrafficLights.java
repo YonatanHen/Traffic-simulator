@@ -104,11 +104,12 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
     public int getObjectCount() { return objectCount; }
     public int getWorkingTime() { return workingTime; }
 
-
+    @Override
     public String toString() {
         return "traffic lights "+ id;
     }
 
+    @Override
     public boolean equals(Object o){
         if(o instanceof TrafficLights){
             return ((TrafficLights) o).delay == delay &&
@@ -121,6 +122,9 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
         return false;
     }
 
+    /**
+     * run invermentDrivingTime function
+     */
     @Override
     public void run() {
         incrementDrivingTime();

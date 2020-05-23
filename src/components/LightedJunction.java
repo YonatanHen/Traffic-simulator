@@ -63,6 +63,7 @@ public class LightedJunction extends Junction{
      * @param obj
      * @return delay time in this type of junction.
      */
+    @Override
     public double calcEstimatedTime(Object obj){
         int sum=1;
         if(obj instanceof LightedJunction){
@@ -77,6 +78,7 @@ public class LightedJunction extends Junction{
      * @param vehicle
      * @return true if the car can leave the junction else false.
      */
+    @Override
     public boolean canLeave(Vehicle vehicle){
         if(lights.getTrafficLightsOn()) return true;
         else {
@@ -85,11 +87,11 @@ public class LightedJunction extends Junction{
         }
     }
 
-
+    @Override
     public String toString() {
         return super.toString()+" (Lighted)";
     }
-
+    @Override
     public boolean equals(Object o){
         if( o instanceof LightedJunction){
             return super.equals(o) &&
