@@ -136,6 +136,7 @@ public class Route implements RouteParts {
        vehicle.getCurrentRoutePart().stayOnCurrentPart(vehicle);
     }
 
+    @Override
     public boolean equals(Object other){
         if(other instanceof Route){
             return RouteParts.equals(((Route)other).RouteParts)&&
@@ -143,6 +144,8 @@ public class Route implements RouteParts {
         }
         return false;
     }
+
+    @Override
     public String toString(){
         //Search for the road with max speed and save the max speed value with end junction value.
         int maxSpeed=0;

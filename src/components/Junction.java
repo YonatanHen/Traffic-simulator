@@ -198,10 +198,12 @@ public class Junction extends Point implements RouteParts {
         System.out.println(vehicle.getStatus());
     }
 
+    @Override
     public String toString(){
         return  "Junction " + junctionName;
     }
 
+    @Override
     public boolean equals(Object o){
         if(o instanceof Junction){
             return ((Junction) o).exitingRoads==exitingRoads &&

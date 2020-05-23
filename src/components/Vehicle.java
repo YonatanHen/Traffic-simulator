@@ -109,10 +109,12 @@ public class Vehicle extends Thread implements Utilities,Timer{
         move();
     }
 
+    @Override
     public String toString(){
         return "Vehicle " + objectCount+ ": "+  vehicleType.name() + ", average speed: "+ vehicleType.getAverageSpeed();
     }
 
+    @Override
     public boolean equals(Object o) {
         if(o instanceof Vehicle){
             return vehicleType.equals(((Vehicle) o).vehicleType) &&
@@ -125,6 +127,9 @@ public class Vehicle extends Thread implements Utilities,Timer{
         return false;
     }
 
+    /**
+     * Function change the location of the vehicle while his thread alive
+     */
     @Override
     public void run() {
         if (!currentRoutePart.canLeave(this)) {
@@ -133,9 +138,10 @@ public class Vehicle extends Thread implements Utilities,Timer{
                 double B = lastRoad.getLength() - A;
                 X = ((lastRoad.getStartJunction().getX() * A + lastRoad.getEndJunction().getX() * B) / (A + B));
                 Y = ((lastRoad.getStartJunction().getY() * A + lastRoad.getEndJunction().getY() * B) / (A + B));
-            } else if (currentRoutePart instanceof Junction) {
-                X = lastRoad.getEndJunction().getX();
-                Y = lastRoad.getEndJunction().getY();
+            }
+            if (currentRoutePart instanceof Junction) {
+                X = ((Junction) currentRoutePart).getX();
+                Y = ((Junction) currentRoutePart).getY();
             }
         }
     }
@@ -148,11 +154,4 @@ public class Vehicle extends Thread implements Utilities,Timer{
         return Y;
     }
 
-    public void setX(int x) {
-        X = x;
-    }
-
-    public void setY(int y) {
-        Y = y;
-    }
 }

@@ -27,7 +27,7 @@ public class RandomTrafficLights extends TrafficLights {
         setGreenLightIndex(index);
     }
 
-
+    @Override
     public String toString() {
         return "Random " + super.toString();
     }

@@ -118,10 +118,11 @@ public class Map implements Utilities {
         this.roads = roads;
     }
 
+    @Override
     public String toString(){
         return "GAME MAP";
     }
-
+    @Override
     public boolean equals(Object o){
         if( o instanceof Map){
             return ((Map) o).junctions.equals(junctions) &&

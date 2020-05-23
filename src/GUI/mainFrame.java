@@ -17,6 +17,12 @@ import java.util.Random;
 
 import static java.lang.Thread.*;
 
+/**
+ * implementation of main frame
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
+ * @see panel
+ */
 public class mainFrame extends JFrame implements ActionListener {
     JMenuBar menuBar;
     JMenu file, background, vehicleColor, help;
@@ -30,6 +36,10 @@ public class mainFrame extends JFrame implements ActionListener {
     int countPressInfo=0;
     boolean isCreated=false;
 
+    /**
+     * Costructor of the main frame
+     * @param title
+     */
     public mainFrame(String title) {
         super(title);
         splitPane=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -184,6 +194,10 @@ public class mainFrame extends JFrame implements ActionListener {
     }
 
 
+    /**
+     * setting the main panel in the main frame
+     * @param mainPanel
+     */
     public void setMainPanel(panel mainPanel) {
         this.mainPanel = mainPanel;
         add(mainPanel,0);
@@ -192,6 +206,9 @@ public class mainFrame extends JFrame implements ActionListener {
         return mainPanel;
     }
 
+    /**
+     * run the GUI repaint every 100 millis
+     */
     public void run() {
         try {
             sleep(100);
@@ -215,6 +232,10 @@ class panel extends JPanel {
     int countRandomalColoredVehicels=0;
 
 
+    /**
+     * Class implement the main panel of the frame
+     * @param mainFrame
+     */
     public panel(mainFrame mainFrame) {
         setSize(new Dimension(820, 600));
         setVisible(true);
@@ -222,44 +243,56 @@ class panel extends JPanel {
         this.mainFrame = mainFrame;
     }
 
+    /**
+     * Function draw the system
+     * @param g
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2d=(Graphics2D) g;
+        g2d.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        //drawing roads
         for (Road r : driving.getMap().getRoads()) {
-            g.setColor(Color.BLACK);
-            g.drawLine((int) r.getStartJunction().getX(),
+            g2d.setColor(Color.BLACK);
+            g2d.drawLine((int) r.getStartJunction().getX(),
                     (int) r.getStartJunction().getY(),
                     (int) r.getEndJunction().getX(),
                     (int) r.getEndJunction().getY());
+            //drwaing green arrows
             if(r.getEnable()) {
                 double DT = Math.sqrt(Math.pow((r.getStartJunction().getX() - r.getEndJunction().getX()), 2) + Math.pow((r.getStartJunction().getY() - r.getEndJunction().getY()), 2));
                 double D = 19, x, y, T = D / DT;
                 x = (1 - T) * r.getEndJunction().getX() + T * r.getStartJunction().getX();
                 y = (1 - T) * r.getEndJunction().getY() + T * r.getStartJunction().getY();
-                g.setColor(Color.GREEN);
-                g.fillPolygon(new int[]{(int) r.getEndJunction().getX(), (int) x + 5, (int) x - 3},
+                g2d.setColor(Color.GREEN);
+                g2d.fillPolygon(new int[]{(int) r.getEndJunction().getX(), (int) x + 5, (int) x - 3},
                         new int[]{(int) r.getEndJunction().getY(), (int) y + 5, (int) y - 3}, 3);
             }
         }
+        //drawing junctions
         for (Junction j : driving.getMap().getJunctions()) {
             if (j instanceof LightedJunction) {
-                if (((LightedJunction) j).getLights().getTrafficLightsOn()) g.setColor(Color.GREEN);
-                else g.setColor(Color.RED);
-            } else g.setColor(Color.BLACK);
-            g.fillOval((int) j.getX()-10, (int) j.getY()-10, RADIUS * 2, RADIUS * 2);
+                if (((LightedJunction) j).getLights().getTrafficLightsOn()) g2d.setColor(Color.GREEN);
+                else g2d.setColor(Color.RED);
+            } else g2d.setColor(Color.BLACK);
+            g2d.fillOval((int) j.getX()-10, (int) j.getY()-10, RADIUS * 2, RADIUS * 2);
         }
+        //drawing vehicles
         for (int i = 0; i < driving.getVehicles().size(); i++) {
             if(driving.getVehicles().get(i).getCurrentRoutePart() instanceof Junction){
-                drawRotetedVehicle(g,
+                drawRotetedVehicle(g2d,
                         (int) driving.getVehicles().get(i).getX(),
                         (int) driving.getVehicles().get(i).getY(),
-                        (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(),
-                        (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(), 8, 4);
-            }else {
-                drawRotetedVehicle(g,
+                        (int) ((Junction) driving.getVehicles().get(i).getCurrentRoutePart()).getX(),
+                        (int) ((Junction) driving.getVehicles().get(i).getCurrentRoutePart()).getY(), 8, 4);
+            }if(driving.getVehicles().get(i).getCurrentRoutePart() instanceof Road) {
+                drawRotetedVehicle(g2d,
                         (int) driving.getVehicles().get(i).getX(),
                         (int) driving.getVehicles().get(i).getY(),
-                        (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getX(),
-                        (int) driving.getVehicles().get(i).getLastRoad().getEndJunction().getY(), 10, 4);
+                        (int) ((Road)driving.getVehicles().get(i).getCurrentRoutePart()).getEndJunction().getX(),
+                        (int) ((Road)driving.getVehicles().get(i).getCurrentRoutePart()).getEndJunction().getY(), 10, 4);
             }
         }
 
@@ -283,14 +316,14 @@ class panel extends JPanel {
             }
                 break;
             case "random": {
-                if(getDriving().getVehicles().size()>=countRandomalColoredVehicels) {
+                if(getDriving().getVehicles().size()>countRandomalColoredVehicels) {
                     Random r = new Random();
                     Color color = new Color(r.nextInt(256), r.nextInt(256), r.nextInt(256));
-                    g.setColor(color);
+                    if(!isRandomalColor) g.setColor(color);
                     c = color;
                     countRandomalColoredVehicels++;
                 }
-                    isRandomalColor=true;
+                else isRandomalColor=true;
             }
             break;
             default: {
@@ -301,7 +334,7 @@ class panel extends JPanel {
 
     }
 
-    private void drawRotetedVehicle(Graphics g, int x1, int y1, int x2, int y2, int d, int h) {
+    private void drawRotetedVehicle(Graphics2D g, int x1, int y1, int x2, int y2, int d, int h) {
         int dx = x2 - x1, dy = y2 - y1, delta = 10;
         double D = Math.sqrt(dx * dx + dy * dy);
         double xm = delta, xn = xm, ym = h, yn = -h, x;
@@ -329,10 +362,13 @@ class panel extends JPanel {
         g.fillOval((int) xn1 - 2, (int) yn1 - 2, 4, 4);
         g.fillOval((int) xm - 2, (int) ym - 2, 4, 4);
         g.fillOval((int) xn - 2, (int) yn - 2, 4, 4);
-
     }
 
 
+    /**
+     * set vehicles color and repaint
+     * @param vehiclesColor
+     */
     public void setVehiclesColor(String vehiclesColor) {
         this.vehiclesColor = vehiclesColor;
         repaint();
@@ -348,10 +384,5 @@ class panel extends JPanel {
     public mainFrame getMainFrame(){
         return mainFrame;
     }
-    public void run() {
-        try {
-            sleep(100);
-        } catch (InterruptedException e) {}
-        getMainFrame().repaint();
-    }
+
 }
