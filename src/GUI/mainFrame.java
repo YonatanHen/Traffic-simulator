@@ -36,6 +36,7 @@ public class mainFrame extends JFrame implements ActionListener {
     Driving driving;
     int countPressInfo=0;
     boolean isCreated=false;
+    JTable table;
 
     /**
      * Costructor of the main frame
@@ -96,7 +97,6 @@ public class mainFrame extends JFrame implements ActionListener {
         }
         container.setLayout(new GridLayout(1, 0));
         add(container,BorderLayout.SOUTH);
-
     }
 
     /**
@@ -113,7 +113,7 @@ public class mainFrame extends JFrame implements ActionListener {
             revalidate();
         }
         if (e.getSource() == noneBackground && mainPanel!=null) {
-            mainPanel.setBackground(Color.GRAY);
+            mainPanel.setBackground(Color.LIGHT_GRAY);
             revalidate();
         }
         if (e.getSource() == helpItem) {
@@ -158,30 +158,26 @@ public class mainFrame extends JFrame implements ActionListener {
                     break;
                     case 4:
                         countPressInfo++;
-                        if(countPressInfo%2==0 && countPressInfo!=0) {
-                           setMainPanel(mainPanel);
-                           revalidate();
-                           repaint();
+                        if(countPressInfo%2==0) {
+                           mainPanel.repaint();
                             }
                         else {
                             driving = mainPanel.getDriving();
-                            setMinimumSize(new Dimension(640, 480));
-                            String[] col = new String[]{
-                                    "Vehicle #", "Type", "Location", "Time on loc", "Speed"};
+                            String[] col = new String[]{"Vehicle #", "Type", "Location", "Time on loc", "Speed"};
                             String[][] data = new String[driving.getVehicles().size()][5];
                             for (int j = 0; j < driving.getVehicles().size(); j++) {
                                 data[j][0] = String.valueOf(driving.getVehicles().get(j).getid());
                                 data[j][1] = driving.getVehicles().get(j).getVehicleType().toString();
                                 if (driving.getVehicles().get(j).getCurrentRoutePart() instanceof Road)
-                                    data[j][2] = "Road " + driving.getVehicles().get(j).getLastRoad().getStartJunction().getJunctionName()+"-"+driving.getVehicles().get(j).getLastRoad().getEndJunction().getJunctionName();
+                                    data[j][2] = "Road " + driving.getVehicles().get(j).getLastRoad().getStartJunction().getJunctionName()
+                                            +"-"+driving.getVehicles().get(j).getLastRoad().getEndJunction().getJunctionName();
                                 else if (driving.getVehicles().get(j).getCurrentRoutePart() instanceof Junction)
                                     data[j][2] = "Junction"+ ((Junction)driving.getVehicles().get(j).getCurrentRoutePart()).getJunctionName();
                                 data[j][3] = String.valueOf(driving.getVehicles().get(j).getTimeOnCurrentPart());
                                 data[j][4] = String.valueOf(driving.getVehicles().get(j).getVehicleType().getAverageSpeed()*10);
                             }
-                            JTable table = new JTable(data, col);
+                            table = new JTable(data, col);
                             table.setMinimumSize(new Dimension(200, 200));
-                            JTableHeader header = table.getTableHeader();
                             JScrollPane pane = new JScrollPane(table);
                             pane.setMinimumSize(new Dimension(150, 23));
                             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -238,7 +234,7 @@ class panel extends JPanel {
      * @param mainFrame
      */
     public panel(mainFrame mainFrame) {
-        setSize(new Dimension(820, 600));
+        setSize(new Dimension(800, 600));
         setVisible(true);
         validate();
         this.mainFrame = mainFrame;

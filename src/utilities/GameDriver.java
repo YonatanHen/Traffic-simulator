@@ -19,8 +19,10 @@ public class GameDriver{
             mainFrame main = new mainFrame("Road system");
             main.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             main.pack();
-            main.setSize(new Dimension(850, 677));
-            main.setBackground(Color.WHITE);
+            JPanel j=new JPanel();
+            j.setBackground(Color.WHITE);
+            main.add(j);
+            main.setSize(new Dimension(850, 750));
             main.setLocationRelativeTo(null);
             main.setVisible(true);
         }
