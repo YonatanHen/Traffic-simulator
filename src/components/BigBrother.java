@@ -7,6 +7,7 @@ public class BigBrother {
     public static BigBrother getInstance(){
         if(instance==null){
             synchronized (BigBrother.class) {
+                if(instance==null)
                 instance = new BigBrother();
             }
         }
