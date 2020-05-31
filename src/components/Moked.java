@@ -19,7 +19,7 @@ public class Moked {
                 // Recheck state because another thread might have
                 // acquired write lock and changed state before we did.
                 if (!cacheValid) {
-                    data = ...
+                   // data = ...
                     cacheValid = true;
                 }
                 // Downgrade by acquiring read lock before releasing write lock
@@ -30,7 +30,7 @@ public class Moked {
         }
 
         try {
-            use(data);
+            //use(data);
         } finally {
             rwl.readLock().unlock();
         }
