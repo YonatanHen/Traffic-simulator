@@ -1,15 +1,24 @@
 package components;
 
+import java.io.File;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
-//TODO: Implement according to our code
+/**
+ * Moked class- ReadWriteLock design pattern
+ * @author Yehonatan Hen-207630112
+ *  @author Rotem Librati-307903732
+ */
 public class Moked {
     Object data;
-    volatile boolean cacheValid;
-    final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    private static volatile boolean cacheValid;
+    private static final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    private static File file;
 
-    void processCachedData() {
+    /**
+     * Write a report when function called
+     */
+    public static void WriteReport(Vehicle vehicle) {
         rwl.readLock().lock();
         if (!cacheValid) {
             // Must release read lock before acquiring write lock

@@ -1,5 +1,11 @@
 package components;
 
+
+/**
+ * Singleton class of big brohter
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
+ */
 public class BigBrother {
   //  private Vehicle vehicle;
     private static volatile BigBrother instance=null;
@@ -17,9 +23,15 @@ public class BigBrother {
     public static void setInstance(BigBrother instance) {
         BigBrother.instance = instance;
     }
-    public boolean calcSpeed(Vehicle vehicle){
-        if(vehicle.getLastRoad().getMaxSpeed() < vehicle.getVehicleType().getAverageSpeed())
-            return true;
-        return false;
+
+    /**
+     * check if the vehicle drove in the allowed speed
+     * @param vehicle
+     * @return
+     */
+    public void isSpeedLegal(Vehicle vehicle){
+        if(vehicle.getLastRoad().getMaxSpeed() < vehicle.getVehicleType().getAverageSpeed()){
+            Moked.WriteReport(vehicle);
+        }
     }
 }

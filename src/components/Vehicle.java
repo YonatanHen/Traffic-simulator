@@ -50,7 +50,8 @@ public class Vehicle extends Thread implements Utilities,Timer{
         objectCount++;
         X=lastRoad.getStartJunction().getX();
         Y=lastRoad.getStartJunction().getY();
-        bigBrother = null;
+        //implement the big brother in each car (created only once)
+        bigBrother =BigBrother.getInstance();
     }
 
     //getters
@@ -142,6 +143,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
                 Y = ((lastRoad.getStartJunction().getY() * B + lastRoad.getEndJunction().getY() * A) / (A + B));
             }
             if (currentRoutePart instanceof Junction) {
+                bigBrother.isSpeedLegal(this);
                 X = ((Junction) currentRoutePart).getX();
                 Y = ((Junction) currentRoutePart).getY();
             }
