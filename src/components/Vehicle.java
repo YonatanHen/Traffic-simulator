@@ -27,6 +27,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
     private String status=null; //Keep the status,will be in use for prints.
     private double X;//location of vehicle in X axis
     private double Y;//location of vehicle in Y axis
+    private BigBrother bigBrother;
 
     /**
      * Vehicle randomal constructor.
@@ -49,6 +50,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
         objectCount++;
         X=lastRoad.getStartJunction().getX();
         Y=lastRoad.getStartJunction().getY();
+        bigBrother = null;
     }
 
     //getters
