@@ -1,6 +1,8 @@
 
 package utilities;
 
+import java.util.Random;
+
 /**
  * @author Yehonatan Hen-207630112
  * @author Rotem Librati-307903732
@@ -12,10 +14,15 @@ public enum VehicleType {
 
     /**
      * Function set to average speed value.
-     * @param speed
+     * @param averageSpeed
      */
-    VehicleType(int speed) {
-        averageSpeed=speed;
+    VehicleType(int averageSpeed) {
+        Random random = new Random();
+        boolean speed = random.nextBoolean();
+        if(speed)
+            this.averageSpeed=(int)(averageSpeed*1.5);
+        else
+            this.averageSpeed = averageSpeed;
     }
     public int getAverageSpeed() {
         return averageSpeed/10;
