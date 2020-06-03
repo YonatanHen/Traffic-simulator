@@ -148,6 +148,8 @@ public class Junction extends Point implements RouteParts {
         vehicle.setCurrentRoutePart(this);
         vehicle.setStatus("- has arrived to "+ toString());
         System.out.println(vehicle.getStatus());
+        //When arrived to junction.check if speed is legal.
+        vehicle.getBigBrother().isSpeedLegal(vehicle);
     }
 
     /**

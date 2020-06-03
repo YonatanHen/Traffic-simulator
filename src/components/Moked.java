@@ -1,6 +1,11 @@
 package components;
 
-import java.io.File;
+import javax.xml.crypto.Data;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
@@ -10,38 +15,51 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *  @author Rotem Librati-307903732
  */
 public class Moked {
-    Object data;
-    private static volatile boolean cacheValid;
-    private static final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    private final Map<String, Data> m = new TreeMap<String, Data>();
+    private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    private final Lock r = rwl.readLock();
+    private final Lock w = rwl.writeLock();
     private static File file;
+    private FileReader fr;
+    private FileWriter fw;
+    private static int counter=0;
+    String fileName="report.txt";
+    public Moked(){
+        file=new File(fileName);
+        try {
+            fr=new FileReader(file);
+            fw=new FileWriter(file);
+        }catch (IOException f) {
+            System.out.println(f);
+        }
+    }
+
+    public Data get(String key) {
+        r.lock();
+        try { return m.get(key); }
+        finally { r.unlock(); }
+    }
+    public String[] allKeys() {
+        r.lock();
+        try { return (String[]) m.keySet().toArray(); }
+        finally { r.unlock(); }
+    }
 
     /**
-     * Write a report when function called
+     * Write data to a file
+     * @param vehicle
      */
-    public static void WriteReport(Vehicle vehicle) {
-        rwl.readLock().lock();
-        if (!cacheValid) {
-            // Must release read lock before acquiring write lock
-            rwl.readLock().unlock();
-            rwl.writeLock().lock();
-            try {
-                // Recheck state because another thread might have
-                // acquired write lock and changed state before we did.
-                if (!cacheValid) {
-                   // data = ...
-                    cacheValid = true;
-                }
-                // Downgrade by acquiring read lock before releasing write lock
-                rwl.readLock().lock();
-            } finally {
-                rwl.writeLock().unlock(); // Unlock write, still hold read
-            }
-        }
-
+    public void put(Vehicle vehicle) {
+        w.lock();
         try {
-            //use(data);
-        } finally {
-            rwl.readLock().unlock();
-        }
+            fw.write("Report #"+(counter++)+"; Time from start route: "+vehicle.getTimeFromStartRoute()+ ", Vehicle ID: " +vehicle.getid()+".\n");
+            fw.flush();
+        }catch (IOException e){ System.out.println(e);}
+        finally { w.unlock(); }
+    }
+    public void clear() {
+        w.lock();
+        try { m.clear(); }
+        finally { w.unlock(); }
     }
 }

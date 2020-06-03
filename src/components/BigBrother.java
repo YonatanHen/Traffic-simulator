@@ -9,7 +9,9 @@ package components;
 public class BigBrother {
   //  private Vehicle vehicle;
     private static volatile BigBrother instance=null;
+    private Moked moked;
     private BigBrother(){
+        moked=new Moked();
     }
     public static BigBrother getInstance(){
         if(instance==null){
@@ -20,9 +22,7 @@ public class BigBrother {
         }
         return instance;
     }
-    public static void setInstance(BigBrother instance) {
-        BigBrother.instance = instance;
-    }
+
 
     /**
      * check if the vehicle drove in the allowed speed
@@ -31,7 +31,7 @@ public class BigBrother {
      */
     public void isSpeedLegal(Vehicle vehicle){
         if(vehicle.getLastRoad().getMaxSpeed() < vehicle.getVehicleType().getAverageSpeed()){
-            Moked.WriteReport(vehicle);
+            moked.put(vehicle);
         }
     }
 }

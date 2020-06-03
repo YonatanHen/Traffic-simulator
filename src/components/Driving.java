@@ -27,6 +27,7 @@ public class Driving extends Thread implements Utilities, Timer {
     private int numOfTurns;
     private boolean isOnStop=false;
     private boolean isRunning;
+    private Moked moked;
     /**
      * Driving constructor: receive number of junctions and
      * number of vehicles.
@@ -56,8 +57,8 @@ public class Driving extends Thread implements Utilities, Timer {
             if (j instanceof LightedJunction) allTimedElements.add(((LightedJunction) j).getLights());
         }
     }
-    //getters
 
+    //getters
 
     public ArrayList<Timer> getAllTimedElements() {
         return allTimedElements;

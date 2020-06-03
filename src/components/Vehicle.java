@@ -28,6 +28,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
     private double X;//location of vehicle in X axis
     private double Y;//location of vehicle in Y axis
     private BigBrother bigBrother;
+    private Moked moked;
 
     /**
      * Vehicle randomal constructor.
@@ -137,13 +138,12 @@ public class Vehicle extends Thread implements Utilities,Timer{
     public void run() {
         if (!currentRoutePart.canLeave(this)) {
             if (currentRoutePart instanceof Road) {
-                double A = timeOnCurrentPart * Math.min(getLastRoad().getMaxSpeed(), vehicleType.getAverageSpeed());
+                double A = timeOnCurrentPart * getLastRoad().getMaxSpeed();
                 double B = lastRoad.getLength() - A;
                 X = ((lastRoad.getStartJunction().getX() * B + lastRoad.getEndJunction().getX() * A) / (A + B));
                 Y = ((lastRoad.getStartJunction().getY() * B + lastRoad.getEndJunction().getY() * A) / (A + B));
             }
             if (currentRoutePart instanceof Junction) {
-                bigBrother.isSpeedLegal(this);
                 X = ((Junction) currentRoutePart).getX();
                 Y = ((Junction) currentRoutePart).getY();
             }
@@ -158,4 +158,7 @@ public class Vehicle extends Thread implements Utilities,Timer{
         return Y;
     }
 
+    public BigBrother getBigBrother() {
+        return bigBrother;
+    }
 }
