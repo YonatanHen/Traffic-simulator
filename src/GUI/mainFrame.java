@@ -148,7 +148,7 @@ public class mainFrame extends JFrame implements ActionListener {
             //TODO
         }
         if(e.getSource()==reports){
-            //TODO
+            if(isCreated) System.out.println(mainPanel.getDriving().getMoked().readAllReport());
         }
         for (int i = 0; i < btns.length; i++) {
             if (e.getSource() == btns[i]) {

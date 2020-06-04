@@ -27,6 +27,7 @@ public class Driving extends Thread implements Utilities, Timer {
     private int numOfTurns;
     private boolean isOnStop=false;
     private boolean isRunning;
+    private Moked moked;
     /**
      * Driving constructor: receive number of junctions and
      * number of vehicles.
@@ -55,6 +56,7 @@ public class Driving extends Thread implements Utilities, Timer {
         for (Junction j : map.getJunctions()) {
             if (j instanceof LightedJunction) allTimedElements.add(((LightedJunction) j).getLights());
         }
+        moked=vehicles.get(0).getBigBrother().getMoked();
     }
 
     //getters
@@ -74,7 +76,12 @@ public class Driving extends Thread implements Utilities, Timer {
     public Map getMap() {
         return map;
     }
-     //setters
+
+    public Moked getMoked() {
+        return moked;
+    }
+
+    //setters
 
 
     public void setAllTimedElements(ArrayList<Timer> allTimedElements) {

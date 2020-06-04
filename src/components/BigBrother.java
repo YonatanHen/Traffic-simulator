@@ -23,6 +23,9 @@ public class BigBrother {
         return instance;
     }
 
+    public Moked getMoked() {
+        return moked;
+    }
 
     /**
      * check if the vehicle drove in the allowed speed

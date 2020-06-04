@@ -70,4 +70,26 @@ public class Moked {
         try { m.clear(); }
         finally { w.unlock(); }
     }
+
+    /**
+     * Function read the whole report and return it as a string variable
+     * @return
+     */
+    public String readAllReport(){
+        r.lock();
+        String str="";
+        try {
+            int data=fr.read();
+            while(data!=-1){
+                data=fr.read();
+                str+=(char)data;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            r.unlock();
+            return str;
+        }
+    }
 }
