@@ -27,7 +27,6 @@ public class Driving extends Thread implements Utilities, Timer {
     private int numOfTurns;
     private boolean isOnStop=false;
     private boolean isRunning;
-    private Moked moked;
     /**
      * Driving constructor: receive number of junctions and
      * number of vehicles.

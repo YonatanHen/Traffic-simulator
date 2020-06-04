@@ -81,11 +81,12 @@ public class Vehicle extends Thread implements Utilities,Timer{
      * Made check out if car can finish the current part and then checkIn to the next part.
      * else-stay at the part
      */
-    public void move() {
+    public synchronized void move() {
         if (currentRoutePart.canLeave(this)) {
             currentRoutePart.checkOut(this);
             if (currentRoutePart.findNextPart(this) != null) {
                 currentRoutePart = currentRoutePart.findNextPart(this);
+                yield();
                 currentRoutePart.checkIn(this);
                 timeOnCurrentPart=0;
             }

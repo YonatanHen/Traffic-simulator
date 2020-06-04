@@ -34,10 +34,18 @@ public class Moked {
         }
     }
 
-    public Data get(String key) {
+    /**
+     * Read from file
+     * @param vehicle
+     */
+    public void get(Vehicle vehicle) {
         r.lock();
-        try { return m.get(key); }
-        finally { r.unlock(); }
+        try {
+            fr.read();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally { r.unlock(); }
     }
     public String[] allKeys() {
         r.lock();
