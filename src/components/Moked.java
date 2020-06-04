@@ -81,8 +81,8 @@ public class Moked {
         try {
             int data=fr.read();
             while(data!=-1){
-                data=fr.read();
                 str+=(char)data;
+                data=fr.read();
             }
 
         } catch (IOException e) {

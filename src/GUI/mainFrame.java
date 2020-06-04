@@ -33,6 +33,7 @@ public class mainFrame extends JFrame implements ActionListener {
     JSplitPane splitPane;
     JButton[] btns;
     createRoadSystem createRoadSys;
+    reportsFrame rf;
     Driving driving;
     int countPressInfo=0;
     boolean isCreated=false;
@@ -150,8 +151,10 @@ public class mainFrame extends JFrame implements ActionListener {
         if(e.getSource()==cloneCar){
             //TODO
         }
-        if(e.getSource()==reports){
-            if(isCreated) System.out.println(mainPanel.getDriving().getMoked().readAllReport());
+        if(e.getSource()==reportItem && isCreated){
+            rf=new reportsFrame(mainPanel.getDriving().getMoked().readAllReport());
+            rf.pack();
+            rf.setVisible(true);
         }
         for (int i = 0; i < btns.length; i++) {
             if (e.getSource() == btns[i]) {
