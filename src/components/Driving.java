@@ -4,8 +4,8 @@ import utilities.Timer;
 import utilities.Utilities;
 import GUI.*;
 
-import javax.print.attribute.standard.JobKOctets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -28,6 +28,7 @@ public class Driving extends Thread implements Utilities, Timer {
     private boolean isOnStop=false;
     private boolean isRunning;
     private Moked moked;
+    private static java.util.Map<String, Vehicle> vehicleMap = new HashMap<String, Vehicle>();//Hash map for vehicles
     /**
      * Driving constructor: receive number of junctions and
      * number of vehicles.
@@ -50,6 +51,8 @@ public class Driving extends Thread implements Utilities, Timer {
         System.out.println("================= CREATING VEHICLES =================");
         for (int i = 0; i < numOfVehicles; i++) {
             vehicles.add(new Vehicle(map.getRoads().get(r.nextInt(map.getRoads().size()))));
+            //Save created vehicle in hash map.
+            vehicleMap.put(Integer.toString(i),vehicles.get(vehicles.size()-1));
             allTimedElements.add(vehicles.get(i));
         }
         //Add the lights to allTimedElements only if junction is LightedJunction
@@ -79,6 +82,16 @@ public class Driving extends Thread implements Utilities, Timer {
 
     public Moked getMoked() {
         return moked;
+    }
+
+    /**
+     * Function returns a clone of selected vehicle
+     * @param id
+     * @return
+     */
+    public static Vehicle getVehicle(int id){
+       Vehicle v=vehicleMap.get(Integer.toString(id));
+       return (Vehicle) v.clone();
     }
 
     //setters

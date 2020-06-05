@@ -27,7 +27,7 @@ import static java.lang.Thread.*;
 public class mainFrame extends JFrame implements ActionListener {
     JMenuBar menuBar;
     JMenu file, background, vehicleColor, help,buildMap,cloneCar,reports;
-    JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem, reportItem;
+    JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem, reportItem,clone;
     JPanel container;
     panel mainPanel;
     JSplitPane splitPane;
@@ -38,6 +38,7 @@ public class mainFrame extends JFrame implements ActionListener {
     int countPressInfo=0;
     boolean isCreated=false;
     JTable table;
+    cloneCarInput cloneCarInput;
 
     /**
      * Costructor of the main frame
@@ -74,6 +75,8 @@ public class mainFrame extends JFrame implements ActionListener {
         buildMap.addActionListener(this);
         cloneCar=new JMenu("Clone a car");
         cloneCar.addActionListener(this);
+        clone=new JMenuItem("clone");
+        clone.addActionListener(this);
         reports=new JMenu("Reports");
         reports.addActionListener(this);
         reportItem=new JMenuItem("Print Reports");
@@ -95,6 +98,7 @@ public class mainFrame extends JFrame implements ActionListener {
         help.add(helpItem);
         reports.add(reportItem);
         menuBar.add(file);
+        cloneCar.add(clone);
         menuBar.add(background);
         menuBar.add(vehicleColor);
         menuBar.add(help);
@@ -148,8 +152,8 @@ public class mainFrame extends JFrame implements ActionListener {
         if(e.getSource()==buildMap){
             //TODO
         }
-        if(e.getSource()==cloneCar){
-            //TODO
+        if(e.getSource()==clone && mainPanel!=null){
+             cloneCarInput=new cloneCarInput(mainPanel.getDriving());
         }
         if(e.getSource()==reportItem && isCreated){
             rf=new reportsFrame(mainPanel.getDriving().getMoked().readAllReport());

@@ -15,7 +15,7 @@ import GUI.*;
  * @see RouteParts
  * @see Road
  */
-public class Vehicle extends Thread implements Utilities,Timer{
+public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
     private int id;
     private VehicleType vehicleType;
     private Route currentRoute;
@@ -65,6 +65,18 @@ public class Vehicle extends Thread implements Utilities,Timer{
     public int getObjectCount(){return objectCount;}
     public Road getLastRoad(){return lastRoad;}
     public String getStatus(){return status;}
+
+    public double getX() {
+        return X;
+    }
+
+    public double getY() {
+        return Y;
+    }
+
+    public BigBrother getBigBrother() {
+        return bigBrother;
+    }
 
     //setters
     public void setId(final int id){this.id=id;}
@@ -133,6 +145,23 @@ public class Vehicle extends Thread implements Utilities,Timer{
     }
 
     /**
+     * Function clone the vehicle
+     * @return clone
+     */
+    public Object clone(){
+        Object clone = null;
+        try
+        {
+            clone = super.clone();
+        }
+        catch (CloneNotSupportedException e)
+        {
+            e.printStackTrace();
+        }
+        return  clone;
+    }
+
+    /**
      * Function change the location of the vehicle while his thread alive
      */
     @Override
@@ -151,15 +180,4 @@ public class Vehicle extends Thread implements Utilities,Timer{
         }
     }
 
-    public double getX() {
-        return X;
-    }
-
-    public double getY() {
-        return Y;
-    }
-
-    public BigBrother getBigBrother() {
-        return bigBrother;
-    }
 }
