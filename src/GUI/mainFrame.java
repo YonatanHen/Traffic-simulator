@@ -154,9 +154,10 @@ public class mainFrame extends JFrame implements ActionListener {
         }
         if(e.getSource()==clone && mainPanel!=null){
              cloneCarInput=new cloneCarInput(mainPanel.getDriving());
+             repaint();
         }
         if(e.getSource()==reportItem && isCreated){
-            rf=new reportsFrame(mainPanel.getDriving().getMoked().readAllReport());
+            rf=new reportsFrame(driving.getMoked().readAllReport());
             rf.pack();
             rf.setVisible(true);
         }

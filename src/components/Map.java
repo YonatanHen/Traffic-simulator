@@ -92,6 +92,7 @@ public class Map implements Utilities {
        }
     }
 
+
     //getters
     public ArrayList<Junction> getJunctions() {
         return junctions;

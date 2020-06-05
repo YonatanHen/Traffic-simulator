@@ -31,7 +31,7 @@ public class cloneCarInput extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==btn){
-            driving.getVehicles().add(Driving.getVehicle(getData()));
+            driving.getVehicles().add(driving.getVehicle(getData()));
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             dispose();
         }
@@ -45,7 +45,7 @@ public class cloneCarInput extends JFrame implements ActionListener {
         try {
             return Integer.parseInt(text.getText());
         }catch (NumberFormatException e){
-            System.out.println("Error! value isn't an integer! -1 will returned");
+            System.out.println("Error! value isn't an integer! -1 will return");
         }
         return -1;
     }

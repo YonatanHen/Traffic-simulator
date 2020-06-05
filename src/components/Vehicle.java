@@ -5,6 +5,8 @@ import utilities.VehicleType;
 import utilities.Timer;
 import GUI.*;
 
+import java.util.Random;
+
 /**
  * Class represent Vehicle on the map.
  *
@@ -44,6 +46,27 @@ public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
         lastRoad=road;
         lastRoad.addVehicleToWaitingVehicles(this);
         currentRoute=new Route(road,this);
+        currentRoutePart=currentRoute.getRouteParts().get(0);
+        successMessage(toString());
+        currentRoute.checkIn(this);
+        currentRoutePart.checkIn(this);
+        objectCount++;
+        X=lastRoad.getStartJunction().getX();
+        Y=lastRoad.getStartJunction().getY();
+        //implement the big brother in each car (created only once)
+        bigBrother =BigBrother.getInstance();
+    }
+
+    public Vehicle(VehicleType vt){
+        super();
+        id=objectCount;
+        this.vehicleType=vt;
+        timeFromStartRoute=0;
+        timeOnCurrentPart=0;
+        Random r=new Random();
+        lastRoad=Driving.map.getRoads().get(r.nextInt(Driving.map.getRoads().size()));
+        lastRoad.addVehicleToWaitingVehicles(this);
+        currentRoute=new Route(lastRoad,this);
         currentRoutePart=currentRoute.getRouteParts().get(0);
         successMessage(toString());
         currentRoute.checkIn(this);
@@ -98,7 +121,6 @@ public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
             currentRoutePart.checkOut(this);
             if (currentRoutePart.findNextPart(this) != null) {
                 currentRoutePart = currentRoutePart.findNextPart(this);
-                yield();
                 currentRoutePart.checkIn(this);
                 timeOnCurrentPart=0;
             }
@@ -149,16 +171,8 @@ public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
      * @return clone
      */
     public Object clone(){
-        Object clone = null;
-        try
-        {
-            clone = super.clone();
-        }
-        catch (CloneNotSupportedException e)
-        {
-            e.printStackTrace();
-        }
-        return  clone;
+        Vehicle v=new Vehicle(this.vehicleType);
+        return v;
     }
 
     /**

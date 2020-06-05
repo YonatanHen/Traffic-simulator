@@ -5,7 +5,6 @@ import utilities.Utilities;
 import GUI.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -19,7 +18,7 @@ import java.util.Random;
  * @see Vehicle
  */
 public class Driving extends Thread implements Utilities, Timer {
-    private Map map; //Map for current running
+    public static Map map; //Map for current running
     private ArrayList<Vehicle> vehicles; //The vehicles who part of the running
     private int drivingTime; // Accumulate the time/number of pulses from the start
     private ArrayList<Timer> allTimedElements; //Keep the whole elements who affected by the time pulses.
@@ -28,7 +27,6 @@ public class Driving extends Thread implements Utilities, Timer {
     private boolean isOnStop=false;
     private boolean isRunning;
     private Moked moked;
-    private static java.util.Map<String, Vehicle> vehicleMap = new HashMap<String, Vehicle>();//Hash map for vehicles
     /**
      * Driving constructor: receive number of junctions and
      * number of vehicles.
@@ -51,8 +49,6 @@ public class Driving extends Thread implements Utilities, Timer {
         System.out.println("================= CREATING VEHICLES =================");
         for (int i = 0; i < numOfVehicles; i++) {
             vehicles.add(new Vehicle(map.getRoads().get(r.nextInt(map.getRoads().size()))));
-            //Save created vehicle in hash map.
-            vehicleMap.put(Integer.toString(i),vehicles.get(vehicles.size()-1));
             allTimedElements.add(vehicles.get(i));
         }
         //Add the lights to allTimedElements only if junction is LightedJunction
@@ -89,9 +85,12 @@ public class Driving extends Thread implements Utilities, Timer {
      * @param id
      * @return
      */
-    public static Vehicle getVehicle(int id){
-       Vehicle v=vehicleMap.get(Integer.toString(id));
-       return (Vehicle) v.clone();
+    public Vehicle getVehicle(int id){
+        Vehicle v=(Vehicle) vehicles.get(id).clone();
+        vehicles.add(v);
+        allTimedElements.add(vehicles.size()-1,v);
+        new Thread(v).start();
+       return v;
     }
 
     //setters
