@@ -13,7 +13,7 @@ public enum VehicleType {
     private int averageSpeed;
 
     /**
-     * Function set to average speed value.
+     * Function set average speed value.
      * @param averageSpeed
      */
     VehicleType(int averageSpeed) {
