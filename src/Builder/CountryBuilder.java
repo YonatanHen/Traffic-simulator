@@ -40,10 +40,10 @@ public class CountryBuilder implements mapBuilder,Utilities{
     public void buildVehicles() {
         ArrayList<Vehicle> allowedVehicles=new ArrayList<>();
         allowedVehicles.add(new Vehicle(((twoWheelVehicle)Factory.getFactory(2)).getVehicle("fast")));
-        allowedVehicles.add(new Vehicle(((twoWheelVehicle)Factory.getFactory(4)).getVehicle("private")));
-        allowedVehicles.add(new Vehicle(((twoWheelVehicle)Factory.getFactory(4)).getVehicle("work")));
-        allowedVehicles.add(new Vehicle(((twoWheelVehicle)Factory.getFactory(4)).getVehicle("public")));
-        allowedVehicles.add(new Vehicle(((twoWheelVehicle)Factory.getFactory(10)).getVehicle("work")));
+        allowedVehicles.add(new Vehicle(((fourWheelVehicle)Factory.getFactory(4)).getVehicle("private")));
+        allowedVehicles.add(new Vehicle(((fourWheelVehicle)Factory.getFactory(4)).getVehicle("work")));
+        allowedVehicles.add(new Vehicle(((fourWheelVehicle)Factory.getFactory(4)).getVehicle("public")));
+        allowedVehicles.add(new Vehicle(((tenWheelVehicle)Factory.getFactory(10)).getVehicle("work")));
         ArrayList<Vehicle> vehicles=new ArrayList<>();
         for(int i=0;i<10;i++){
             vehicles.add((Vehicle) allowedVehicles.get(getRandomInt(0,10)).clone());
