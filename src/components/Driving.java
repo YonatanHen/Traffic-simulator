@@ -1,5 +1,6 @@
 package components;
 
+import Mediator.Driver;
 import utilities.Timer;
 import utilities.Utilities;
 import GUI.*;
@@ -57,6 +58,10 @@ public class Driving extends Thread implements Utilities, Timer {
             if (j instanceof LightedJunction) allTimedElements.add(((LightedJunction) j).getLights());
         }
         moked=vehicles.get(0).getBigBrother().getMoked();
+        //Add all drivers to moked drivers list
+        for(int i=0;i<vehicles.size();i++){
+            moked.addDriver(vehicles.get(i));
+        }
     }
 
     //getters
@@ -123,7 +128,11 @@ public class Driving extends Thread implements Utilities, Timer {
         System.out.println("\n"+toString()+"\n");
         this.numOfTurns=numOfTurns;
         for (Timer t : allTimedElements) {
-            if (t instanceof Vehicle) new Thread((Vehicle) t).start();
+            if (t instanceof Vehicle){
+                new Thread((Vehicle) t).start();
+                //Start driver thread
+                new Thread((Driver) ((Vehicle) t).getDriver()).start();
+            }
             if (t instanceof TrafficLights) new Thread((TrafficLights) t).start();
         }
         new Thread(this).start();
@@ -180,6 +189,7 @@ public class Driving extends Thread implements Utilities, Timer {
             drivingTime++;
             //suppose to update graphics every 100 millis
             mainFrame.run();
+            moked.confirm();
         }
     }
 

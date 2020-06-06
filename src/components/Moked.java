@@ -1,5 +1,7 @@
 package components;
 
+import Mediator.Driver;
+
 import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.ArrayList;
@@ -23,8 +25,9 @@ public class Moked {
     private FileReader fr;
     private FileWriter fw;
     private static int counter=0;
-    private String state; //state dp
+    private static boolean state=true; //state dp
     String fileName="report.txt";
+    private ArrayList<Driver> drivers;
     public Moked(){
         file=new File(fileName);
         try {
@@ -33,22 +36,23 @@ public class Moked {
         }catch (IOException f) {
             System.out.println(f);
         }
-        state="write";
+        drivers=new ArrayList<>();
     }
 
     /**
      * Read from file
-     * @param vehicle
      */
-    public void get(Vehicle vehicle) {
+    public synchronized void confirm() {
         r.lock();
         try {
-            fr.read();
-
+            for(Driver driver:drivers){
+                driver.receiveReport(fileName);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } finally { r.unlock(); }
     }
+
     public String[] allKeys() {
         r.lock();
         try { return (String[]) m.keySet().toArray(); }
@@ -60,13 +64,13 @@ public class Moked {
      * @param vehicle
      */
     public void put(Vehicle vehicle) {
-        if(state!=null) changeState();//change state from write to read
         w.lock();
         try {
             fw.write("Report #"+(counter++)+"; Time from start route: "+vehicle.getTimeFromStartRoute()+ ", Vehicle ID: " +vehicle.getid()+".\n");
             fw.flush();
         }catch (IOException e){ System.out.println(e);}
-        finally { w.unlock(); }
+        finally { w.unlock();
+        state=false;}
     }
     public void clear() {
         w.lock();
@@ -79,7 +83,6 @@ public class Moked {
      * @return
      */
     public String readAllReport(){
-        //changeState();// change state from read to write
         r.lock();
         String str="";
         try {
@@ -97,11 +100,11 @@ public class Moked {
         }
     }
 
-    /**
-     * Function change the state - read/write
-     */
-    public void changeState(){
-        if(state=="read") state="write";
-        else state="read";
+    public static boolean getState() {
+        return state;
+    }
+
+    public void addDriver(Vehicle v){
+        drivers.add(v.getDriver());
     }
 }
