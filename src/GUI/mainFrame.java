@@ -2,6 +2,8 @@ package GUI;
 
 
 
+import Builder.CityBuilder;
+import Builder.MapB;
 import Listener.EscEventHandler;
 import components.*;
 
@@ -158,8 +160,7 @@ public class mainFrame extends JFrame implements ActionListener {
         if(e.getSource() == randomVehicle && mainPanel!=null){
             mainPanel.setVehiclesColor("random");
         }
-        if(e.getSource()==buildMap){
-            //TODO
+        if(e.getSource()==cityMap){
         }
         if(e.getSource()==clone && mainPanel!=null){
              cloneCarInput=new cloneCarInput(mainPanel.getDriving());
