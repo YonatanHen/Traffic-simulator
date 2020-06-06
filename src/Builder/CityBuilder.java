@@ -50,7 +50,7 @@ public class CityBuilder implements mapBuilder, Utilities {
             Random random = new Random();
             boolean speed = random.nextBoolean();
             if (speed)
-                vehicles.get(i).getVehicleType().setAverageSpeedForCity((vehicles.get(i).getVehicleType().getAverageSpeed()));
+                vehicles.get(i).getVehicleType().setAverageSpeedForCity((vehicles.get(i).getVehicleType().getAverageSpeed()*10));
         }
         map.setVehicles(vehicles);
     }
