@@ -1,5 +1,6 @@
 package components;
 
+import Mediator.Driver;
 import utilities.Utilities;
 import utilities.VehicleType;
 import utilities.Timer;
@@ -31,6 +32,7 @@ public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
     private double Y;//location of vehicle in Y axis
     private BigBrother bigBrother;
     private Moked moked;
+    private Driver driver;
 
     /**
      * Vehicle randomal constructor.
@@ -55,6 +57,8 @@ public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
         Y=lastRoad.getStartJunction().getY();
         //implement the big brother in each car (created only once)
         bigBrother =BigBrother.getInstance();
+        //Create mediator
+        driver=new Driver(this);
     }
 
     public Vehicle(VehicleType vt){
@@ -99,6 +103,10 @@ public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
 
     public BigBrother getBigBrother() {
         return bigBrother;
+    }
+
+    public Driver getDriver() {
+        return driver;
     }
 
     //setters

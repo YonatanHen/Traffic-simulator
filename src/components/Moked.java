@@ -1,5 +1,7 @@
 package components;
 
+import Mediator.Driver;
+
 import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class Moked {
     private static int counter=0;
     private static boolean state=true; //state dp
     String fileName="report.txt";
+    private ArrayList<Driver> drivers;
     public Moked(){
         file=new File(fileName);
         try {
@@ -33,20 +36,22 @@ public class Moked {
         }catch (IOException f) {
             System.out.println(f);
         }
+        drivers=new ArrayList<>();
     }
 
     /**
      * Read from file
-     * @param vehicle
      */
-    public void confirm(Vehicle vehicle) {
+    public synchronized void confirm() {
         r.lock();
         try {
-            fr.read();
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally { r.unlock(); }
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        finally { r.unlock(); }
     }
 
     public String[] allKeys() {
@@ -98,5 +103,9 @@ public class Moked {
 
     public static boolean getState() {
         return state;
+    }
+
+    public void addDriver(Vehicle v){
+        drivers.add(v.getDriver());
     }
 }
