@@ -27,7 +27,7 @@ import static java.lang.Thread.*;
 public class mainFrame extends JFrame implements ActionListener {
     JMenuBar menuBar;
     JMenu file, background, vehicleColor, help,buildMap,cloneCar,reports;
-    JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem, reportItem,clone;
+    JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem, reportItem,clone, cityMap, countryMap;
     JPanel container;
     panel mainPanel;
     JSplitPane splitPane;
@@ -73,6 +73,10 @@ public class mainFrame extends JFrame implements ActionListener {
         helpItem.addActionListener(this);
         buildMap=new JMenu("Build a map");
         buildMap.addActionListener(this);
+        cityMap=new JMenuItem("City map");
+        cityMap.addActionListener(this);
+        countryMap = new JMenuItem("Country Map");
+        countryMap.addActionListener(this);
         cloneCar=new JMenu("Clone a car");
         cloneCar.addActionListener(this);
         clone=new JMenuItem("clone");
@@ -95,6 +99,8 @@ public class mainFrame extends JFrame implements ActionListener {
         vehicleColor.add(magentaVehicle);
         vehicleColor.add(orangeVehicle);
         vehicleColor.add(randomVehicle);
+        buildMap.add(cityMap);
+        buildMap.add(countryMap);
         help.add(helpItem);
         reports.add(reportItem);
         menuBar.add(file);

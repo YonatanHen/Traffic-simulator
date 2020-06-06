@@ -79,7 +79,7 @@ public class Moked {
      * @return
      */
     public String readAllReport(){
-        changeState();// change state from read to write
+        //changeState();// change state from read to write
         r.lock();
         String str="";
         try {
