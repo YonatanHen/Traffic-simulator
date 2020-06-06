@@ -1,4 +1,59 @@
 package Builder;
 
-public class CityBuilder {
+import AbstractFactory.Factory;
+import AbstractFactory.tenWheelVehicle;
+import AbstractFactory.twoWheelVehicle;
+import components.*;
+import utilities.Utilities;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class CityBuilder implements mapBuilder, Utilities {
+    private MapB map;
+    @Override
+    public void buildRoads() {
+        if(map.getJuntions()!= null) {
+            for (int i = 0; i < map.getJuntions().size(); i++)
+                for (int j = 0; j < map.getJuntions().size(); j++) {
+                    if(i!=j){
+                        map.getRoads().add(new Road(map.getJuntions().get(i), map.getJuntions().get(j)));
+                        ((LightedJunction) map.getJuntions().get(j)).getLights().getRoads().add(map.getRoads().get(map.getRoads().size() - 1));
+                    }
+                }
+        }
+
+    }
+
+    @Override
+    public void buildJunctions() {
+        ArrayList <Junction> junctions=new ArrayList<>();
+        String [] types=new String[]{Junction.class.getName(), LightedJunction.class.getName()};
+        for(int i=0;i<12;i++){
+            junctions.add(JFactory.getJunction("city"));
+        }
+        map.setJunctions(junctions);
+    }
+    @Override
+    public void buildVehicles() {
+        ArrayList<Vehicle> allowedVehicles=new ArrayList<>();
+        allowedVehicles.add(new Vehicle(((tenWheelVehicle) Factory.getFactory(2)).getVehicle("fast")));
+        allowedVehicles.add(new Vehicle(((tenWheelVehicle) Factory.getFactory(2)).getVehicle("slow")));
+        allowedVehicles.add(new Vehicle(((tenWheelVehicle)Factory.getFactory(4)).getVehicle("private")));
+        allowedVehicles.add(new Vehicle(((tenWheelVehicle)Factory.getFactory(4)).getVehicle("public")));
+        allowedVehicles.add(new Vehicle(((tenWheelVehicle)Factory.getFactory(10)).getVehicle("tram")));
+        ArrayList<Vehicle> vehicles=new ArrayList<>();
+        for(int i=0;i<10;i++){
+            vehicles.add((Vehicle) allowedVehicles.get(getRandomInt(0,5)).clone());
+        }
+        for(int i=0;i<vehicles.size();i++) {
+            Random random = new Random();
+            boolean speed = random.nextBoolean();
+            if (speed)
+                vehicles.get(i).getVehicleType().setAverageSpeedForCity((vehicles.get(i).getVehicleType().getAverageSpeed()));
+        }
+        map.setVehicles(vehicles);
+    }
+    @Override
+    public MapB getMap() {return map;}
 }

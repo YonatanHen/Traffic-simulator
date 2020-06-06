@@ -49,6 +49,7 @@ public class Driving extends Thread implements Utilities, Timer {
         System.out.println("================= CREATING VEHICLES =================");
         for (int i = 0; i < numOfVehicles; i++) {
             vehicles.add(new Vehicle(map.getRoads().get(r.nextInt(map.getRoads().size()))));
+            vehicles.get(i).getVehicleType().setAverageSpeedReports(vehicles.get(i).getVehicleType().getAverageSpeed());
             allTimedElements.add(vehicles.get(i));
         }
         //Add the lights to allTimedElements only if junction is LightedJunction
