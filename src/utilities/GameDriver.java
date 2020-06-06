@@ -2,10 +2,8 @@
 package utilities;
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.locks.Lock;
 
 import GUI.*;
-import components.Driving;
 
 /**
  * class main.

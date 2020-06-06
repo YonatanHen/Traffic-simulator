@@ -2,6 +2,7 @@ package GUI;
 
 
 
+import Listener.EscEventHandler;
 import components.*;
 
 import javax.swing.*;
@@ -123,7 +124,9 @@ public class mainFrame extends JFrame implements ActionListener {
      */
     public void actionPerformed (ActionEvent e) {
         if (e.getSource() == exit) {
-            System.exit(0);
+            EscEventHandler esc=new EscEventHandler();
+            esc.myEventOccured();
+            esc.fireEvent();
         }
         if (e.getSource() == blueBackGround && mainPanel!=null) {
             mainPanel.setBackground(Color.BLUE);
