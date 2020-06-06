@@ -1,6 +1,5 @@
 package Mediator;
 
-import components.Driving;
 import components.Vehicle;
 
 import java.io.*;
@@ -25,29 +24,38 @@ public class Driver implements Runnable {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
-    public void receiveReport(String report,String directory) throws FileNotFoundException {
-        reports.add(report);
+    public void receiveReport(String directory) throws FileNotFoundException {
+        //TODO: Add specific report to array list
         if(br==null) br=new BufferedReader(new FileReader(directory));
 
     }
 
-    public String sendConfirmation(String report){
+    public void sendConfirmation(String report){
             System.out.println(report+ "confirmed");
     }
 
     @Override
     public void run() {
-        while(true) {
+        String line= null;
+        try {
+            line = br.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        while(line!=null) {
             try {
-                if (reports.get(reports.size() - 1) != br.readLine()) break;
+                line=br.readLine();
+                if (reports.get(reports.size() - 1).equals(line)) {
+                    System.out.println("AAAAAAAAAAAAAAAAAA");
+                    System.out.println(this+" reading report: "+reports.get(reports.size()-1));
+                    sendConfirmation(reports.get(reports.size()-1));
+                    reports.remove(reports.size()-1);
+                }
+                else reportReaded=false;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println(this+" reading report: "+reports.get(reports.size()-1));
-            sendConfirmation(reports.get(reports.size()-1));
-            reports.remove(reports.size()-1);
-        }
-
+            if(line==null) reportReaded=true;
         }
     }
 }

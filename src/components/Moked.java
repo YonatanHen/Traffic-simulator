@@ -45,13 +45,12 @@ public class Moked {
     public synchronized void confirm() {
         r.lock();
         try {
-
+            for(Driver driver:drivers){
+                driver.receiveReport(fileName);
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-        finally { r.unlock(); }
+        } finally { r.unlock(); }
     }
 
     public String[] allKeys() {

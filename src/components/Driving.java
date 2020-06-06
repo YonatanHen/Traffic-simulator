@@ -188,6 +188,7 @@ public class Driving extends Thread implements Utilities, Timer {
             drivingTime++;
             //suppose to update graphics every 100 millis
             mainFrame.run();
+            moked.confirm();
         }
     }
 
