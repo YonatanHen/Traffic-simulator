@@ -9,7 +9,7 @@ public class twoWheelVehicle extends vehicle {
     }
 
     @Override
-    VehicleType getVehicle(String y) {
+    public VehicleType getVehicle(String y) {
         switch (y){
             case "fast": return VehicleType.motorcycle;
             case "slow": return VehicleType.bicycle;

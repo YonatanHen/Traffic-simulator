@@ -7,7 +7,7 @@ public class fourWheelVehicle extends vehicle {
         super();
     }
     @Override
-    VehicleType getVehicle(String y) {
+    public VehicleType getVehicle(String y) {
         switch (y){
             case "private": return VehicleType.car;
             case "work": return VehicleType.truck;

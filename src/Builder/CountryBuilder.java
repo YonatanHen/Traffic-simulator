@@ -1,11 +1,12 @@
 package Builder;
 
-import components.Junction;
-import components.LightedJunction;
-import components.Map;
-import components.Road;
+import AbstractFactory.*;
+import components.*;
 import utilities.Utilities;
+import utilities.VehicleType;
+
 import java.util.ArrayList;
+import java.util.Random;
 
 public class CountryBuilder implements mapBuilder,Utilities{
     private MapB map;
@@ -30,16 +31,24 @@ public class CountryBuilder implements mapBuilder,Utilities{
         ArrayList <Junction> junctions=new ArrayList<>();
         String [] types=new String[]{Junction.class.getName(), LightedJunction.class.getName()};
         for(int i=0;i<6;i++){
-            String type=types[getRandomInt(0,types.length)];
-            if(type.equals(Junction.class.getName())) junctions.add(new Junction());
-            else junctions.add(new LightedJunction());
+            junctions.add(JFactory.getJunction("country"));
         }
         map.setJunctions(junctions);
     }
 
     @Override
     public void buildVehicles() {
-
+        ArrayList<Vehicle> allowedVehicles=new ArrayList<>();
+        allowedVehicles.add(new Vehicle(((twoWheelVehicle)Factory.getFactory(2)).getVehicle("fast")));
+        allowedVehicles.add(new Vehicle(((twoWheelVehicle)Factory.getFactory(4)).getVehicle("private")));
+        allowedVehicles.add(new Vehicle(((twoWheelVehicle)Factory.getFactory(4)).getVehicle("work")));
+        allowedVehicles.add(new Vehicle(((twoWheelVehicle)Factory.getFactory(4)).getVehicle("public")));
+        allowedVehicles.add(new Vehicle(((twoWheelVehicle)Factory.getFactory(10)).getVehicle("work")));
+        ArrayList<Vehicle> vehicles=new ArrayList<>();
+        for(int i=0;i<10;i++){
+            vehicles.add((Vehicle) allowedVehicles.get(getRandomInt(0,10)).clone());
+        }
+        map.setVehicles(vehicles);
     }
 
     @Override

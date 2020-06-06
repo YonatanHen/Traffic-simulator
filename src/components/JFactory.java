@@ -22,9 +22,9 @@ public class JFactory extends Junction {
      * return lighted junction or regular junction-depends on 'x' value-city/country
      * for legal value,return null.
      * @param x
-     * @return
+     * @return instance of junction
      */
-    public Junction getJunction(String x){
+    public static Junction getJunction(String x){
         if(x.equals("city")) return new LightedJunction();
         if(x.equals("country")){
             Random r=new Random();
