@@ -1,9 +1,0 @@
-Report #0; Time from start route: 20, Vehicle ID: 2.
-Report #1; Time from start route: 25, Vehicle ID: 3.
-Report #2; Time from start route: 9, Vehicle ID: 3.
-Report #3; Time from start route: 44, Vehicle ID: 4.
-Report #4; Time from start route: 9, Vehicle ID: 3.
-Report #5; Time from start route: 59, Vehicle ID: 2.
-Report #6; Time from start route: 59, Vehicle ID: 4.
-Report #7; Time from start route: 9, Vehicle ID: 3.
-Report #8; Time from start route: 75, Vehicle ID: 1.

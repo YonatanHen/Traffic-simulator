@@ -17,14 +17,27 @@ public enum VehicleType {
      * @param averageSpeed
      */
     VehicleType(int averageSpeed) {
+        this.averageSpeed = averageSpeed;
+    }
+    public void setAverageSpeedForCity(int averageSpeed){
+        Random random = new Random();
+        boolean speed = random.nextBoolean();
+        if(speed)
+            this.averageSpeed=(int)(averageSpeed*1.3);
+        else
+            this.averageSpeed=averageSpeed;
+    }
+    public void setAverageSpeedReports(int averageSpeed){
         Random random = new Random();
         boolean speed = random.nextBoolean();
         if(speed)
             this.averageSpeed=(int)(averageSpeed*1.5);
         else
-            this.averageSpeed = averageSpeed;
+            this.averageSpeed=averageSpeed;
     }
+
     public int getAverageSpeed() {
         return averageSpeed/10;
     }
+    public void setAverageSpeed(int averageSpeed){this.averageSpeed = averageSpeed;}
 }
