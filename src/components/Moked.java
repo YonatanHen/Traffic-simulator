@@ -23,6 +23,7 @@ public class Moked {
     private FileReader fr;
     private FileWriter fw;
     private static int counter=0;
+    private String state; //state dp
     String fileName="report.txt";
     public Moked(){
         file=new File(fileName);
@@ -32,6 +33,7 @@ public class Moked {
         }catch (IOException f) {
             System.out.println(f);
         }
+        state="write";
     }
 
     /**
@@ -58,6 +60,7 @@ public class Moked {
      * @param vehicle
      */
     public void put(Vehicle vehicle) {
+        if(state!=null) changeState();//change state from write to read
         w.lock();
         try {
             fw.write("Report #"+(counter++)+"; Time from start route: "+vehicle.getTimeFromStartRoute()+ ", Vehicle ID: " +vehicle.getid()+".\n");
@@ -76,6 +79,7 @@ public class Moked {
      * @return
      */
     public String readAllReport(){
+        changeState();// change state from read to write
         r.lock();
         String str="";
         try {
@@ -91,5 +95,13 @@ public class Moked {
             r.unlock();
             return str;
         }
+    }
+
+    /**
+     * Function change the state - read/write
+     */
+    public void changeState(){
+        if(state=="read") state="write";
+        else state="read";
     }
 }

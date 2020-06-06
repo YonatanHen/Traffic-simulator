@@ -21,7 +21,7 @@ public class Junction extends Point implements RouteParts {
     /**
      * Randomal constructor for Junction
      */
-    Junction(){
+    public Junction(){
         super(); //Call the Point default constructor
         junctionName=String.valueOf(objectsCount);
         objectsCount++;//Advance the counter after using his value

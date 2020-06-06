@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * @see TrafficLights
  * @see Vehicle
  */
-public class Map implements Utilities {
+public class Map implements Utilities{
     private ArrayList<Junction> junctions;
     private ArrayList<Road> roads;
     private ArrayList<TrafficLights> lights;
