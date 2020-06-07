@@ -144,6 +144,8 @@ public class Junction extends Point implements RouteParts {
             if (r.getEndJunction().equals(this) && r.getEndJunction().equals(vehicle.getLastRoad().getEndJunction())){
                 vehicle.setLastRoad(r);
             }
+            //Report to big brother when reach the junction
+            vehicle.getBigBrother().getMoked().confirm(vehicle);
         }
         vehicle.setCurrentRoutePart(this);
         vehicle.setStatus("- has arrived to "+ toString());

@@ -42,13 +42,11 @@ public class Moked {
     /**
      * Read from file
      */
-    public void confirm() {
+    public void confirm(Vehicle v) {
         r.lock();
         try {
-            for(Driver driver:drivers){
-                driver.receiveReport(fileName);
-                driver.readReport();
-            }
+            v.getDriver().receiveReport(fileName);
+            v.getDriver().readReport();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

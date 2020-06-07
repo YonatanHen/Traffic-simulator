@@ -14,12 +14,12 @@ public class CityBuilder implements mapBuilder, Utilities {
     private MapB map;
     @Override
     public void buildRoads() {
-        if(map.getJuntions()!= null) {
-            for (int i = 0; i < map.getJuntions().size(); i++)
-                for (int j = 0; j < map.getJuntions().size(); j++) {
+        if(map.getJunctions()!= null) {
+            for (int i = 0; i < map.getJunctions().size(); i++)
+                for (int j = 0; j < map.getJunctions().size(); j++) {
                     if(i!=j){
-                        map.getRoads().add(new Road(map.getJuntions().get(i), map.getJuntions().get(j)));
-                        ((LightedJunction) map.getJuntions().get(j)).getLights().getRoads().add(map.getRoads().get(map.getRoads().size() - 1));
+                        map.getRoads().add(new Road(map.getJunctions().get(i), map.getJunctions().get(j)));
+                        ((LightedJunction) map.getJunctions().get(j)).getLights().getRoads().add(map.getRoads().get(map.getRoads().size() - 1));
                     }
                 }
         }
