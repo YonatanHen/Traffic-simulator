@@ -5,7 +5,7 @@ import components.Vehicle;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Driver implements Runnable {
+public class Driver {
     private Vehicle vehicle;
     boolean reportReaded=false;
     BufferedReader br;
@@ -25,37 +25,17 @@ public class Driver implements Runnable {
         this.vehicle = vehicle;
     }
     public void receiveReport(String directory) throws FileNotFoundException {
-        //TODO: Add specific report to array list
         if(br==null) br=new BufferedReader(new FileReader(directory));
-
     }
-
-    public void sendConfirmation(String report){
-            System.out.println(report+ "confirmed");
-    }
-
-    @Override
-    public void run() {
-        String line= null;
-        try {
-            line = br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        while(line!=null) {
-            try {
-                line=br.readLine();
-                if (reports.get(reports.size() - 1).equals(line)) {
-                    System.out.println("AAAAAAAAAAAAAAAAAA");
-                    System.out.println(this+" reading report: "+reports.get(reports.size()-1));
-                    sendConfirmation(reports.get(reports.size()-1));
-                    reports.remove(reports.size()-1);
-                }
-                else reportReaded=false;
-            } catch (IOException e) {
-                e.printStackTrace();
+    public void readReport() throws IOException {
+        String line=br.readLine();
+        while (line!=null){
+            if(line.contains("ID: "+ vehicle.getid()+".") && reports.indexOf(line)==-1) {
+                System.out.println(line + " confirmed by the driver.");
+                reports.add(line);
             }
-            if(line==null) reportReaded=true;
+            line=br.readLine();
         }
     }
 }
+
