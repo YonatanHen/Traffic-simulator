@@ -12,14 +12,14 @@ public class CountryBuilder implements mapBuilder,Utilities{
     private MapB map;
     @Override
     public void buildRoads() {
-        if (map.getJuntions() != null) {
-            for (int i = 0; i < map.getJuntions().size(); i++)
-                for (int j = 0; j < map.getJuntions().size(); j++) {
+        if (map.getJunctions() != null) {
+            for (int i = 0; i < map.getJunctions().size(); i++)
+                for (int j = 0; j < map.getJunctions().size(); j++) {
                     //Add new roads only if junctions aren't the sane and random value equals 1 (in that way not all of the junctions will connect)
                     if (i != j && getRandomInt(0, 2) == 1) {
-                        map.getRoads().add(new Road(map.getJuntions().get(i), map.getJuntions().get(j)));
-                        if (map.getJuntions().get(j) instanceof LightedJunction) {
-                            ((LightedJunction) map.getJuntions().get(j)).getLights().getRoads().add(map.getRoads().get(map.getRoads().size() - 1));
+                        map.getRoads().add(new Road(map.getJunctions().get(i), map.getJunctions().get(j)));
+                        if (map.getJunctions().get(j) instanceof LightedJunction) {
+                            ((LightedJunction) map.getJunctions().get(j)).getLights().getRoads().add(map.getRoads().get(map.getRoads().size() - 1));
                         }
                     }
                 }
