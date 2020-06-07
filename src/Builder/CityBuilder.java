@@ -12,6 +12,9 @@ import java.util.Random;
 
 public class CityBuilder implements mapBuilder, Utilities {
     private MapB map;
+    public CityBuilder(){
+        map = new MapB();
+    }
     @Override
     public void buildRoads() {
         if(map.getJunctions()!= null) {
@@ -42,7 +45,7 @@ public class CityBuilder implements mapBuilder, Utilities {
         allowedVehicles.add(new Vehicle(((twoWheelVehicle) Factory.getFactory(2)).getVehicle("slow")));
         allowedVehicles.add(new Vehicle(((fourWheelVehicle)Factory.getFactory(4)).getVehicle("private")));
         allowedVehicles.add(new Vehicle(((fourWheelVehicle)Factory.getFactory(4)).getVehicle("public")));
-        allowedVehicles.add(new Vehicle(((tenWheelVehicle)Factory.getFactory(10)).getVehicle("tram")));
+        allowedVehicles.add(new Vehicle(((tenWheelVehicle)Factory.getFactory(10)).getVehicle("public")));
         ArrayList<Vehicle> vehicles=new ArrayList<>();
         for(int i=0;i<10;i++){
             vehicles.add((Vehicle) allowedVehicles.get(getRandomInt(0,5)).clone());

@@ -1,6 +1,8 @@
 package components;
 
 import Builder.CityBuilder;
+import Builder.CountryBuilder;
+import Builder.MapB;
 import Mediator.Driver;
 import utilities.Timer;
 import utilities.Utilities;
@@ -29,6 +31,9 @@ public class Driving extends Thread implements Utilities, Timer {
     private boolean isOnStop=false;
     private boolean isRunning;
     private Moked moked;
+    public static MapB mapB;
+    private CityBuilder cityBuilder;
+    private CountryBuilder countryBuilder;
     /**
      * Driving constructor: receive number of junctions and
      * number of vehicles.
@@ -64,6 +69,45 @@ public class Driving extends Thread implements Utilities, Timer {
             moked.addDriver(vehicles.get(i));
         }
     }
+    //constructor for build cityMap or countryMap
+    //true for city and false for country
+    public Driving(mainFrame GUIFrame, boolean flag) {
+        super();
+        if(flag) {
+            cityBuilder = new CityBuilder();
+            cityBuilder.buildJunctions();
+            cityBuilder.buildRoads();
+            cityBuilder.buildVehicles();
+            setMap(cityBuilder.getMap());
+            setVehicles(cityBuilder.getMap().getVehicles());
+            drivingTime = 0;
+            allTimedElements = new ArrayList<>();
+            for (int i = 0; i < cityBuilder.getMap().getVehicles().size(); i++)
+                allTimedElements.add(cityBuilder.getMap().getVehicles().get(i));
+            for (Junction j : cityBuilder.getMap().getJunctions())
+                allTimedElements.add(((LightedJunction) j).getLights());
+            mainFrame = GUIFrame;
+//        moked=vehicles.get(0).getBigBrother().getMoked();
+//        //Add all drivers to moked drivers list
+//        for(int i=0;i<vehicles.size();i++){
+//            moked.addDriver(vehicles.get(i));
+//        }
+        }
+        else{
+            countryBuilder = new CountryBuilder();
+            countryBuilder.buildJunctions();
+            countryBuilder.buildRoads();
+            countryBuilder.buildVehicles();
+            setMap(countryBuilder.getMap());
+            setVehicles(countryBuilder.getMap().getVehicles());
+            drivingTime = 0;
+            allTimedElements = new ArrayList<>();
+            for (int i = 0; i < countryBuilder.getMap().getVehicles().size(); i++)
+                allTimedElements.add(countryBuilder.getMap().getVehicles().get(i));
+            mainFrame = GUIFrame;
+        }
+    }
+
 
     //getters
 

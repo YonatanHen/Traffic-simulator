@@ -26,5 +26,8 @@ public class MapB extends Map implements mapPlan{
         return vehicles;
     }
 
-
+    @Override
+    public ArrayList<Junction> getJunctions() {
+        return super.getJunctions();
+    }
 }

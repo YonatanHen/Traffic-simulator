@@ -10,6 +10,9 @@ import java.util.Random;
 
 public class CountryBuilder implements mapBuilder,Utilities{
     private MapB map;
+    public CountryBuilder(){
+        map = new MapB();
+    }
     @Override
     public void buildRoads() {
         if (map.getJunctions() != null) {

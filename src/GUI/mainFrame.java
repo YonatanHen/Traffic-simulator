@@ -42,6 +42,7 @@ public class mainFrame extends JFrame implements ActionListener {
     boolean isCreated=false;
     JTable table;
     cloneCarInput cloneCarInput;
+    Driving cityDriving, countryDriving;
 
     /**
      * Costructor of the main frame
@@ -146,7 +147,7 @@ public class mainFrame extends JFrame implements ActionListener {
         }
         if (e.getSource() == helpItem) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
-                    "Home Work 3\n" + "GUI @ Threads");
+                    "Home Work 4\n" + "GUI @ Threads");
         }
         if(e.getSource() == blueVehicle && mainPanel!=null){
             mainPanel.setVehiclesColor("blue");
@@ -160,7 +161,17 @@ public class mainFrame extends JFrame implements ActionListener {
         if(e.getSource() == randomVehicle && mainPanel!=null){
             mainPanel.setVehiclesColor("random");
         }
-        if(e.getSource()==cityMap){
+        if(e.getSource()==cityMap && mainPanel!=null){
+            cityDriving = new Driving(this,true);
+            mainPanel.setDriving(cityDriving);
+            setMainPanel(mainPanel);
+            repaint();
+        }
+        if(e.getSource()==countryMap && mainPanel!=null){
+            countryDriving = new Driving(this,false);
+            mainPanel.setDriving(countryDriving);
+            setMainPanel(mainPanel);
+            repaint();
         }
         if(e.getSource()==clone && mainPanel!=null){
              cloneCarInput=new cloneCarInput(mainPanel.getDriving());
@@ -285,6 +296,7 @@ class panel extends JPanel {
      */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        driving = getDriving();
         Graphics2D g2d=(Graphics2D) g;
         g2d.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
