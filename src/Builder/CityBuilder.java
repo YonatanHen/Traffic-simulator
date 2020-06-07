@@ -1,6 +1,7 @@
 package Builder;
 
 import AbstractFactory.Factory;
+import AbstractFactory.fourWheelVehicle;
 import AbstractFactory.tenWheelVehicle;
 import AbstractFactory.twoWheelVehicle;
 import components.*;
@@ -37,10 +38,10 @@ public class CityBuilder implements mapBuilder, Utilities {
     @Override
     public void buildVehicles() {
         ArrayList<Vehicle> allowedVehicles=new ArrayList<>();
-        allowedVehicles.add(new Vehicle(((tenWheelVehicle) Factory.getFactory(2)).getVehicle("fast")));
-        allowedVehicles.add(new Vehicle(((tenWheelVehicle) Factory.getFactory(2)).getVehicle("slow")));
-        allowedVehicles.add(new Vehicle(((tenWheelVehicle)Factory.getFactory(4)).getVehicle("private")));
-        allowedVehicles.add(new Vehicle(((tenWheelVehicle)Factory.getFactory(4)).getVehicle("public")));
+        allowedVehicles.add(new Vehicle(((twoWheelVehicle) Factory.getFactory(2)).getVehicle("fast")));
+        allowedVehicles.add(new Vehicle(((twoWheelVehicle) Factory.getFactory(2)).getVehicle("slow")));
+        allowedVehicles.add(new Vehicle(((fourWheelVehicle)Factory.getFactory(4)).getVehicle("private")));
+        allowedVehicles.add(new Vehicle(((fourWheelVehicle)Factory.getFactory(4)).getVehicle("public")));
         allowedVehicles.add(new Vehicle(((tenWheelVehicle)Factory.getFactory(10)).getVehicle("tram")));
         ArrayList<Vehicle> vehicles=new ArrayList<>();
         for(int i=0;i<10;i++){
