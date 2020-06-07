@@ -145,7 +145,7 @@ public class Road implements RouteParts, Utilities {
 
     public void stayOnCurrentPart(Vehicle vehicle) {
         //- is still moving on Road from Junction 10 to Junction 5 (Lighted), length: 526, max speed 30, time to arrive: 13.0
-        vehicle.setStatus("- is still moving on " + toString() + ", " + "time to arrive: " + (calcEstimatedTime(vehicle)-vehicle.getTimeFromStartRoute()));
+        vehicle.setStatus("- is still moving on " + toString() + ", " + "time to arrive: " + Math.abs(calcEstimatedTime(vehicle)-vehicle.getTimeFromStartRoute()));
         System.out.println(vehicle.getStatus());
         vehicle.run();
     }

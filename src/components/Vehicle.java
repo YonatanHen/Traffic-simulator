@@ -189,13 +189,13 @@ public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
     @Override
     public void run() {
         if (!currentRoutePart.canLeave(this)) {
-            if (currentRoutePart instanceof Road) {
+            if (currentRoutePart instanceof Road && !(lastRoad.getEndJunction().getX()==X && lastRoad.getEndJunction().getY()==Y)) {
                 double A = timeOnCurrentPart * getLastRoad().getMaxSpeed();
                 double B = lastRoad.getLength() - A;
                 X = ((lastRoad.getStartJunction().getX() * B + lastRoad.getEndJunction().getX() * A) / (A + B));
                 Y = ((lastRoad.getStartJunction().getY() * B + lastRoad.getEndJunction().getY() * A) / (A + B));
             }
-            if (currentRoutePart instanceof Junction) {
+            else {
                 X = ((Junction) currentRoutePart).getX();
                 Y = ((Junction) currentRoutePart).getY();
             }
