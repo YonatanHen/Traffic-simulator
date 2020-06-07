@@ -198,6 +198,7 @@ public class Junction extends Point implements RouteParts {
      */
     public void stayOnCurrentPart(Vehicle vehicle){
         System.out.println(vehicle.getStatus());
+        vehicle.run();
     }
 
     @Override

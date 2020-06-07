@@ -4,6 +4,7 @@ import utilities.Utilities;
 import utilities.VehicleType;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.Semaphore;
 
 /**
  * Class represent Road on the map.
@@ -118,12 +119,12 @@ public class Road implements RouteParts, Utilities {
         vehicle.setCurrentRoutePart(this);
         vehicle.setLastRoad(this);
         addVehicleToWaitingVehicles(vehicle);
-        vehicle.setStatus("- is starting to move on " +  toString() + ", time to finish: "+ calcEstimatedTime(vehicle)) ;
+        vehicle.setStatus("- is starting to move on " + toString() + ", time to finish: " + calcEstimatedTime(vehicle));
         System.out.println(vehicle.getStatus());
     }
 
     /**
-     * Method "release" the car fron current road. upadte all relevant data fields.
+     * Method "release" the car fron current road. upadte all relevant data )fields.
      *
      * @param vehicle
      */

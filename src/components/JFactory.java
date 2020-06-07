@@ -14,7 +14,7 @@ public class JFactory{
 
     /**
      * return lighted junction or regular junction-depends on 'x' value-city/country
-     * for legal value,return null.
+     * for illegal value,return null.
      * @param x
      * @return instance of junction
      */
