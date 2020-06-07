@@ -5,10 +5,12 @@ import components.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class MapB implements mapPlan{
-    private ArrayList<Junction> junctions;
-    private ArrayList<Road> roads;
+public class MapB extends Map implements mapPlan{
     private ArrayList<Vehicle> vehicles;
+    public MapB() {
+        super();
+    }
+
     public void setJunctions(ArrayList<Junction> junctions){
         this.junctions=junctions;
     }
@@ -17,16 +19,6 @@ public class MapB implements mapPlan{
     }
     public void setVehicles(ArrayList<Vehicle> vehicles){
         this.vehicles=vehicles;
-    }
-
-    @Override
-    public ArrayList<Junction> getJuntions() {
-        return junctions;
-    }
-
-    @Override
-    public ArrayList<Road> getRoads() {
-        return roads;
     }
 
     @Override

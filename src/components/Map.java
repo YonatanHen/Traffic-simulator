@@ -19,10 +19,15 @@ import java.util.ArrayList;
  * @see Vehicle
  */
 public class Map implements Utilities{
-    private ArrayList<Junction> junctions;
-    private ArrayList<Road> roads;
-    private ArrayList<TrafficLights> lights;
+    protected ArrayList<Junction> junctions;
+    protected ArrayList<Road> roads;
+    protected ArrayList<TrafficLights> lights;
+    public Map(){
+        junctions=new ArrayList<>();
+        roads=new ArrayList<>();
+        lights=new ArrayList<>();
 
+    }
 
     /**
      * The constructor of the map.
