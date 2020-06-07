@@ -10,13 +10,7 @@ import java.util.Random;
  *  @see Junction
  *  @see LightedJunction 
  */
-public class JFactory extends Junction {
-    /**
-     * JFactory constructor
-     */
-    public JFactory(){
-        super();
-    }
+public class JFactory{
 
     /**
      * return lighted junction or regular junction-depends on 'x' value-city/country
