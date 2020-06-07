@@ -42,15 +42,20 @@ public class Moked {
     /**
      * Read from file
      */
-    public synchronized void confirm() {
+    public void confirm() {
         r.lock();
         try {
             for(Driver driver:drivers){
                 driver.receiveReport(fileName);
+                driver.readReport();
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally { r.unlock(); }
+        } finally {
+            r.unlock();
+            //When reports confirmed,states chenged to true.
+            state=true;
+        }
     }
 
     public String[] allKeys() {
@@ -69,8 +74,11 @@ public class Moked {
             fw.write("Report #"+(counter++)+"; Time from start route: "+vehicle.getTimeFromStartRoute()+ ", Vehicle ID: " +vehicle.getid()+".\n");
             fw.flush();
         }catch (IOException e){ System.out.println(e);}
-        finally { w.unlock();
-        state=false;}
+        finally {
+            w.unlock();
+            //When new reports added,state change to false
+            state=false;
+        }
     }
     public void clear() {
         w.lock();

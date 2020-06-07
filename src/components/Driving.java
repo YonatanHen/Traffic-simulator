@@ -128,11 +128,8 @@ public class Driving extends Thread implements Utilities, Timer {
         System.out.println("\n"+toString()+"\n");
         this.numOfTurns=numOfTurns;
         for (Timer t : allTimedElements) {
-            if (t instanceof Vehicle){
+            if (t instanceof Vehicle)
                 new Thread((Vehicle) t).start();
-                //Start driver thread
-                new Thread((Driver) ((Vehicle) t).getDriver()).start();
-            }
             if (t instanceof TrafficLights) new Thread((TrafficLights) t).start();
         }
         new Thread(this).start();
