@@ -1,5 +1,6 @@
 package AbstractFactory;
 
+import components.Vehicle;
 import utilities.VehicleType;
 
 abstract class vehicle {

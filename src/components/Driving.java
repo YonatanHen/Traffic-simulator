@@ -8,6 +8,7 @@ import utilities.Timer;
 import utilities.Utilities;
 import GUI.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -74,6 +75,7 @@ public class Driving extends Thread implements Utilities, Timer {
     public Driving(mainFrame GUIFrame, boolean flag) {
         super();
         if(flag) {
+            //TODO: Problem probably with the map creation, check how to create a map after the setters implemented.
             cityBuilder = new CityBuilder();
             cityBuilder.buildJunctions();
             cityBuilder.buildRoads();
@@ -82,8 +84,7 @@ public class Driving extends Thread implements Utilities, Timer {
             setVehicles(cityBuilder.getMap().getVehicles());
             drivingTime = 0;
             allTimedElements = new ArrayList<>();
-            for (int i = 0; i < cityBuilder.getMap().getVehicles().size(); i++)
-                allTimedElements.add(cityBuilder.getMap().getVehicles().get(i));
+            allTimedElements.addAll(cityBuilder.getMap().getVehicles());
             for (Junction j : cityBuilder.getMap().getJunctions()) {
                 allTimedElements.add(((LightedJunction) j).getLights());
             }
@@ -104,8 +105,7 @@ public class Driving extends Thread implements Utilities, Timer {
             setVehicles(countryBuilder.getMap().getVehicles());
             drivingTime = 0;
             allTimedElements = new ArrayList<>();
-            for (int i = 0; i < countryBuilder.getMap().getVehicles().size(); i++)
-                allTimedElements.add(countryBuilder.getMap().getVehicles().get(i));
+            allTimedElements.addAll(countryBuilder.getMap().getVehicles());
             mainFrame = GUIFrame;
         }
     }
@@ -159,7 +159,7 @@ public class Driving extends Thread implements Utilities, Timer {
     }
 
     public void setMap(Map map) {
-        this.map = map;
+        Driving.map = map;
     }
 
     public void setVehicles(ArrayList<Vehicle> vehicles) {

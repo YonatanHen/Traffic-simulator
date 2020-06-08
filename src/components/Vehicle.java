@@ -67,8 +67,7 @@ public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
         this.vehicleType=vt;
         timeFromStartRoute=0;
         timeOnCurrentPart=0;
-        Random r=new Random();
-        lastRoad=Driving.map.getRoads().get(r.nextInt(Driving.map.getRoads().size()));
+        lastRoad=Driving.map.getRoads().get(getRandomInt(0,Driving.map.getRoads().size()));
         lastRoad.addVehicleToWaitingVehicles(this);
         currentRoute=new Route(lastRoad,this);
         currentRoutePart=currentRoute.getRouteParts().get(0);
@@ -80,6 +79,7 @@ public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
         Y=lastRoad.getStartJunction().getY();
         //implement the big brother in each car (created only once)
         bigBrother =BigBrother.getInstance();
+        driver=new Driver(this);
     }
 
     //getters

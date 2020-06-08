@@ -32,7 +32,6 @@ public class CountryBuilder implements mapBuilder,Utilities{
     @Override
     public void buildJunctions() {
         ArrayList <Junction> junctions=new ArrayList<>();
-        String [] types=new String[]{Junction.class.getName(), LightedJunction.class.getName()};
         for(int i=0;i<6;i++){
             junctions.add(JFactory.getJunction("country"));
         }

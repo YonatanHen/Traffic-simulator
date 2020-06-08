@@ -33,11 +33,8 @@ public class CityBuilder implements mapBuilder, Utilities {
     @Override
     public void buildJunctions() {
         ArrayList <Junction> junctions=new ArrayList<>();
-        String [] types=new String[]{Junction.class.getName(), LightedJunction.class.getName()};
         for(int i=0;i<12;i++){
             junctions.add(JFactory.getJunction("city"));
-//            junctions.get(i).setObjectsCount(i);
-//            junctions.get(i).setJunctionName(Integer.toString(i+1));
         }
         map.setJunctions(junctions);
     }
