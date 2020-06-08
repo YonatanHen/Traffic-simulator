@@ -61,6 +61,10 @@ public class Junction extends Point implements RouteParts {
     }
     public void setJunctionName(final String name){junctionName=name;}
 
+    public void setObjectsCount(int objectsCount) {
+        Junction.objectsCount = objectsCount;
+    }
+
     /**
      * Add new entering road to array list
      * @param road

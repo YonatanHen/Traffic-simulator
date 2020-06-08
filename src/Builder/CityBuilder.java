@@ -12,6 +12,7 @@ import java.util.Random;
 
 public class CityBuilder implements mapBuilder, Utilities {
     private MapB map;
+    private Junction junction;
     public CityBuilder(){
         map = new MapB();
     }
@@ -35,11 +36,14 @@ public class CityBuilder implements mapBuilder, Utilities {
         String [] types=new String[]{Junction.class.getName(), LightedJunction.class.getName()};
         for(int i=0;i<12;i++){
             junctions.add(JFactory.getJunction("city"));
+//            junctions.get(i).setObjectsCount(i);
+//            junctions.get(i).setJunctionName(Integer.toString(i+1));
         }
         map.setJunctions(junctions);
     }
     @Override
     public void buildVehicles() {
+        int r;
         ArrayList<Vehicle> allowedVehicles=new ArrayList<>();
         allowedVehicles.add(new Vehicle(((twoWheelVehicle) Factory.getFactory(2)).getVehicle("fast")));
         allowedVehicles.add(new Vehicle(((twoWheelVehicle) Factory.getFactory(2)).getVehicle("slow")));

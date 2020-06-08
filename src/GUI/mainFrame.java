@@ -163,20 +163,18 @@ public class mainFrame extends JFrame implements ActionListener {
             mainPanel.setVehiclesColor("random");
         }
         if(e.getSource()==cityMap && mainPanel!=null){
+            remove(mainPanel);
             cityDriving = new Driving(this,true);
             //draw
-//            mainPanel.getDriving().setVehicles(null);
-//            mainPanel.setDriving(driving);
-//            repaint();
             mainPanel.setDriving(cityDriving);
-            //driving=mainPanel.getDriving();
             setMainPanel(mainPanel);
             repaint();
         }
         if(e.getSource()==countryMap && mainPanel!=null){
+            remove(mainPanel);
             countryDriving = new Driving(this,false);
-//            mainPanel.setDriving(countryDriving);
-//            setMainPanel(mainPanel);
+            mainPanel.setDriving(countryDriving);
+            setMainPanel(mainPanel);
             repaint();
         }
         if(e.getSource()==clone && mainPanel!=null){
