@@ -33,6 +33,7 @@ public class mainFrame extends JFrame implements ActionListener {
     JMenuItem exit, blueBackGround, noneBackground, blueVehicle, magentaVehicle, orangeVehicle, randomVehicle, helpItem, reportItem,clone, cityMap, countryMap;
     JPanel container;
     panel mainPanel;
+    panel White;
     JSplitPane splitPane;
     JButton[] btns;
     createRoadSystem createRoadSys;
@@ -163,14 +164,19 @@ public class mainFrame extends JFrame implements ActionListener {
         }
         if(e.getSource()==cityMap && mainPanel!=null){
             cityDriving = new Driving(this,true);
+            //draw
+//            mainPanel.getDriving().setVehicles(null);
+//            mainPanel.setDriving(driving);
+//            repaint();
             mainPanel.setDriving(cityDriving);
+            //driving=mainPanel.getDriving();
             setMainPanel(mainPanel);
             repaint();
         }
         if(e.getSource()==countryMap && mainPanel!=null){
             countryDriving = new Driving(this,false);
-            mainPanel.setDriving(countryDriving);
-            setMainPanel(mainPanel);
+//            mainPanel.setDriving(countryDriving);
+//            setMainPanel(mainPanel);
             repaint();
         }
         if(e.getSource()==clone && mainPanel!=null){
