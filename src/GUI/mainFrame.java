@@ -292,7 +292,7 @@ class panel extends JPanel {
      * @param mainFrame
      */
     public panel(mainFrame mainFrame) {
-        setSize(new Dimension(800, 600));
+        setSize(new Dimension(850, 670));
         setVisible(true);
         validate();
         this.mainFrame = mainFrame;
