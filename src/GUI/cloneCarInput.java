@@ -18,7 +18,6 @@ public class cloneCarInput extends JFrame implements ActionListener {
         driving=d;
         setSize(new Dimension(300,300));
         panel=new JPanel();
-       // panel.setLayout(new GridLayout(2,1));
         Border border = BorderFactory.createLineBorder(Color.BLUE, 1); //border of button
         panel.setLayout(new GridLayout(5, 1, 30, 30));
         panel.setBackground(Color.GRAY);
@@ -28,9 +27,7 @@ public class cloneCarInput extends JFrame implements ActionListener {
         panel1.add(new JLabel(spaces + "Choose number of car for clone" + spaces));
         panel1.setBorder(blackline);
         panel.add(panel1);
-        panel1.setBackground(Color.WHITE);
         text=new JTextField();
-        text.setPreferredSize(new Dimension(100,100));
         text.setText("0");
         btn=new JButton("Submit");
         btn.addActionListener(this);
