@@ -185,7 +185,8 @@ public class mainFrame extends JFrame implements ActionListener {
              repaint();
         }
         if(e.getSource()==reportItem && isCreated){
-            rf=new reportsFrame(driving.getMoked().readAllReport());
+            driving = mainPanel.getDriving();
+            rf = new reportsFrame(driving.getMoked().readAllReport());
             rf.pack();
             rf.setVisible(true);
         }
