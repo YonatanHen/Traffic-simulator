@@ -3,6 +3,7 @@ package GUI;
 import components.Driving;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,17 +15,29 @@ public class cloneCarInput extends JFrame implements ActionListener {
     JPanel panel;
     public cloneCarInput(Driving d){
         super("Clone a vehicle");
-        setSize(new Dimension(100,200));
-        panel=new JPanel();
-        panel.setLayout(new GridLayout(2,1));
-        setVisible(true);
         driving=d;
+        setSize(new Dimension(300,300));
+        panel=new JPanel();
+       // panel.setLayout(new GridLayout(2,1));
+        Border border = BorderFactory.createLineBorder(Color.BLUE, 1); //border of button
+        panel.setLayout(new GridLayout(5, 1, 30, 30));
+        panel.setBackground(Color.GRAY);
+        Border blackline = BorderFactory.createTitledBorder("");
+        JPanel panel1 = new JPanel();
+        String spaces = "                   ";
+        panel1.add(new JLabel(spaces + "Choose number of car for clone" + spaces));
+        panel1.setBorder(blackline);
+        panel.add(panel1);
+        panel1.setBackground(Color.WHITE);
         text=new JTextField();
+        text.setPreferredSize(new Dimension(100,100));
         text.setText("0");
         btn=new JButton("Submit");
         btn.addActionListener(this);
+        setVisible(true);
         panel.add(text);
         panel.add(btn);
+
         add(panel);
     }
 
