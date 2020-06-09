@@ -84,16 +84,13 @@ public class Driving extends Thread implements Utilities, Timer {
             setVehicles(cityBuilder.getMap().getVehicles());
             drivingTime = 0;
             allTimedElements = new ArrayList<>();
-            allTimedElements.addAll(cityBuilder.getMap().getVehicles());
+            for (int i = 0; i <vehicles.size() ; i++) {
+                vehicles.get(i).getVehicleType().setAverageSpeedReports(vehicles.get(i).getVehicleType().getAverageSpeed() * 10);
+                allTimedElements.add(vehicles.get(i));
+            }
             for (Junction j : cityBuilder.getMap().getJunctions()) {
                 allTimedElements.add(((LightedJunction) j).getLights());
             }
-            mainFrame = GUIFrame;
-        moked=vehicles.get(0).getBigBrother().getMoked();
-        //Add all drivers to moked drivers list
-        for(int i=0;i<vehicles.size();i++){
-            moked.addDriver(vehicles.get(i));
-        }
         }
         else{
             countryBuilder = new CountryBuilder();
@@ -104,8 +101,16 @@ public class Driving extends Thread implements Utilities, Timer {
             setVehicles(countryBuilder.getMap().getVehicles());
             drivingTime = 0;
             allTimedElements = new ArrayList<>();
-            allTimedElements.addAll(countryBuilder.getMap().getVehicles());
-            mainFrame = GUIFrame;
+            for (int i = 0; i <vehicles.size() ; i++) {
+                vehicles.get(i).getVehicleType().setAverageSpeedReports(vehicles.get(i).getVehicleType().getAverageSpeed() * 10);
+                allTimedElements.add(vehicles.get(i));
+            }
+        }
+        mainFrame = GUIFrame;
+        moked=vehicles.get(0).getBigBrother().getMoked();
+        //Add all drivers to moked drivers list
+        for(int i=0;i<vehicles.size();i++){
+            moked.addDriver(vehicles.get(i));
         }
     }
 
@@ -233,7 +238,6 @@ public class Driving extends Thread implements Utilities, Timer {
             drivingTime++;
             //suppose to update graphics every 100 millis
             mainFrame.run();
-            //moked.confirm();
         }
     }
 

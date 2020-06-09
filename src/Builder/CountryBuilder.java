@@ -6,12 +6,25 @@ import utilities.Utilities;
 
 import java.util.ArrayList;
 
-
+/**
+ * Country map builder- used to build map that represent a interurban area.
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
+ * @see MapB
+ */
 public class CountryBuilder implements mapBuilder,Utilities{
     private MapB map;
+
+    /**
+     * Country map constructor
+     */
     public CountryBuilder(){
         map = new MapB();
     }
+
+    /**
+     * Function build the roads of the map.
+     */
     @Override
     public void buildRoads() {
         ArrayList<Road> roads=new ArrayList<>();
@@ -30,6 +43,9 @@ public class CountryBuilder implements mapBuilder,Utilities{
         }
     }
 
+    /**
+     * Function build the junctions of the map.
+     */
     @Override
     public void buildJunctions() {
         ArrayList <Junction> junctions=new ArrayList<>();
@@ -39,6 +55,9 @@ public class CountryBuilder implements mapBuilder,Utilities{
         map.setJunctions(junctions);
     }
 
+    /**
+     * Function build the vehicles by unique types that match the interurban area.
+     */
     @Override
     public void buildVehicles() {
         ArrayList<Vehicle> allowedVehicles=new ArrayList<>();

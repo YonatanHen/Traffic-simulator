@@ -10,12 +10,21 @@ import utilities.Utilities;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * City map builder- used to build map that represent a city.
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
+ * @see MapB
+ */
 public class CityBuilder implements mapBuilder, Utilities {
     private MapB map;
-    private Junction junction;
     public CityBuilder(){
         map = new MapB();
     }
+
+    /**
+     * Function build the roads of the map.
+     */
     @Override
     public void buildRoads() {
         if(map.getJunctions()!= null) {
@@ -30,6 +39,9 @@ public class CityBuilder implements mapBuilder, Utilities {
 
     }
 
+    /**
+     * Function build the junctions of the map.
+     */
     @Override
     public void buildJunctions() {
         ArrayList <Junction> junctions=new ArrayList<>();
@@ -38,6 +50,9 @@ public class CityBuilder implements mapBuilder, Utilities {
         }
         map.setJunctions(junctions);
     }
+    /**
+     * Function build the vehicles by unique types that match the urban area.
+     */
     @Override
     public void buildVehicles() {
         ArrayList<Vehicle> allowedVehicles=new ArrayList<>();

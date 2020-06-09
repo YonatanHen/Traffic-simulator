@@ -1,6 +1,7 @@
 package GUI;
 
 import components.Driving;
+import components.Vehicle;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -8,6 +9,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/**
+ * GUI class. implement the UI of the clone car option.
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
+ */
 public class cloneCarInput extends JFrame implements ActionListener {
     JTextField text;
     JButton btn;

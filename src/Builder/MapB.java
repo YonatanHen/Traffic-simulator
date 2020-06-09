@@ -4,8 +4,21 @@ import components.*;
 
 import java.util.ArrayList;
 
+/**
+ * Used expansion of Map. part of Builder DP.
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
+ * @see Map
+ * @see Vehicle
+ * @see Road
+ * @see Junction
+ */
 public class MapB extends Map implements mapPlan{
     private ArrayList<Vehicle> vehicles;
+
+    /**
+     * MapB constructor
+     */
     public MapB() {
         super();
         vehicles=new ArrayList<>();

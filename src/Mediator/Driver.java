@@ -5,6 +5,14 @@ import components.Vehicle;
 import java.io.*;
 import java.util.ArrayList;
 
+
+/**
+ * Implementation of Mediator design pattern by Driver class, the driver serves as mediator between his vehicle and the moked.
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
+ * @see Vehicle
+ * @see components.Moked
+ */
 public class Driver {
     private Vehicle vehicle;
     boolean reportReaded=false;
@@ -24,9 +32,20 @@ public class Driver {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
+
+    /**
+     * Function receive directory of txt file and initialize buffered reader object.
+     * @param directory
+     * @throws FileNotFoundException
+     */
     public void receiveReport(String directory) throws FileNotFoundException {
         if(br==null) br=new BufferedReader(new FileReader(directory));
     }
+
+    /**
+     * function read the report.
+     * @throws IOException
+     */
     public void readReport() throws IOException {
         String line=br.readLine();
         while (line!=null){

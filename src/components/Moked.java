@@ -56,12 +56,6 @@ public class Moked {
         }
     }
 
-    public String[] allKeys() {
-        r.lock();
-        try { return (String[]) m.keySet().toArray(); }
-        finally { r.unlock(); }
-    }
-
     /**
      * Write data to a file
      * @param vehicle
@@ -77,11 +71,6 @@ public class Moked {
             //When new reports added,state change to false
             state=false;
         }
-    }
-    public void clear() {
-        w.lock();
-        try { m.clear(); }
-        finally { w.unlock(); }
     }
 
     /**
