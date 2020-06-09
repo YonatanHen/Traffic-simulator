@@ -89,6 +89,11 @@ public class Driving extends Thread implements Utilities, Timer {
                 allTimedElements.add(((LightedJunction) j).getLights());
             }
             mainFrame = GUIFrame;
+        moked=vehicles.get(0).getBigBrother().getMoked();
+        //Add all drivers to moked drivers list
+        for(int i=0;i<vehicles.size();i++){
+            moked.addDriver(vehicles.get(i));
+        }
         }
         else{
             countryBuilder = new CountryBuilder();
@@ -120,7 +125,7 @@ public class Driving extends Thread implements Utilities, Timer {
         return drivingTime;
     }
 
-    public static Map getMap() {
+    public Map getMap() {
         return map;
     }
 

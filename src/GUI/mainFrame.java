@@ -164,7 +164,6 @@ public class mainFrame extends JFrame implements ActionListener {
         }
         if(e.getSource()==cityMap){
             cityDriving = new Driving(this,true);
-            //draw
             mainPanel=new panel(this);
             mainPanel.setDriving(cityDriving);
             setMainPanel(mainPanel);

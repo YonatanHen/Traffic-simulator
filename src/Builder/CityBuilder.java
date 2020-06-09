@@ -40,7 +40,6 @@ public class CityBuilder implements mapBuilder, Utilities {
     }
     @Override
     public void buildVehicles() {
-        int r;
         ArrayList<Vehicle> allowedVehicles=new ArrayList<>();
         allowedVehicles.add(new Vehicle(((twoWheelVehicle) Factory.getFactory(2)).getVehicle("fast")));
         allowedVehicles.add(new Vehicle(((twoWheelVehicle) Factory.getFactory(2)).getVehicle("slow")));
