@@ -2,14 +2,13 @@ package Builder;
 
 import components.*;
 
-import javax.crypto.AEADBadTagException;
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class MapB extends Map implements mapPlan{
     private ArrayList<Vehicle> vehicles;
     public MapB() {
         super();
+        vehicles=new ArrayList<>();
     }
 
     public void setJunctions(ArrayList<Junction> junctions){
@@ -22,7 +21,13 @@ public class MapB extends Map implements mapPlan{
     }
     public void setVehicles(ArrayList<Vehicle> vehicles){
         this.vehicles=new ArrayList<>();
+        vehicles.get(0).setObjectCount(0);
         this.vehicles.addAll(vehicles);
+    }
+
+    @Override
+    public ArrayList<Road> getRoads() {
+        return super.getRoads();
     }
 
     @Override

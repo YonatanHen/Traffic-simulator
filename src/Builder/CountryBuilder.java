@@ -3,10 +3,9 @@ package Builder;
 import AbstractFactory.*;
 import components.*;
 import utilities.Utilities;
-import utilities.VehicleType;
 
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class CountryBuilder implements mapBuilder,Utilities{
     private MapB map;
@@ -15,17 +14,19 @@ public class CountryBuilder implements mapBuilder,Utilities{
     }
     @Override
     public void buildRoads() {
+        ArrayList<Road> roads=new ArrayList<>();
         if (map.getJunctions() != null) {
             for (int i = 0; i < map.getJunctions().size(); i++)
                 for (int j = 0; j < map.getJunctions().size(); j++) {
                     //Add new roads only if junctions aren't the sane and random value equals 1 (in that way not all of the junctions will connect)
                     if (i != j && getRandomInt(0, 2) == 1) {
-                        map.getRoads().add(new Road(map.getJunctions().get(i), map.getJunctions().get(j)));
+                        roads.add(new Road(map.getJunctions().get(i), map.getJunctions().get(j)));
                         if (map.getJunctions().get(j) instanceof LightedJunction) {
-                            ((LightedJunction) map.getJunctions().get(j)).getLights().getRoads().add(map.getRoads().get(map.getRoads().size() - 1));
+                            ((LightedJunction) map.getJunctions().get(j)).getLights().getRoads().add(roads.get(roads.size() - 1));
                         }
                     }
                 }
+            map.setRoads(roads);
         }
     }
 

@@ -79,8 +79,8 @@ public class Driving extends Thread implements Utilities, Timer {
             cityBuilder = new CityBuilder();
             cityBuilder.buildJunctions();
             cityBuilder.buildRoads();
-            cityBuilder.buildVehicles();
             setMap(cityBuilder.getMap());
+            cityBuilder.buildVehicles();
             setVehicles(cityBuilder.getMap().getVehicles());
             drivingTime = 0;
             allTimedElements = new ArrayList<>();
@@ -89,19 +89,13 @@ public class Driving extends Thread implements Utilities, Timer {
                 allTimedElements.add(((LightedJunction) j).getLights());
             }
             mainFrame = GUIFrame;
-
-//        moked=vehicles.get(0).getBigBrother().getMoked();
-//        //Add all drivers to moked drivers list
-//        for(int i=0;i<vehicles.size();i++){
-//            moked.addDriver(vehicles.get(i));
-//        }
         }
         else{
             countryBuilder = new CountryBuilder();
             countryBuilder.buildJunctions();
             countryBuilder.buildRoads();
-            countryBuilder.buildVehicles();
             setMap(countryBuilder.getMap());
+            countryBuilder.buildVehicles();
             setVehicles(countryBuilder.getMap().getVehicles());
             drivingTime = 0;
             allTimedElements = new ArrayList<>();
@@ -126,7 +120,7 @@ public class Driving extends Thread implements Utilities, Timer {
         return drivingTime;
     }
 
-    public Map getMap() {
+    public static Map getMap() {
         return map;
     }
 
