@@ -1,7 +1,9 @@
 package components;
 
 import Mediator.Driver;
-
+import state.NotReadedState;
+import state.ReadedState;
+import state.ReportReadedContext;
 import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.ArrayList;
@@ -25,10 +27,14 @@ public class Moked {
     private FileReader fr;
     private FileWriter fw;
     private static int counter=0;
-    private static boolean state=true; //state dp
+    private ReportReadedContext ctx;
+    private static boolean state; //state dp
     String fileName="report.txt";
     private ArrayList<Driver> drivers;
     public Moked(){
+        ctx=new ReportReadedContext();
+        ctx.setState(new ReadedState());
+        state=ctx.getState().isReaded();
         file=new File(fileName);
         try {
             fr=new FileReader(file);
@@ -52,7 +58,8 @@ public class Moked {
         } finally {
             r.unlock();
             //When reports confirmed,states chenged to true.
-            state=true;
+            ctx.setState(new ReadedState());
+            state=ctx.getState().isReaded();
         }
     }
 
@@ -69,7 +76,8 @@ public class Moked {
         finally {
             w.unlock();
             //When new reports added,state change to false
-            state=false;
+            ctx.setState(new NotReadedState());
+            state=ctx.getState().isReaded();
         }
     }
 

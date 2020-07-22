@@ -19,7 +19,7 @@ import java.util.Random;
  * @see RouteParts
  * @see Road
  */
-public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
+public class Vehicle implements Runnable,Utilities,Timer,Cloneable{
     private int id;
     private VehicleType vehicleType;
     private Route currentRoute;
@@ -61,27 +61,6 @@ public class Vehicle extends Thread implements Utilities,Timer,Cloneable{
         //Create mediator
         driver=new Driver(this);
     }
-
-  /*  public Vehicle(VehicleType vt, ArrayList<Road> roads){
-        super();
-        id=objectCount;
-        this.vehicleType=vt;
-        timeFromStartRoute=0;
-        timeOnCurrentPart=0;
-        lastRoad=roads.get(getRandomInt(0,roads.size()));
-        lastRoad.addVehicleToWaitingVehicles(this);
-        currentRoute=new Route(lastRoad,this);
-        currentRoutePart=currentRoute.getRouteParts().get(0);
-        successMessage(toString());
-        currentRoute.checkIn(this);
-        currentRoutePart.checkIn(this);
-        objectCount++;
-        X=lastRoad.getStartJunction().getX();
-        Y=lastRoad.getStartJunction().getY();
-        //implement the big brother in each car (created only once)
-        bigBrother =BigBrother.getInstance();
-        driver=new Driver(this);
-    }*/
 
     public Vehicle(VehicleType vt){
         super();
