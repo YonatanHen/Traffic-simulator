@@ -3,12 +3,10 @@ package components;
 import Builder.CityBuilder;
 import Builder.CountryBuilder;
 import Builder.MapB;
-import Mediator.Driver;
 import utilities.Timer;
 import utilities.Utilities;
 import GUI.*;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -75,7 +73,6 @@ public class Driving extends Thread implements Utilities, Timer {
     public Driving(mainFrame GUIFrame, boolean flag) {
         super();
         if(flag) {
-            //TODO: Problem probably with the map creation, check how to create a map after the setters implemented.
             cityBuilder = new CityBuilder();
             cityBuilder.buildJunctions();
             cityBuilder.buildRoads();
@@ -152,16 +149,6 @@ public class Driving extends Thread implements Utilities, Timer {
     }
 
     //setters
-
-
-    public void setAllTimedElements(ArrayList<Timer> allTimedElements) {
-        this.allTimedElements = allTimedElements;
-    }
-
-    public void setDrivingTime(final int drivingTime) {
-        this.drivingTime = drivingTime;
-    }
-
     public void setMap(Map map) {
         Driving.map = map;
     }
@@ -175,8 +162,7 @@ public class Driving extends Thread implements Utilities, Timer {
      *
      * @param numOfTurns
      */
-
-    public synchronized void drive(int numOfTurns){
+    public void drive(int numOfTurns){
         System.out.println("\n"+toString()+"\n");
         this.numOfTurns=numOfTurns;
         for (Timer t : allTimedElements) {
@@ -244,6 +230,7 @@ public class Driving extends Thread implements Utilities, Timer {
     public synchronized void Stop(){
         isOnStop = true;
     }
+
     public synchronized void Continue() {
         isOnStop = false;
         notifyAll();

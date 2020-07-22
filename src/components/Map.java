@@ -128,6 +128,7 @@ public class Map implements Utilities{
     public String toString(){
         return "GAME MAP";
     }
+
     @Override
     public boolean equals(Object o){
         if( o instanceof Map){

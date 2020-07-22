@@ -7,7 +7,6 @@ package components;
  * @author Rotem Librati-307903732
  */
 public class BigBrother {
-  //  private Vehicle vehicle;
     private static volatile BigBrother instance=null;
     private Moked moked;
     private BigBrother(){

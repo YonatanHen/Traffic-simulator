@@ -145,7 +145,6 @@ public class Road implements RouteParts, Utilities {
     }
 
     public void stayOnCurrentPart(Vehicle vehicle) {
-        //- is still moving on Road from Junction 10 to Junction 5 (Lighted), length: 526, max speed 30, time to arrive: 13.0
         vehicle.setStatus("- is still moving on " + toString() + ", " + "time to arrive: " + Math.abs(calcEstimatedTime(vehicle)-vehicle.getTimeFromStartRoute()));
         System.out.println(vehicle.getStatus());
         vehicle.run();
@@ -165,9 +164,6 @@ public class Road implements RouteParts, Utilities {
     @Override
     public String toString(){
         //Assume that implementation is correct,maybe need to fix this later.
-         /*
-        - is starting to move on Road from Junction 4 (Lighted) to Junction 3 (Lighted), length: 447, max speed 60, time to finish: 11.0.
-         */
         return "Road from "+ startJunction + " to " + endJunction +", length: "+ (int)calcLength()+", max speed "+ maxSpeed;
     }
 
