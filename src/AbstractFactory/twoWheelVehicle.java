@@ -5,8 +5,8 @@ import utilities.VehicleType;
 
 /**
  * Class represent a vehicle with 2 wheels, part of Abstract factory design pattern.
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  * @see components.Vehicle
  * @see VehicleType
  */

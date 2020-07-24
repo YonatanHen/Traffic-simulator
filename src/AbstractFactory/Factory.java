@@ -3,8 +3,8 @@ package AbstractFactory;
 
 /**
  * Class Factory part of abstract factory implementation.
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  */
 public class Factory {
 

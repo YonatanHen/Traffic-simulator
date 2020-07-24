@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
 
 /**
  * GUI class. implement the UI of the clone car option.
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  */
 public class cloneCarInput extends JFrame implements ActionListener {
     JTextField text;

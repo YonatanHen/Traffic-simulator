@@ -7,8 +7,8 @@ import java.util.ArrayList;
 /**
  * Class represent TrafficLights in the junction.
  *
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  * @see Road
  */
 public abstract class TrafficLights extends Thread implements Timer, Utilities {

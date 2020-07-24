@@ -9,8 +9,8 @@ import java.util.concurrent.Semaphore;
 /**
  * Class represent Road on the map.
  *
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen-
+ * @author Rotem Librati
  * @see Junction
  * @see RouteParts
  * @see Utilities

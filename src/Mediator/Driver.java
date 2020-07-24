@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 /**
  * Implementation of Mediator design pattern by Driver class, the driver serves as mediator between his vehicle and the moked.
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  * @see Vehicle
  * @see components.Moked
  */

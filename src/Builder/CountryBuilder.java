@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 /**
  * Country map builder- used to build map that represent a interurban area.
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  * @see MapB
  */
 public class CountryBuilder implements mapBuilder,Utilities{

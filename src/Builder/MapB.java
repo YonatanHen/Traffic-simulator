@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 /**
  * Used expansion of Map. part of Builder DP.
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  * @see Map
  * @see Vehicle
  * @see Road

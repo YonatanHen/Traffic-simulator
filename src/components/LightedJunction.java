@@ -5,8 +5,8 @@ import java.util.Random;
 /**
  * Class represent a junction with traffic lights.
  *
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  * @see Junction
  * @see TrafficLights
  */

@@ -4,8 +4,8 @@ import components.Moked;
 
 /**
  * Listener class (Listener design pattern implementation) to exit button.
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  */
 public class EscEventHandler implements MyListener{
     public EscEventHandler(){}

@@ -12,8 +12,8 @@ import java.util.Random;
 /**
  * Class represent Vehicle on the map.
  *
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  * @see VehicleType
  * @see Route
  * @see RouteParts

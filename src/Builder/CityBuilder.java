@@ -12,8 +12,8 @@ import java.util.Random;
 
 /**
  * City map builder- used to build map that represent a city.
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  * @see MapB
  */
 public class CityBuilder implements mapBuilder, Utilities {

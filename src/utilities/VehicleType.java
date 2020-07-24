@@ -4,8 +4,8 @@ package utilities;
 import java.util.Random;
 
 /**
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  */
 public enum VehicleType {
     car(90), bus(60), bicycle(40), motorcycle(120), truck(80),

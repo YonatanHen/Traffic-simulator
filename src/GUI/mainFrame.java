@@ -23,8 +23,8 @@ import static java.lang.Thread.*;
 
 /**
  * implementation of main frame
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  * @see panel
  */
 public class mainFrame extends JFrame implements ActionListener {

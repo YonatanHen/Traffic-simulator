@@ -6,8 +6,8 @@ import utilities.VehicleType;
 
 /**
  * Vehicle abstract class. part of the design pattern implementation.
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  */
 abstract class vehicle {
     VehicleType type=null;

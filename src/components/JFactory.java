@@ -5,8 +5,8 @@ import java.util.Random;
 
 /**
  * Factory method class to Junction class.
- *  @author Yehonatan Hen-207630112
- *  @author Rotem Librati-307903732
+ *  @author Yehonatan Hen
+ *  @author Rotem Librati
  *  @see Junction
  *  @see LightedJunction 
  */

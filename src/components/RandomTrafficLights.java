@@ -5,8 +5,8 @@ import java.util.Random;
 
 /**
  * Class represent RandomTrafficLight in the junction.
- * @author Yehonatan Hen-207630112
- * @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ * @author Rotem Librati
  * @see TrafficLights
  */
 public class RandomTrafficLights extends TrafficLights {

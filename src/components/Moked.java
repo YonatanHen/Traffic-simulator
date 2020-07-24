@@ -15,8 +15,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Moked class- ReadWriteLock design pattern
- * @author Yehonatan Hen-207630112
- *  @author Rotem Librati-307903732
+ * @author Yehonatan Hen
+ *  @author Rotem Librati
  */
 public class Moked {
     private final Map<String, Data> m = new TreeMap<String, Data>();
