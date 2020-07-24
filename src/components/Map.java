@@ -4,12 +4,13 @@ import utilities.Utilities;
 import utilities.VehicleType;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class make the map
  *
- * @author Yehonatan Hen
- * @author Rotem Librati
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
  * @see VehicleType
  * @see Route
  * @see RouteParts
@@ -18,16 +19,11 @@ import java.util.ArrayList;
  * @see TrafficLights
  * @see Vehicle
  */
-public class Map implements Utilities{
-    protected ArrayList<Junction> junctions;
-    protected ArrayList<Road> roads;
-    protected ArrayList<TrafficLights> lights;
-    public Map(){
-        junctions=new ArrayList<>();
-        roads=new ArrayList<>();
-        lights=new ArrayList<>();
+public class Map implements Utilities {
+    private ArrayList<Junction> junctions;
+    private ArrayList<Road> roads;
+    private ArrayList<TrafficLights> lights;
 
-    }
 
     /**
      * The constructor of the map.
@@ -87,16 +83,15 @@ public class Map implements Utilities{
            if (r.getEndJunction() instanceof LightedJunction){
                //Turn lights on when traffic lights on lightedJunction aren't lightening/lightening yet and random value is true.
                if(!((LightedJunction)r.getEndJunction()).getLights().getTrafficLightsOn() &&
-                       !lightedJuncs.contains(((LightedJunction)r.getEndJunction()).getLights().getid()) &&getRandomBoolean()){
+                       !lightedJuncs.contains(((LightedJunction)r.getEndJunction()).getLights().getId()) &&getRandomBoolean()){
                    System.out.println(((LightedJunction)r.getEndJunction()).getLights()+
                            " turned ON, delay time: "+((LightedJunction)r.getEndJunction()).getLights().getDelay());
                    ((LightedJunction) r.getEndJunction()).getLights().changeLights();
-                   lightedJuncs.add(((LightedJunction)r.getEndJunction()).getLights().getid());
+                   lightedJuncs.add(((LightedJunction)r.getEndJunction()).getLights().getId());
                }
            }
        }
     }
-
 
     //getters
     public ArrayList<Junction> getJunctions() {
@@ -124,12 +119,10 @@ public class Map implements Utilities{
         this.roads = roads;
     }
 
-    @Override
     public String toString(){
         return "GAME MAP";
     }
 
-    @Override
     public boolean equals(Object o){
         if( o instanceof Map){
             return ((Map) o).junctions.equals(junctions) &&

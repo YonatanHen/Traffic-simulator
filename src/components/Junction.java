@@ -7,8 +7,8 @@ import java.util.ArrayList;
 /**
  * Class represent Junction on the map.
  *
- * @author Yehonatan Hen
- * @author Rotem Librati
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
  * @see Road
  */
 public class Junction extends Point implements RouteParts {
@@ -21,7 +21,7 @@ public class Junction extends Point implements RouteParts {
     /**
      * Randomal constructor for Junction
      */
-    public Junction(){
+    Junction(){
         super(); //Call the Point default constructor
         junctionName=String.valueOf(objectsCount);
         objectsCount++;//Advance the counter after using his value
@@ -59,11 +59,7 @@ public class Junction extends Point implements RouteParts {
         exitingRoads.clear();
         exitingRoads.addAll(er);
     }
-    public void setJunctionName(final String name){junctionName=name;}
-
-    public void setObjectsCount(int objectsCount) {
-        Junction.objectsCount = objectsCount;
-    }
+    public void setJunctionName(String name){junctionName=name;}
 
     /**
      * Add new entering road to array list
@@ -120,23 +116,27 @@ public class Junction extends Point implements RouteParts {
      * @param vehicle
      * @return true when vehicle is first in the entering roads list,else false.
      */
-    public boolean checkAvailability(Vehicle vehicle) {
-        if(vehicle.getLastRoad().getWaitingVehicles().size()==0) return true;
-        else if (!vehicle.getLastRoad().getWaitingVehicles().get(0).equals(vehicle)) {
-                vehicle.setStatus("- is waiting at " + vehicle.getLastRoad().getStartJunction() + "- there are previous cars on the same road.");
-                return false;
-            }
-        else {
-                for (Road r : exitingRoads) {
-                    for (int i = 0; i < r.getVehicleTypes().length; i++) {
-                        if (r.getVehicleTypes()[i].equals(vehicle.getVehicleType())) return true;
-                    }
-                }
-            }
+    public boolean checkAvailability(Vehicle vehicle){
+     if(exitingRoads.size()>0 && vehicle.getCurrentRoutePart().findNextPart(vehicle)!=null) {
+         if (((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().size()>0) {
+             if(((Road) vehicle.getCurrentRoutePart().findNextPart(vehicle)).getWaitingVehicles().indexOf(vehicle)==0)
+             return true;
+             else{
+                 vehicle.setStatus("- is waiting at "+ toString()+"- there are previous cars on the same road.");
+                 return false;
+             }
+         }
+
+     }
         return false;
+
+//        if(vehicle.getLastRoad().getStartJunction().equals(vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().size()-1)))
+//            return false;
+//        if(vehicle.getCurrentRoutePart())
+//    }
     }
 
-    /**
+    /**}
      * Method writes the car in the junction and update all relevant data fields.
      * Finally,prints a message.
      *
@@ -145,17 +145,13 @@ public class Junction extends Point implements RouteParts {
     public void checkIn(Vehicle vehicle) {
         //The last road suppose to be the road from the last end junction and to the current junction
         for(Road r:enteringRoads){
-            if (r.getEndJunction().equals(this) && r.getEndJunction().equals(vehicle.getLastRoad().getEndJunction())){
+            if (r.getEndJunction().equals(this) && r.getStartJunction().equals(vehicle.getLastRoad().getEndJunction())){
                 vehicle.setLastRoad(r);
             }
-            //Report to big brother when reach the junction
-            vehicle.getBigBrother().getMoked().confirm(vehicle);
         }
         vehicle.setCurrentRoutePart(this);
         vehicle.setStatus("- has arrived to "+ toString());
         System.out.println(vehicle.getStatus());
-        //When arrived to junction.check if speed is legal.
-        vehicle.getBigBrother().isSpeedLegal(vehicle);
     }
 
     /**
@@ -168,7 +164,6 @@ public class Junction extends Point implements RouteParts {
         if(canLeave(vehicle)) {
             vehicle.setStatus("- has left " + toString());
             System.out.println(vehicle.getStatus());
-            vehicle.getLastRoad().getWaitingVehicles().remove(vehicle);
         }
     }
 
@@ -204,15 +199,12 @@ public class Junction extends Point implements RouteParts {
      */
     public void stayOnCurrentPart(Vehicle vehicle){
         System.out.println(vehicle.getStatus());
-        new Thread(vehicle).start();
     }
 
-    @Override
     public String toString(){
         return  "Junction " + junctionName;
     }
 
-    @Override
     public boolean equals(Object o){
         if(o instanceof Junction){
             return ((Junction) o).exitingRoads==exitingRoads &&

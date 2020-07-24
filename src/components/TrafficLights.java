@@ -7,11 +7,11 @@ import java.util.ArrayList;
 /**
  * Class represent TrafficLights in the junction.
  *
- * @author Yehonatan Hen
- * @author Rotem Librati
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
  * @see Road
  */
-public abstract class TrafficLights extends Thread implements Timer, Utilities {
+public abstract class TrafficLights implements Timer, Utilities {
     private static int objectCount=0; //count the objects
     private int delay=0; //Delay time (in pulses) that passes between each traffic light switch.
     // The delay time is 0 when the traffic light is off and momentarily
@@ -30,7 +30,6 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
      */
 
     TrafficLights(ArrayList<Road> roads){
-        super();
         this.roads = new ArrayList<>();
         this.roads.addAll(roads);
         //Initialize green light index
@@ -53,40 +52,33 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
     /**
      * function that change next junction to green and make sure that other junction with red light
      */
-    public synchronized void changeLights() {
-        for (int i = 0; i < roads.size(); i++) {
-            roads.get(i).setGreenlight(false);
-        }
+    public void changeLights() {
         changeIndex();
-        roads.get(getGreenLightIndex()).setGreenlight(true);
-        trafficLightsOn = true;
-        System.out.println("-" + roads.get(getGreenLightIndex()) + ": green light.");
-            //Change delay time-happens when new light turn on.
-            delay = (getRandomInt(minDelay, maxDelay + 1));
+        for (int i = 0; i < roads.size(); i++) {
+            if (i == greenLightIndex) {
+                roads.get(i).setGreenlight(true);
+                System.out.println("-" + roads.get(i) + ": green light.");
+            } else roads.get(i).setGreenlight(false);
+        }
+        //Change delay time-happens when new light turn on.
+        delay = getRandomInt(minDelay, maxDelay + 1);
+        //Initialize the working time of the new light who turns on to 0.
+        workingTime = 0;
     }
 
     /**
      * Method check if it's time to change lights by advancing the index of light working time.
      */
-    public synchronized void incrementDrivingTime(){
+    public void incrementDrivingTime(){
         workingTime++;
-        if(workingTime>=delay){
-            try{
-                sleep(delay*100);
-            }catch (InterruptedException er){}
-            changeLights();
-            workingTime = 0;
-        }
-        else {
-            trafficLightsOn=false;
-            System.out.println(this+ "\n- on delay");
-        }
+        if(workingTime>=delay) changeLights();
+        else System.out.println(this+ "\n- on delay");
     }
     //setters
-    public void setDelay(final int delay) { this.delay = delay; }
-    public void setGreenLightIndex(final int greenLightIndex) { this.greenLightIndex = greenLightIndex; }
-    public void setId(final int id) { this.id = id; }
-    public void setTrafficLightsOn(final boolean trafficLightsOn) { this.trafficLightsOn = trafficLightsOn; }
+    public void setDelay(int delay) { this.delay = delay; }
+    public void setGreenLightIndex(int greenLightIndex) { this.greenLightIndex = greenLightIndex; }
+    public void setId(int id) { this.id = id; }
+    public void setTrafficLightsOn(boolean trafficLightsOn) { this.trafficLightsOn = trafficLightsOn; }
     public void setRoads(ArrayList<Road> roads) {
         this.roads.clear();
         this.roads.addAll(roads);
@@ -96,7 +88,7 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
     //getters
     public boolean getTrafficLightsOn(){return trafficLightsOn;}
     public int getDelay() { return delay; }
-    public int getid() { return id; }
+    public int getId() { return id; }
     public static int getMaxDelay() { return maxDelay; }
     public static int getMinDelay() { return minDelay; }
     public ArrayList<Road> getRoads() { return roads; }
@@ -104,12 +96,11 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
     public int getObjectCount() { return objectCount; }
     public int getWorkingTime() { return workingTime; }
 
-    @Override
+
     public String toString() {
         return "traffic lights "+ id;
     }
 
-    @Override
     public boolean equals(Object o){
         if(o instanceof TrafficLights){
             return ((TrafficLights) o).delay == delay &&
@@ -120,13 +111,5 @@ public abstract class TrafficLights extends Thread implements Timer, Utilities {
                     ((TrafficLights) o).workingTime == workingTime;
         }
         return false;
-    }
-
-    /**
-     * run invermentDrivingTime function
-     */
-    @Override
-    public void run() {
-        incrementDrivingTime();
     }
 }

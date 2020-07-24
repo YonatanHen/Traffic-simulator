@@ -5,8 +5,8 @@ import java.util.Random;
 
 /**
  * Class represent RandomTrafficLight in the junction.
- * @author Yehonatan Hen
- * @author Rotem Librati
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
  * @see TrafficLights
  */
 public class RandomTrafficLights extends TrafficLights {
@@ -23,11 +23,10 @@ public class RandomTrafficLights extends TrafficLights {
      * NOTE:This method override abstract trafficLight method.
      */
     public void changeIndex(){
-        int index=getRandomInt(0,getRoads().size()-1);
-        setGreenLightIndex(index);
+        setGreenLightIndex(getRandomInt(0,getRoads().size()));
     }
 
-    @Override
+
     public String toString() {
         return "Random " + super.toString();
     }

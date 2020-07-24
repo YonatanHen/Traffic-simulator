@@ -5,8 +5,8 @@ import java.util.Random;
 /**
  * Class represent a junction with traffic lights.
  *
- * @author Yehonatan Hen
- * @author Rotem Librati
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
  * @see Junction
  * @see TrafficLights
  */
@@ -63,7 +63,6 @@ public class LightedJunction extends Junction{
      * @param obj
      * @return delay time in this type of junction.
      */
-    @Override
     public double calcEstimatedTime(Object obj){
         int sum=1;
         if(obj instanceof LightedJunction){
@@ -78,20 +77,20 @@ public class LightedJunction extends Junction{
      * @param vehicle
      * @return true if the car can leave the junction else false.
      */
-    @Override
     public boolean canLeave(Vehicle vehicle){
-        if(lights.getTrafficLightsOn()) return true;
+        if(lights.getTrafficLightsOn())
+            return true;
         else {
             vehicle.setStatus("- is waiting at " + this + " for green light.");
             return false;
         }
     }
 
-    @Override
+
     public String toString() {
         return super.toString()+" (Lighted)";
     }
-    @Override
+
     public boolean equals(Object o){
         if( o instanceof LightedJunction){
             return super.equals(o) &&

@@ -1,13 +1,12 @@
 package components;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Class represent Route on the map.
  *
- * @author Yehonatan Hen
- * @author Rotem Librati
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
  * @see RouteParts
  * @see Vehicle
  */
@@ -72,7 +71,7 @@ public class Route implements RouteParts {
      * @return true if yes .
      */
     public boolean canLeave(Vehicle vehicle){
-        return RouteParts.get(RouteParts.size()-1).equals(vehicle.getCurrentRoutePart());
+        return RouteParts.get(RouteParts.size()-1).equals(vehicle.getCurrentRoute());
     }
 
     /**
@@ -80,12 +79,11 @@ public class Route implements RouteParts {
      * updates the relevant fields and prints an appropriate message.
      * @param vehicle
      */
-    public void checkIn(Vehicle vehicle){
+    public void checkIn(Vehicle vehicle){ //TODO: check this function, if not clearly need to ask Sofi.
         // put the vehicle in the route
         vehicle.setCurrentRoute(this);
         vehicle.setCurrentRoutePart(RouteParts.get(0));
         vehicle.setStatus("- is starting a new "+ this);
-        System.out.println(vehicle.getStatus());
     }
 
     /**
@@ -95,7 +93,7 @@ public class Route implements RouteParts {
      */
     public void checkOut(Vehicle vehicle){
         if(canLeave(vehicle)) {//check if vehicle arrived to last route
-            vehicle.setStatus("- has finished " + this + " Time spent on the route: " + vehicle.getTimeFromStartRoute());
+            vehicle.setStatus(" has finished " + this);
             System.out.println(vehicle.getStatus());
         }
         else
@@ -113,30 +111,22 @@ public class Route implements RouteParts {
      * @return next route part
      */
     public RouteParts findNextPart(Vehicle vehicle){
-        if (canLeave(vehicle)) {
-            for (Road r : ((Junction) vehicle.getCurrentRoutePart()).getExitingRoads()) {
-                for (int i = 0; i < r.getVehicleTypes().length; i++) {
-                    if (r.getVehicleTypes()[i].equals(vehicle.getVehicleType())) {
-                        Road lastRoad = vehicle.getLastRoad();
-                        vehicle.setCurrentRoute(new Route(lastRoad, vehicle));
-                        return vehicle.getCurrentRoutePart();
-                    }
-                }
-            }
-            vehicle.setCurrentRoute(new Route(vehicle.getCurrentRoute().getRouteParts().get(0),vehicle));
+        if(vehicle.getCurrentRoutePart().equals(vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().size()-1))) {
+            vehicle.setCurrentRoute(new Route(vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().size()-1), vehicle));
             return vehicle.getCurrentRoutePart();
         }
-        else return vehicle.getCurrentRoutePart().findNextPart(vehicle);
+        else
+            return vehicle.getCurrentRoute().getRouteParts().get(vehicle.getCurrentRoute().getRouteParts().indexOf(vehicle.getCurrentRoutePart())+1);
     }
 
-     /** print a message that the vehicle continue in current route.
+    /**
+     * print a message that the vehicle continue in current route.
      * @param vehicle
      */
     public void stayOnCurrentPart(Vehicle vehicle){
-       vehicle.getCurrentRoutePart().stayOnCurrentPart(vehicle);
+       vehicle.getLastRoad().stayOnCurrentPart(vehicle);
     }
 
-    @Override
     public boolean equals(Object other){
         if(other instanceof Route){
             return RouteParts.equals(((Route)other).RouteParts)&&
@@ -144,23 +134,13 @@ public class Route implements RouteParts {
         }
         return false;
     }
-
-    @Override
     public String toString(){
-        //Search for the road with max speed and save the max speed value with end junction value.
-        int maxSpeed=0;
-        Junction endJunc=((Road)RouteParts.get(0)).getEndJunction();
-        for (RouteParts r:RouteParts){
-            if( r instanceof Road){
-                if(((Road) r).getMaxSpeed()>maxSpeed){
-                    maxSpeed=((Road)r).getMaxSpeed();
-                    endJunc=((Road) r).getEndJunction();
+        double length=0;
+                for(int i=0;i<RouteParts.size();i++){
+                    if(RouteParts.get(i) instanceof Road)
+                    length+=((Road) RouteParts.get(i)).getLength();
                 }
-            }
-        }
-        return "Route from Road from " + vehicle.getLastRoad().getStartJunction()+ " to "+
-                vehicle.getLastRoad().getEndJunction() +", length: "+ (int)vehicle.getLastRoad().getLength() + ", max speed "+ maxSpeed +" to "
-                + endJunc+", estimated time for route: "+ calcEstimatedTime(this) + ".";
+        return "Route from " + vehicle.getLastRoad() + ", length: " + (int)length + ", estimated time for route: "+ calcEstimatedTime(this) + ".";
     }
     
 }

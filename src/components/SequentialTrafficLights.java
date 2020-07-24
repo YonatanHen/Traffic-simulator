@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 /**
 * Class represent RandomTrafficLight in the junction.
-* @author Yehonatan Hen
-* @author Rotem Librati
+* @author Yehonatan Hen-207630112
+* @author Rotem Librati-307903732
 * @see TrafficLights
 */
 public class SequentialTrafficLights extends TrafficLights {
@@ -26,20 +26,16 @@ public class SequentialTrafficLights extends TrafficLights {
      */
     public void changeIndex(){
         setGreenLightIndex(increment);
-        increment++;
-        if(getRoads().size()>=increment)
-            increment=0;
     }
 
     public int getIncrement() {
         return increment;
     }
 
-    public void setIncrement(final int increment) {
+    public void setIncrement(int increment) {
         this.increment = increment;
     }
 
-    @Override
     public String toString() {
         return "Sequential " + super.toString();
     }

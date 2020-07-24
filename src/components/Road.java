@@ -4,13 +4,12 @@ import utilities.Utilities;
 import utilities.VehicleType;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.Semaphore;
 
 /**
  * Class represent Road on the map.
  *
- * @author Yehonatan Hen-
- * @author Rotem Librati
+ * @author Yehonatan Hen-207630112
+ * @author Rotem Librati-307903732
  * @see Junction
  * @see RouteParts
  * @see Utilities
@@ -54,7 +53,7 @@ public class Road implements RouteParts, Utilities {
     //getters
     public boolean getGreenLight(){return greenlight;}
     public boolean getEnable(){return enable;}
-    public int getMaxSpeed() {return maxSpeed/10;}
+    public int getMaxSpeed() {return getMaxSpeed();}
     public double getLength() { return length;}
     public Junction getEndJunction() { return endJunction; }
     public Junction getStartJunction() {return startJunction; }
@@ -63,11 +62,11 @@ public class Road implements RouteParts, Utilities {
     public static int[] getAllowedSpeedOptions() {return allowedSpeedOptions; }
 
     //setters
-    public void setLength(final double length) {this.length = length; }
-    public void setEnable(final boolean enable) { this.enable = enable; }
-    public void setMaxSpeed(final int maxSpeed) { this.maxSpeed = maxSpeed; }
+    public void setLength(double length) {this.length = length; }
+    public void setEnable(boolean enable) { this.enable = enable; }
+    public void setMaxSpeed(int maxSpeed) { this.maxSpeed = maxSpeed; }
     public void setEndJunction(Junction endJunction) { this.endJunction = endJunction; }
-    public void setGreenlight(final boolean greenlight) {this.greenlight = greenlight; }
+    public void setGreenlight(boolean greenlight) {this.greenlight = greenlight; }
     public void setStartJunction(Junction startJunction) { this.startJunction = startJunction; }
     public void setVehicleTypes(VehicleType[] vehicleTypes) { this.vehicleTypes = vehicleTypes; }
     public void setWaitingVehicles(ArrayList<Vehicle> waitingVehicles) { this.waitingVehicles = waitingVehicles; }
@@ -88,7 +87,7 @@ public class Road implements RouteParts, Utilities {
      */
     public double calcEstimatedTime(Object obj){
         if(obj instanceof Vehicle)
-            return Math.round(Math.abs(length)/ Math.min(maxSpeed,((Vehicle) obj).getVehicleType().getAverageSpeed()));
+            return Math.round(length/ Math.min(maxSpeed,((Vehicle) obj).getVehicleType().getAverageSpeed()));
         return 0;
     }
 
@@ -118,19 +117,18 @@ public class Road implements RouteParts, Utilities {
     public void checkIn(Vehicle vehicle){
         vehicle.setCurrentRoutePart(this);
         vehicle.setLastRoad(this);
-        addVehicleToWaitingVehicles(vehicle);
-        vehicle.setStatus("- is starting to move on " + toString() + ", time to finish: " + calcEstimatedTime(vehicle));
+        vehicle.setStatus("- is starting to move on " +  toString() + ", time to finish:"+ vehicle.getCurrentRoute().calcEstimatedTime(vehicle)) ;
         System.out.println(vehicle.getStatus());
     }
 
     /**
-     * Method "release" the car fron current road. upadte all relevant data )fields.
+     * Method "release" the car fron current road. upadte all relevant data fields.
      *
      * @param vehicle
      */
     public void checkOut(Vehicle vehicle){
         removeVehicleFromWaitingVehicles(vehicle);
-        vehicle.setStatus("- has finished " + toString() + ", time spent on the road: "+ vehicle.getTimeOnCurrentPart() + ".");
+        vehicle.setStatus("- has finished " + toString());
         System.out.println(vehicle.getStatus());
     }
 
@@ -145,9 +143,9 @@ public class Road implements RouteParts, Utilities {
     }
 
     public void stayOnCurrentPart(Vehicle vehicle) {
-        vehicle.setStatus("- is still moving on " + toString() + ", " + "time to arrive: " + Math.abs(calcEstimatedTime(vehicle)-vehicle.getTimeFromStartRoute()));
+        //- is still moving on Road from Junction 10 to Junction 5 (Lighted), length: 526, max speed 30, time to arrive: 13.0
+        vehicle.setStatus("- is still moving on " + toString() + ", " + vehicle.toString());
         System.out.println(vehicle.getStatus());
-        vehicle.run();
     }
 
     /**
@@ -161,13 +159,14 @@ public class Road implements RouteParts, Utilities {
         }
     }
 
-    @Override
     public String toString(){
         //Assume that implementation is correct,maybe need to fix this later.
-        return "Road from "+ startJunction + " to " + endJunction +", length: "+ (int)calcLength()+", max speed "+ maxSpeed;
+         /*
+        - is starting to move on Road from Junction 4 (Lighted) to Junction 3 (Lighted), length: 447, max speed 60, time to finish: 11.0.
+         */
+        return "Road from "+ startJunction + " to " + endJunction +", length:"+ (int)calcLength()+", max speed "+ maxSpeed;
     }
 
-    @Override
     public boolean equals(Object obj){
         if(obj instanceof Road){
             return  ((Road) obj).enable==enable &&
